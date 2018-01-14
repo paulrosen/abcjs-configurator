@@ -48,9 +48,10 @@
         drawer: true,
         fixed: false,
         items: [
-          { icon: 'apps', title: 'Home', to: '/' },
-          { icon: 'apps', title: 'Visual', to: '/visual' },
-          { icon: 'apps', title: 'Audio', to: '/audio' },
+          { icon: 'home', title: 'Home', to: '/' },
+          { icon: 'audiotrack', title: 'Visual', to: '/visual' },
+          { icon: 'volume_mute', title: 'Audio', to: '/audio' },
+          { icon: 'edit', title: 'Interactive', to: '/interactive' },
         ],
         miniVariant: false,
         right: true,
