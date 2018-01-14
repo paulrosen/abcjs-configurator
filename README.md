@@ -18,7 +18,26 @@ npx: installed 318 in 9.43s
 ? Author name Paul Rosen
 ```
 
+## To develop
+
+Start the server with:
+``` bash
+npm run dev
+```
+The page is at `localhost:3000`.
+
+## To deploy
+
+Static pages are generated into the `/dist` folder, then those files are copied to the server. There is a bash script for that called `deploy-to-production.sh` that does this:
+``` bash
+./deploy-to-production.sh
+```
+
+It requires the file `deploy-constants.sh`. You can see the format that this file should have by copying the file `deploy-contants-example.sh`.
+
 ## Build Setup
+
+(These are the initial instructions that were generated with the example app.)
 
 ``` bash
 # install dependencies
