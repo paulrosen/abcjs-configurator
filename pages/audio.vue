@@ -79,3 +79,19 @@ A more complicated example that has the drum pattern fall over two measures of 2
 		</v-flex>
 	</v-layout>
 </template>
+
+<script>
+	import {mapGetters} from 'vuex';
+
+	export default {
+		head() {
+			return {
+				title: this.appTitle()
+			};
+		},
+
+		methods: {
+			...mapGetters(['appTitle']),
+		}
+	}
+</script>

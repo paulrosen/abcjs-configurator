@@ -26,7 +26,7 @@
     </v-navigation-drawer>
     <v-toolbar fixed app :clipped-left="clipped">
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-toolbar-title>{{appTitle()}}</v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
     <v-content>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-	import {mapActions} from 'vuex';
+	import {mapGetters, mapMutations, mapActions} from 'vuex';
 
   export default {
     data() {
@@ -61,14 +61,19 @@
         miniVariant: false,
         right: true,
         rightDrawer: false,
-        title: 'abcjs Configurator'
+        title: this.appTitle()
       }
     },
 	  methods: {
+		  ...mapGetters(['appTitle']),
+		  ...mapMutations(['setRoute']),
 		  ...mapActions(['initializeAbcjs']),
 	  },
       mounted() {
-    	this.initializeAbcjs(`
+	      this.setRoute(this.$route.name);
+	      document.title = this.appTitle();
+
+	      this.initializeAbcjs(`
 X: 22
 T:Cats and Birds
 C:Paul Rosen

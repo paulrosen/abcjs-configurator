@@ -36,8 +36,14 @@
 
 	export default {
 
+		head() {
+			return {
+				title: this.appTitle()
+			};
+		},
+
 		methods: {
-			...mapGetters(['numberOfTunes', 'titles', 'ids', 'tuneByTitle', 'tuneById']),
+			...mapGetters(['numberOfTunes', 'titles', 'ids', 'tuneByTitle', 'tuneById', 'appTitle']),
 		}
 	}
 </script>

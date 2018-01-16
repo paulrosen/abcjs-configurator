@@ -27,12 +27,14 @@
 
 	export default {
 
-		data() {
-			return {}
+		head() {
+			return {
+				title: this.appTitle()
+			};
 		},
 
 		methods: {
-			...mapGetters(['inputAbc', 'signature']),
+			...mapGetters(['appTitle', 'inputAbc', 'signature']),
 			...mapMutations(['updateInput']),
 		}
 	}

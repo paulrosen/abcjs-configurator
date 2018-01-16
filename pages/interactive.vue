@@ -53,3 +53,19 @@ Typical usage is:
 		</v-flex>
 	</v-layout>
 </template>
+
+<script>
+	import {mapGetters} from 'vuex';
+
+	export default {
+		head() {
+			return {
+				title: this.appTitle()
+			};
+		},
+
+		methods: {
+			...mapGetters(['appTitle']),
+		}
+	}
+</script>

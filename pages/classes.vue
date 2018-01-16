@@ -33,3 +33,19 @@ If you use, `{ add_classes: true }`, then the following classes are attached to 
 		</v-flex>
 	</v-layout>
 </template>
+
+<script>
+	import {mapGetters} from 'vuex';
+
+	export default {
+		head() {
+			return {
+				title: this.appTitle()
+			};
+		},
+
+		methods: {
+			...mapGetters(['appTitle']),
+		}
+	}
+</script>

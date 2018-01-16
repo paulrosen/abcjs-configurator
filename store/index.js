@@ -4,6 +4,7 @@ const abcjs = process.browser ? require('abcjs/midi.js') : null; // This require
 const createStore = () => {
 	return new Vuex.Store({
 		state: {
+			currentRoute: "",
 			inputAbc: "",
 			numberOfTunes: null,
 			titles: [],
@@ -12,6 +13,14 @@ const createStore = () => {
 			signature: "",
 		},
 		getters: {
+			appTitle(state) {
+				const name = "abcjs Configurator";
+				if (state.currentRoute.length > 0 && state.currentRoute !== 'index') {
+					const page = state.currentRoute.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+					return page + ': ' + name;
+				} else
+					return name;
+			},
 			signature(state) {
 				return state.signature;
 			},
@@ -52,6 +61,9 @@ const createStore = () => {
 			},
 			setSignature(state) {
 				state.signature = abcjs.signature;
+			},
+			setRoute(state, payload) {
+				state.currentRoute = payload;
 			},
 		},
 		actions: {

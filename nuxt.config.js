@@ -45,6 +45,14 @@ module.exports = {
     '@/plugins/vuetify'
   ],
 
+	transition: {
+		name: 'page',
+		mode: 'out-in',
+		beforeEnter (el) {
+		  this.$store.commit("setRoute", this.$route.name);
+		}
+	},
+
   /*
   ** Nuxt.js modules
   */
