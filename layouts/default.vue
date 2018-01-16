@@ -54,6 +54,8 @@
           { icon: 'audiotrack', title: 'Visual', to: '/visual' },
           { icon: 'volume_mute', title: 'Audio', to: '/audio' },
           { icon: 'edit', title: 'Interactive', to: '/interactive' },
+	        { icon: 'directions_run', title: 'Animation', to: '/animation' },
+	        { icon: 'style', title: 'Classes', to: '/classes' },
           { icon: 'pie_chart', title: 'Analysis', to: '/analyze' },
         ],
         miniVariant: false,

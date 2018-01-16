@@ -1,8 +1,23 @@
 <template>
-	<v-layout class="interactive-page">
+	<v-layout class="animation-page">
 		<v-flex xs12 sm12 md10 lg8>
-			<h1>Interactive</h1>
+			<h1>Animation</h1>
 			<pre>
+| `ABCJS.startAnimation(outputElement, tuneObject, animationParams)` | Puts an animated cursor on the rendered music.  |
+| `ABCJS.stopAnimation()` | Stops the animation that was started with `startAnimation`. |
+| `ABCJS.pauseAnimation(pause)` | Pauses/resumes the animation that was started with `startAnimation`. Pass `true` or `false` to pause or resume. |
+
+
+| `animationParams` | Default | Description |
+| ------------- | ----------- | ----------- |
+| hideFinishedMeasures | false | true or false |
+| hideCurrentMeasure | false | true or false |
+| showCursor | false | true or false |
+| bpm | whatever is in the Q: field | number of beats per minute. |
+
+NOTE: To use animation, you MUST have `{ add_classes: true }` in the `engraverParams`. Also, the cursor is not visible unless you add some css. Often this will be something like either `.cursor { background-color: #ffffc0; opacity: 0.5 }` or `.cursor { border-left: 1px solid black; }`
+
+
 # abcjs editor
 
 Typical usage is:
