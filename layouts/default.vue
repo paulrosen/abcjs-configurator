@@ -41,7 +41,7 @@
 </template>
 
 <script>
-	import {mapMutations} from 'vuex';
+	import {mapActions} from 'vuex';
 
   export default {
     data() {
@@ -63,10 +63,10 @@
       }
     },
 	  methods: {
-		  ...mapMutations(['updateInput']),
+		  ...mapActions(['initializeAbcjs']),
 	  },
       mounted() {
-    	this.updateInput(`
+    	this.initializeAbcjs(`
 X: 22
 T:Cats and Birds
 C:Paul Rosen

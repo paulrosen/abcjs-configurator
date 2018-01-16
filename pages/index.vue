@@ -8,6 +8,8 @@
 			<p>There are different configuration options for the standard music engraver, the midi generator, and the interactive version where a textarea is presented to the user
 				and the user can create the music.</p>
 			<p>All of the public entry points that abcjs provides are represented here.</p>
+			<p>The signature of abcjs that is being used for this app is: <v-chip label>{{signature()}}</v-chip></p>
+			<p>Click on each of the pages to see what abcjs has to offer.</p>
 			<p>The examples depend on some input text in ABC format. You may enter the text you wish to test here:</p>
 			<v-text-field
 					:value="inputAbc()"
@@ -30,7 +32,7 @@
 		},
 
 		methods: {
-			...mapGetters(['inputAbc']),
+			...mapGetters(['inputAbc', 'signature']),
 			...mapMutations(['updateInput']),
 		}
 	}

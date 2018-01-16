@@ -1,5 +1,5 @@
 import Vuex from 'vuex'
-const abcjs = process.browser ? require('abcjs') : null; // This requires document and window, so can't be used on the server side.
+const abcjs = process.browser ? require('abcjs/midi.js') : null; // This requires document and window, so can't be used on the server side.
 
 const createStore = () => {
 	return new Vuex.Store({
@@ -9,8 +9,12 @@ const createStore = () => {
 			titles: [],
 			ids: [],
 			tuneBook: null,
+			signature: "",
 		},
 		getters: {
+			signature(state) {
+				return state.signature;
+			},
 			inputAbc(state) {
 				return state.inputAbc
 			},
@@ -45,7 +49,17 @@ const createStore = () => {
 					state.ids = ids;
 					state.titles = titles;
 				}
-			}
+			},
+			setSignature(state) {
+				state.signature = abcjs.signature;
+			},
+		},
+		actions: {
+			initializeAbcjs: (context, payload) => {
+				context.commit("setSignature");
+				context.commit("updateInput", payload);
+			},
+
 		}
 	})
 };
