@@ -42,6 +42,16 @@ const createStore = () => {
 			tuneByTitle: (state) => (title) => {
 				return state.tuneBook.getTuneByTitle(title);
 			},
+			renderAbc() {
+				if (abcjs)
+					return abcjs.renderAbc;
+				return function() { };
+			},
+			renderMidi(state) {
+				if (abcjs)
+					return abcjs.renderMidi;
+				return function() { };
+			},
 		},
 		mutations: {
 			updateInput(state, payload) {

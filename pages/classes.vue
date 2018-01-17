@@ -1,35 +1,34 @@
 <template>
 	<v-layout class="classes-page">
-		<v-flex xs12 sm12 md10 lg8>
-			<h1>Classes</h1>
-			<pre>
-| css classes (assuming the SVG element is `.paper`) | Description |
-| `.paper path.note_selected, .paper text.note_selected` | The color that the selected note or other element is |
-
-## classes
-
-If you use, `{ add_classes: true }`, then the following classes are attached to various elements:
-
-| class | description |
-| ------------- | ----------- |
-| meta-top | Everything that is printed before the first staff line. |
-| title | The line specified by T: |
-| text | Extra text that is not part of the music. |
-| staff-extra | Clefs, key signatures, time signatures. |
-| tempo | The tempo marking. |
-| meta-bottom | Everything that is printed after all the music. |
-| staff  | The horizontal lines that make up the staff; ledger lines. |
-| l1, l2, etc. | (lower case L, followed by a number) The staff line number, starting at one. |
-| m1, m2, etc. | The measure count from the START OF THE LINE. |
-| top-line | The top horizontal line of a staff. |
-| symbol | Any special symbol, like a trill. |
-| chord | The chord symbols, specified in quotes. |
-| note | Everything to do with a note. |
-| bar | The bar lines. |
-| slur | Slurs and ties. |
-| abc-lyric | The lyric line. |
-
-			</pre>
+		<v-flex xs12 sm12 md12 lg12>
+			<v-card>
+				<v-card-title>Command</v-card-title>
+				<v-card-text>
+					<code>
+abcjs.renderAbc("paper", abcString, { add_classes: true });
+<template v-if="this.selector.length > 0">document.getElementById("paper").querySelectorAll("{{this.selector}}").forEach((el) => {
+    el.setAttribute("fill", "#3D9AFC");
+});</template>
+					</code>
+				</v-card-text>
+			</v-card>
+			<v-card>
+				<v-card-title>Available Classes</v-card-title>
+				<v-card-text>
+					<v-flex>
+						<label v-for="c,i in classNames" :key="i" class="classes">
+							<input type="checkbox" v-model="checkedClasses" :value="c">
+							{{c}}
+						</label>
+					</v-flex>
+				</v-card-text>
+			</v-card>
+			<v-card>
+				<v-card-title>Output</v-card-title>
+				<v-card-text>
+					<div id="paper"></div>
+				</v-card-text>
+			</v-card>
 		</v-flex>
 	</v-layout>
 </template>
@@ -43,9 +42,68 @@ If you use, `{ add_classes: true }`, then the following classes are attached to 
 				title: this.appTitle()
 			};
 		},
+		data() {
+			return {
+				classNames: [ 'one', 'two'],
+				checkedClasses: [],
+				selector: "",
+			}
+		},
+		watch: {
+			checkedClasses: function (val) {
+				const paper = document.getElementById('paper');
+				const svg = paper.querySelector("svg");
+				const elements = svg.querySelectorAll('[fill]');
+				elements.forEach((el) => {
+					el.setAttribute("fill", "#000000");
+				});
 
+				this.selector = (val.length > 0) ? "." + val.join(".") : "";
+				if (this.selector.length > 0) {
+					document.getElementById('paper').querySelectorAll(this.selector).forEach((el) => {
+						el.setAttribute("fill", "#3D9AFC");
+					});
+				}
+			},
+		},
 		methods: {
-			...mapGetters(['appTitle']),
+			...mapGetters(['appTitle', 'inputAbc', 'renderAbc']),
+			getClassNames() {
+				const paper = document.getElementById('paper');
+				const svg = paper.querySelector("svg");
+				const elements = svg.querySelectorAll('*');
+
+				let classes = [];
+				elements.forEach((el) => {
+					const arr = el.classList ? el.classList.value.split(" ") : [];
+					classes = classes.concat(arr);
+				});
+				this.classNames = [...new Set(classes)].filter(Boolean).sort();
+			},
+		},
+		mounted() {
+			this.renderAbc()("paper", this.inputAbc(), { add_classes: true });
+			this.getClassNames();
 		}
 	}
 </script>
+
+<style>
+	.card {
+		margin-bottom: 10px;
+	}
+	.card__title {
+		font-weight: bold;
+	}
+	code {
+		font-family: "Lucida Console", Monaco, monospace;
+		background-color: #DFDBC3;
+		color: #333333;
+		padding: 10px;
+		font-size: 16px;
+	}
+	.classes {
+		width: 150px;
+		display: inline-block;
+	}
+</style>
