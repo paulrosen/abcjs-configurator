@@ -25,7 +25,7 @@ const createStore = () => {
 				return state.signature;
 			},
 			inputAbc(state) {
-				return state.inputAbc
+				return state.inputAbc;
 			},
 			numberOfTunes(state) {
 				return state.numberOfTunes;
@@ -37,10 +37,16 @@ const createStore = () => {
 				return state.ids;
 			},
 			tuneById: (state) => (id) => {
-				return state.tuneBook.getTuneById(id);
+				if (state.tuneBook)
+					return state.tuneBook.getTuneById(id);
+				else
+					return {};
 			},
 			tuneByTitle: (state) => (title) => {
-				return state.tuneBook.getTuneByTitle(title);
+				if (state.tuneBook)
+					return state.tuneBook.getTuneByTitle(title);
+			else
+				return {};
 			},
 			renderAbc() {
 				if (abcjs)

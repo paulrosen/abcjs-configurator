@@ -5,21 +5,24 @@
 				<v-card-title>JavaScript</v-card-title>
 				<v-card-text>
 					<code>import abcjs from 'abcjs';
-abcjs.renderAbc("paper", abcString, { add_classes: true });
-<template v-if="this.selector.length > 0">document.getElementById("paper").querySelectorAll("{{this.selector}}").forEach((el) => {
-    el.setAttribute("fill", "#3D9AFC");
-});</template>
-					</code>
+{{formatCommand()}}{{formatClassSelection()}}</code>
 				</v-card-text>
 			</v-card>
 			<v-card>
 				<v-card-title>Available Classes</v-card-title>
 				<v-card-text>
+					<v-select
+							v-bind:items="titles()"
+							v-model="tuneTitle"
+							label="Tune To Display"
+							bottom
+							clearable
+					></v-select>
+					<p>Check the various classes to see how they are applied to the music. (They are AND'd together.)</p>
 					<v-flex>
-						<label v-for="c,i in classNames" :key="i" class="classes">
-							<input type="checkbox" v-model="checkedClasses" :value="c">
-							{{c}}
-						</label>
+						<div v-for="c,i in classNames" :key="i" class="classes">
+							<v-checkbox :label="c" v-model="checkedClasses" :value="c"></v-checkbox>
+						</div>
 					</v-flex>
 				</v-card-text>
 			</v-card>
@@ -47,6 +50,7 @@ abcjs.renderAbc("paper", abcString, { add_classes: true });
 				classNames: [ 'one', 'two'],
 				checkedClasses: [],
 				selector: "",
+				tuneTitle: null,
 			}
 		},
 		watch: {
@@ -65,9 +69,18 @@ abcjs.renderAbc("paper", abcString, { add_classes: true });
 					});
 				}
 			},
+			tuneTitle: function(val) {
+				if (!this.tuneTitle) {
+					this.renderAbc()("paper", this.inputAbc(), {add_classes: true});
+				}
+				else {
+					const tune = this.tuneByTitle()(this.tuneTitle);
+					this.renderAbc()("paper", tune.abc, { add_classes: true });
+				}
+			},
 		},
 		methods: {
-			...mapGetters(['appTitle', 'inputAbc', 'renderAbc']),
+			...mapGetters(['appTitle', 'inputAbc', 'renderAbc', 'titles', 'tuneByTitle']),
 			getClassNames() {
 				const paper = document.getElementById('paper');
 				const svg = paper.querySelector("svg");
@@ -80,6 +93,21 @@ abcjs.renderAbc("paper", abcString, { add_classes: true });
 				});
 				this.classNames = [...new Set(classes)].filter(Boolean).sort();
 			},
+			formatCommand() {
+				if (!this.tuneTitle)
+					return "abcjs.renderAbc(\"paper\", abcString, { add_classes: true });";
+				else
+					return `const tune = abcjs.TuneBook(abcString).getTuneByTitle("${this.tuneTitle}");
+abcjs.renderAbc("paper", tune.abc, { add_classes: true });`;
+			},
+			formatClassSelection() {
+				if (this.selector.length === 0) return "";
+				return `
+
+document.getElementById("paper").querySelectorAll("${this.selector}").forEach((el) => {
+    el.setAttribute("fill", "#3D9AFC");
+});`;
+			},
 		},
 		mounted() {
 			this.renderAbc()("paper", this.inputAbc(), { add_classes: true });
@@ -90,7 +118,7 @@ abcjs.renderAbc("paper", abcString, { add_classes: true });
 
 <style>
 	.classes {
-		width: 150px;
+		width: 190px;
 		display: inline-block;
 	}
 </style>
