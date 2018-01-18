@@ -1,17 +1,14 @@
 <template>
 	<v-layout class="visual-page">
 		<v-flex xs12 sm12 md12 lg12>
-			<v-card class="section-card">
+			<v-card>
 				<v-card-title>JavaScript</v-card-title>
 				<v-card-text>
-					<p>(The <em>tunebookString</em> is whatever is in the textarea on the <nuxt-link to="/">main page</nuxt-link>.)</p>
-					<pre>tuneObjectArray = ABCJS.renderAbc(
-						output,
-						tunebookString,
-						parserParams,
-						engraverParams,
-						renderParams)</pre>
-					<p>(The <em>tuneObjectArray</em> contains each of the tunes that was processed. This is not normally needed,
+					<p>(The <code>abcString</code> is whatever is in the textarea on the <nuxt-link to="/">main page</nuxt-link>.)</p>
+					<code>import abcjs from 'abcjs';
+{{javascriptString}}</code>
+					<p></p>
+					<p>(The <code>tuneObjectArray</code> contains each of the tunes that was processed. This is not normally needed,
 						unless you need to pass it to the animation function or the MIDI "bouncing ball".</p>
 				</v-card-text>
 			</v-card>
@@ -27,61 +24,93 @@
 					></v-text-field>
 
 					<h2>Parser Parameters</h2>
-					<v-checkbox label="Format For Printing" v-model="print" light></v-checkbox>
-					<v-checkbox label="Parse Header Only" v-model="header_only" light></v-checkbox>
-					<v-checkbox label="Stop Parsing on Warning" v-model="stop_on_warning" light></v-checkbox>
-					<v-checkbox label="Insert Hint Measures" v-model="hint_measures" light></v-checkbox>
+					<v-layout wrap justify-start>
+					<v-checkbox label="Format For Printing" v-model="parserParams.print"></v-checkbox>
+					<v-checkbox label="Parse Header Only" v-model="parserParams.header_only"></v-checkbox>
+					<v-checkbox label="Stop Parsing on Warning" v-model="parserParams.stop_on_warning"></v-checkbox>
+					<v-checkbox label="Insert Hint Measures" v-model="parserParams.hint_measures"></v-checkbox>
+					</v-layout>
 
 					<h2>Engraver Parameters</h2>
+					<v-layout wrap justify-start>
 					<v-text-field
 							class="numeric"
-							v-model="scale"
+							v-model="engraverParams.scale"
 							label="Scale"
 					></v-text-field>
 					<v-text-field
 							class="numeric"
-							v-model="staffwidth"
+							v-model="engraverParams.staffwidth"
 							label="Staff Width"
 					></v-text-field>
 					<v-text-field
 							class="numeric"
-							v-model="paddingtop"
+							v-model="engraverParams.paddingtop"
 							label="Padding Top"
 					></v-text-field>
 					<v-text-field
 							class="numeric"
-							v-model="paddingbottom"
+							v-model="engraverParams.paddingbottom"
 							label="Padding Bottom"
 					></v-text-field>
 					<v-text-field
 							class="numeric"
-							v-model="paddingright"
+							v-model="engraverParams.paddingright"
 							label="Padding Right"
 					></v-text-field>
 					<v-text-field
 							class="numeric"
-							v-model="paddingleft"
+							v-model="engraverParams.paddingleft"
 							label="Padding Left"
 					></v-text-field>
-					<v-checkbox label="Editable" v-model="editable" light></v-checkbox>
-					<v-checkbox label="Add Classes" v-model="add_classes" light></v-checkbox>
-					<v-checkbox label="User Click Listener" v-model="highlightListener" light></v-checkbox>
-					<v-checkbox label="Music Changed Listener" v-model="modelChangedListener" light></v-checkbox>
-					<v-checkbox label="Responsive Sizing" v-model="responsive" light></v-checkbox>
+					<v-checkbox label="Editable" v-model="engraverParams.editable"></v-checkbox>
+					<v-checkbox label="Add Classes" v-model="engraverParams.add_classes"></v-checkbox>
+					<v-checkbox label="User Click Listener" v-model="engraverParams.highlightListener"></v-checkbox>
+					<v-checkbox label="Music Changed Listener" v-model="engraverParams.modelChangedListener"></v-checkbox>
+					<v-checkbox label="Responsive Sizing" v-model="engraverParams.responsive"></v-checkbox>
+					</v-layout>
 
 					<h2>Renderer Params</h2>
+					<v-layout wrap justify-start>
 					<v-text-field
 							class="numeric"
-							v-model="startingTune"
+							v-model="renderParams.startingTune"
 							label="Starting Tune"
 					></v-text-field>
-					<v-checkbox label="viewportHorizontal" v-model="viewportHorizontal" light></v-checkbox>
-					<v-checkbox label="scrollHorizontal" v-model="scrollHorizontal" light></v-checkbox>
-					<v-checkbox label="oneSvgPerLine" v-model="oneSvgPerLine" light></v-checkbox>
+					<v-checkbox label="viewportHorizontal" v-model="renderParams.viewportHorizontal"></v-checkbox>
+					<v-checkbox label="scrollHorizontal" v-model="renderParams.scrollHorizontal"></v-checkbox>
+					<v-checkbox label="oneSvgPerLine" v-model="renderParams.oneSvgPerLine"></v-checkbox>
+					</v-layout>
 				</v-card-text>
 			</v-card>
-			<v-card class="section-card">
+			<v-card>
 				<v-card-title>Output</v-card-title>
+				<v-card-text>
+					<div id="paper1"></div>
+					<div id="paper2"></div>
+					<div id="paper3"></div>
+					<div id="paper4"></div>
+					<div id="paper5"></div>
+					<div id="paper6"></div>
+					<div id="paper7"></div>
+					<div id="paper8"></div>
+					<div id="paper9"></div>
+					<div id="paper10"></div>
+					<div id="paper11"></div>
+					<div id="paper12"></div>
+					<div id="paper13"></div>
+					<div id="paper14"></div>
+					<div id="paper15"></div>
+					<div id="paper16"></div>
+					<div id="paper17"></div>
+					<div id="paper18"></div>
+					<div id="paper19"></div>
+					<div id="paper20"></div>
+					<div id="paper21"></div>
+					<div id="paper22"></div>
+					<div id="paper23"></div>
+					<div id="paper24"></div>
+				</v-card-text>
 			</v-card>
 		</v-flex>
 	</v-layout>
@@ -106,12 +135,12 @@
 					hint_measures: false,
 				},
 				engraverParams: {
-					scale: 1,
-					staffwidth: 740,
-					paddingtop: 15,
-					paddingbottom: 30,
-					paddingright: 50,
-					paddingleft: 15,
+					scale: "1",
+					staffwidth: "740",
+					paddingtop: "15",
+					paddingbottom: "30",
+					paddingright: "50",
+					paddingleft: "15",
 					editable: false,
 					add_classes: false,
 					highlightListener: false,
@@ -119,16 +148,133 @@
 					responsive: false,
 				},
 				renderParams: {
-					startingTune: 0,
+					startingTune: "1",
 					viewportHorizontal: false,
 					scrollHorizontal: false,
 					oneSvgPerLine: false,
 				},
+				javascriptString: "",
 			};
+		},
+		watch: {
+			'numberOfTunes': function() {
+				this.redraw();
+			},
+			'parserParams': {
+				handler: function () {
+					this.redraw();
+				},
+				deep: true
+			},
+			'engraverParams': {
+				handler: function () {
+					this.redraw();
+				},
+				deep: true
+			},
+			'renderParams': {
+				handler: function () {
+					this.redraw();
+				},
+				deep: true
+			},
 		},
 
 		methods: {
 			...mapGetters(['appTitle']),
+			formatOutput() {
+				let output = '"paper1"';
+				if (this.numberOfTunes > 1) {
+					output = '[';
+					for (let i = 0; i < this.numberOfTunes; i++) {
+						output += ' "paper' + (i+1) + '",'
+					}
+					output += " ]";
+				}
+				return output;
+			},
+			formatParserParams() {
+				let params = "";
+				if (this.parserParams.print)
+					params += "\n        print: true,";
+				if (this.parserParams.header_only)
+					params += "\n        header_only: true,";
+				if (this.parserParams.stop_on_warning)
+					params += "\n        stop_on_warning: true,";
+				if (this.parserParams.hint_measures)
+					params += "\n        hint_measures: true,";
+				if (params === "")
+					params = "{ }";
+				else
+					params = `{${params}
+    }`;
+				return params;
+			},
+			formatEngraverParams() {
+				let params = "";
+				if (this.engraverParams.scale !== "1")
+					params += `\n        scale: ${this.engraverParams.scale},`;
+				if (this.engraverParams.staffwidth !== "740")
+					params += `\n        staffwidth: ${this.engraverParams.staffwidth},`;
+				if (this.engraverParams.paddingtop !== "15")
+					params += `\n        paddingtop: ${this.engraverParams.paddingtop},`;
+				if (this.engraverParams.paddingbottom !== "30")
+					params += `\n        paddingbottom: ${this.engraverParams.paddingbottom},`;
+				if (this.engraverParams.paddingright !== "50")
+					params += `\n        paddingright: ${this.engraverParams.paddingright},`;
+				if (this.engraverParams.paddingleft !== "15")
+					params += `\n        paddingleft: ${this.engraverParams.paddingleft},`;
+				if (this.engraverParams.editable)
+					params += "\n        editable: true,";
+				if (this.engraverParams.add_classes)
+					params += "\n        add_classes: true,";
+				if (this.engraverParams.highlightListener || this.engraverParams.modelChangedListener) {
+					params += "\n        listener: { ";
+					if (this.engraverParams.highlightListener)
+						params += "highlight: function(abcElem) { console.log(abcElem); }, ";
+					if (this.engraverParams.modelChangedListener)
+						params += "modelChanged: function(abcElem) { console.log(abcElem); }, ";
+					params += "},";
+				}
+				if (this.engraverParams.responsive)
+					params += "\n        responsive: \"resize\",";
+				if (params === "")
+					params = "{ }";
+				else
+					params = `{${params}
+    }`;
+				return params;
+			},
+			formatRenderParams() {
+				let params = "";
+				if (this.renderParams.startingTune !== "1")
+					params += `\n        startingTune: ${this.renderParams.startingTune},`;
+				if (this.renderParams.viewportHorizontal)
+					params += "\n        viewportHorizontal: true,";
+				if (this.renderParams.scrollHorizontal)
+					params += "\n        scrollHorizontal: true,";
+				if (this.renderParams.oneSvgPerLine)
+					params += "\n        oneSvgPerLine: true,";
+				if (params === "")
+					params = "{ }";
+				else
+					params = `{${params}
+    }`;
+				return params;
+			},
+			redraw() {
+				const output = this.formatOutput();
+				const parserParams = this.formatParserParams();
+				const engraverParams = this.formatEngraverParams();
+				const renderParams = this.formatRenderParams();
+
+				this.javascriptString = `const tuneObjectArray = ABCJS.renderAbc(
+    ${output},
+    abcString,
+    ${parserParams},
+    ${engraverParams},
+    ${renderParams});`;
+},
 		},
 	// 	| Parameters | Description |
 	// 	| ------------- | ----------- |
@@ -165,7 +311,8 @@
 </script>
 
 <style>
-	.numeric {
-		width: 250px;
+	.visual-page .input-group {
+		min-width: 200px;
+		margin-right: 10px;
 	}
 </style>
