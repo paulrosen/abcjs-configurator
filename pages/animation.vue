@@ -1,70 +1,52 @@
 <template>
 	<v-layout class="animation-page">
-		<v-flex xs12 sm12 md10 lg8>
-			<h1>Animation</h1>
-			<pre>
-| `ABCJS.startAnimation(outputElement, tuneObject, animationParams)` | Puts an animated cursor on the rendered music.  |
-| `ABCJS.stopAnimation()` | Stops the animation that was started with `startAnimation`. |
-| `ABCJS.pauseAnimation(pause)` | Pauses/resumes the animation that was started with `startAnimation`. Pass `true` or `false` to pause or resume. |
+		<v-flex xs12 sm12 md12 lg12>
+			<v-card>
+				<v-card-title>JavaScript</v-card-title>
+				<v-card-text>
+					<code>import abcjs from 'abcjs';
+const tunes = abcjs.renderAbc("paper", abcString, { add_classes: true });
+abcjs.startAnimation("paper", tunes[0], {
+<div v-if="hideCurrentMeasure">    hideCurrentMeasure: true,</div><div v-if="hideFinishedMeasures">    hideFinishedMeasures: true,</div><div v-if="showCursor">    showCursor: true,</div><div v-if="bpm">    bpm: {{bpm}},</div>});
 
+abcjs.stopAnimation();
 
-| `animationParams` | Default | Description |
-| ------------- | ----------- | ----------- |
-| hideFinishedMeasures | false | true or false |
-| hideCurrentMeasure | false | true or false |
-| showCursor | false | true or false |
-| bpm | whatever is in the Q: field | number of beats per minute. |
+abcjs.pauseAnimation(true | false);
 
-NOTE: To use animation, you MUST have `{ add_classes: true }` in the `engraverParams`. Also, the cursor is not visible unless you add some css. Often this will be something like either `.cursor { background-color: #ffffc0; opacity: 0.5 }` or `.cursor { border-left: 1px solid black; }`
-
-
-# abcjs editor
-
-Typical usage is:
-
-	window.onload = function() {
-		abc_editor = new ABCJS.Editor("abc", { canvas_id: "canvas0", midi_id:"midi", warnings_id:"warnings" });
-	}
-
-| Editor entry points | Description |
-| ------------- | ----------- |
-| `abc_editor = new ABCJS.Editor(editArea, editorParams)` | constructor of the editor object |
-| `setReadOnly(bool)` |adds or removes the class abc_textarea_readonly, and adds or removes the attribute readonly=yes |
-| `setDirtyStyle(bool)` | adds or removes the class abc_textarea_dirty |
-| `renderTune(abc, parserParams, domElement)` | Immediately renders the tune. (Useful for creating the SVG output behind the scenes, if div is hidden) |
-| `modelChanged()` | Called when the model has been changed to trigger re-rendering |
-| `parseABC()` | Called internally by fireChanged() -- returns true if there has been a change since last call. |
-| `updateSelection()` | Called when the user has changed the selection. This calls the engraver_controller to show the selection. |
-| `fireSelectionChanged()` | Called by the textarea object when the user has changed the selection. |
-| `paramChanged(engraverParams)` | Called to signal that the engraver params have changed, so re-rendering should occur. |
-| `fireChanged()` | Called by the textarea object when the user has changed something. |
-| `setNotDirty()` | Called by the client app to reset the dirty flag |
-| `isDirty()` | Returns true or false, whether the textarea contains the same text that it started with. |
-| `highlight(abcelem)` | Called by the engraver_controller to highlight an area. |
-| `pause(bool)` | Stops the automatic rendering when the user is typing. |
-| `pauseMidi(shouldPause)` | Stops the automatic re-rendering of the MIDI. |
-
-| Edit parameters | Description |
-| ------------- | ----------- |
-| `editArea` | If it is a string, then it is an HTML id of a textarea control. Otherwise, it should be an instantiation of an object that expresses the `EditArea` interface. |
-| `editorParams` | Hash of parameters for the editor. |
-
-| editorParams | Description |
-| ------------- | ----------- |
-| `canvas_id` or `paper_id` | HTML id to draw in. If not present, then the drawing happens just below the editor. |
-| `generate_midi` | if present, then midi is generated. |
-| `midi_id` | if present, the HTML id to place the midi control. Otherwise it is placed in the same div as the paper. An encompassing `div` surrounds each control with the class in the format `"inline-midi midi-%d"`. |
-| `midi_download_id` | if present, the HTML id to place the midi download link. Otherwise, if `midi_id` is present it is placed there, otherwise it is placed in the same div as the paper. An encompassing `div` surrounds each control with the class in the format `"download-midi midi-%d"`.|
-| `generate_warnings` | if present, then parser warnings are displayed on the page. |
-| `warnings_id` | if present, the HTML id to place the warnings. Otherwise they are placed in the same div as the paper. |
-| `onchange` | if present, the callback function to call whenever there has been a change. |
-| `gui` | if present, the paper can send changes back to the editor (presumably because the user changed something directly.) |
-| `parser_options` | options to send to the parser engine. |
-| `midi_options` | options to send to the midi engine. |
-| `render_options` | options to send to the render engine. |
-| `indicate_changed` | the dirty flag is set if this is true. |
-
-			</pre>
+&lt;style&gt;
+    .cursor {
+        background-color: #ffffc0;
+        opacity: 0.5
+    }
+&lt;/style&gt;
+</code>
+				</v-card-text>
+			</v-card>
+			<v-card>
+				<v-card-title>Options</v-card-title>
+				<v-card-text>
+					<p>You must check at least one of these checkboxes to see the animation. If you leave the Beats Per Minute blank, then the the tempo found in the music is used. If you put a number in, then that is used for the Beats Per Minute.</p>
+					<v-checkbox label="Hide Finished Measures" v-model="hideFinishedMeasures" light></v-checkbox>
+					<v-checkbox label="Hide Current Measure" v-model="hideCurrentMeasure" light></v-checkbox>
+					<v-checkbox label="Show Cursor" v-model="showCursor" light></v-checkbox>
+					<v-text-field
+							class="bpm-input"
+							v-model="bpm"
+							label="Beats Per Minute"
+					></v-text-field>
+					<v-btn round color="primary" @click="start">Start</v-btn>
+					<v-btn outline color="primary" @click="stop">Stop</v-btn>
+					<v-btn-toggle v-model="isPaused">
+					<v-btn outline color="primary" @click="pause">Pause</v-btn>
+					</v-btn-toggle>
+				</v-card-text>
+			</v-card>
+			<v-card>
+				<v-card-title>Output</v-card-title>
+				<v-card-text>
+					<div id="paper"></div>
+				</v-card-text>
+			</v-card>
 		</v-flex>
 	</v-layout>
 </template>
@@ -78,9 +60,49 @@ Typical usage is:
 				title: this.appTitle()
 			};
 		},
-
+		data() {
+			return {
+				hideFinishedMeasures: false,
+				hideCurrentMeasure: false,
+				showCursor: false,
+				bpm: "",
+				isPaused: null,
+			};
+		},
+		mounted() {
+			this.renderAbc()("paper", this.inputAbc(), { add_classes: true });
+		},
 		methods: {
-			...mapGetters(['appTitle']),
+			...mapGetters(['appTitle', 'inputAbc', 'renderAbc', 'startAnimation', 'stopAnimation', 'pauseAnimation']),
+			start() {
+				const tunes = this.renderAbc()("paper", this.inputAbc(), { add_classes: true });
+				const options = {
+					hideFinishedMeasures: this.hideFinishedMeasures,
+					hideCurrentMeasure: this.hideCurrentMeasure,
+					showCursor: this.showCursor,
+					bpm: this.bpm,
+				};
+				this.startAnimation()(document.getElementById("paper"), tunes[0], options);
+				this.isPaused = null;
+			},
+			stop() {
+				this.stopAnimation()();
+				this.isPaused = null;
+			},
+			pause() {
+				const paused = this.isPaused === null;
+				this.pauseAnimation()(paused);
+			},
 		}
 	}
 </script>
+
+<style>
+	.cursor {
+		border-left: 1px solid #3D9AFC;
+	}
+	.bpm-input {
+		width: 150px;
+		margin-top: -25px;
+	}
+</style>

@@ -2,9 +2,9 @@
 	<v-layout class="classes-page">
 		<v-flex xs12 sm12 md12 lg12>
 			<v-card>
-				<v-card-title>Command</v-card-title>
+				<v-card-title>JavaScript</v-card-title>
 				<v-card-text>
-					<code>
+					<code>import abcjs from 'abcjs';
 abcjs.renderAbc("paper", abcString, { add_classes: true });
 <template v-if="this.selector.length > 0">document.getElementById("paper").querySelectorAll("{{this.selector}}").forEach((el) => {
     el.setAttribute("fill", "#3D9AFC");
@@ -89,19 +89,6 @@ abcjs.renderAbc("paper", abcString, { add_classes: true });
 </script>
 
 <style>
-	.card {
-		margin-bottom: 10px;
-	}
-	.card__title {
-		font-weight: bold;
-	}
-	code {
-		font-family: "Lucida Console", Monaco, monospace;
-		background-color: #DFDBC3;
-		color: #333333;
-		padding: 10px;
-		font-size: 16px;
-	}
 	.classes {
 		width: 150px;
 		display: inline-block;

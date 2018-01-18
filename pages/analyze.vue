@@ -10,7 +10,7 @@
 				<v-chip label>{{numberOfTunes()}}</v-chip>
 			</p>
 			<template v-for="title,i in titles()">
-				<v-card class="tune-card" :key="i" raised>
+				<v-card :key="i" raised>
 					<v-card-title>abcjs.TuneBook(abcString).getTuneByTitle("{{title}}")</v-card-title>
 					<v-card-text>
 						<p>Start Character: {{tuneByTitle()(title).startPos}}</p>
@@ -19,7 +19,7 @@
 				</v-card>
 			</template>
 			<template v-for="id,i in ids()">
-				<v-card class="tune-card" :key="i" raised>
+				<v-card :key="i" raised>
 					<v-card-title>abcjs.TuneBook(abcString).getTuneById("{{id}}")</v-card-title>
 					<v-card-text>
 						<p>Start Character: {{tuneById()(id).startPos}}</p>
@@ -49,7 +49,4 @@
 </script>
 
 <style>
-	.tune-card {
-		margin-bottom: 10px;
-	}
 </style>

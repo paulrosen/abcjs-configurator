@@ -426,3 +426,23 @@ ed2d- d4|"A7"eg2e gab2|"D7"a2aa a2Bc|"G"d2Bc d2gf|ed2d- d2AB|
       }
   }
 </script>
+
+<style>
+  .card {
+    margin-bottom: 10px;
+  }
+  .card__title {
+    font-weight: bold;
+  }
+  code {
+    font-family: "Lucida Console", Monaco, monospace;
+    background-color: #DFDBC3;
+    color: #333333;
+    padding: 10px;
+    font-size: 16px;
+  }
+  code::before {
+    content:""
+  }
+
+</style>

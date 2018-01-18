@@ -52,6 +52,21 @@ const createStore = () => {
 					return abcjs.renderMidi;
 				return function() { };
 			},
+			startAnimation(state) {
+				if (abcjs)
+					return abcjs.startAnimation;
+				return function() { };
+			},
+			stopAnimation(state) {
+				if (abcjs)
+					return abcjs.stopAnimation;
+				return function() { };
+			},
+			pauseAnimation(state) {
+				if (abcjs)
+					return abcjs.pauseAnimation;
+				return function() { };
+			},
 		},
 		mutations: {
 			updateInput(state, payload) {

@@ -76,10 +76,4 @@
 </script>
 
 <style>
-	.section-card {
-		margin-bottom: 10px;
-	}
-	.card__title {
-		font-weight: bold;
-	}
 </style>
