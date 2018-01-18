@@ -1,7 +1,6 @@
 <template>
 	<v-layout class="visual-page">
-		<v-flex xs12 sm12 md10 lg8>
-			<h1>Displaying Sheet Music</h1>
+		<v-flex xs12 sm12 md12 lg12>
 			<v-card class="section-card">
 				<v-card-title>JavaScript</v-card-title>
 				<v-card-text>
@@ -84,8 +83,6 @@
 			<v-card class="section-card">
 				<v-card-title>Output</v-card-title>
 			</v-card>
-			<pre>
-			</pre>
 		</v-flex>
 	</v-layout>
 </template>
