@@ -67,7 +67,7 @@
 					<v-checkbox label="Add Classes" v-model="engraverParams.add_classes"></v-checkbox>
 					<v-checkbox label="User Click Listener" v-model="engraverParams.highlightListener"></v-checkbox>
 					<v-checkbox label="Music Changed Listener" v-model="engraverParams.modelChangedListener"></v-checkbox>
-					<v-checkbox label="Responsive Sizing" v-model="engraverParams.responsive"></v-checkbox>
+					<v-checkbox label="Responsive Sizing" v-model="engraverParams.responsiveResize"></v-checkbox>
 					</v-layout>
 
 					<h2>Renderer Params</h2>
@@ -145,7 +145,7 @@
 					add_classes: false,
 					highlightListener: false,
 					modelChangedListener: false,
-					responsive: false,
+					responsiveResize: false,
 				},
 				renderParams: {
 					startingTune: "1",
@@ -197,6 +197,7 @@
 					return '"' + papers + '"';
 				return '[ "' + papers.join('", "') + '" ]';
 			},
+
 			formatParserParams() {
 				let params = "";
 				if (this.parserParams.print)
@@ -213,6 +214,16 @@
 					params = `{${params}
     }`;
 				return params;
+			},
+
+			constructEngraverParams() {
+				this.engraverParams.listener = {};
+				if (this.engraverParams.highlightListener)
+					this.engraverParams.listener.highlight = this.highlightListenerCallback;
+				if (this.engraverParams.modelChangedListener)
+					this.engraverParams.listener.modelChanged = this.modelChangedListenerCallback;
+				this.engraverParams.responsive = this.engraverParams.responsiveResize ? "resize" : undefined;
+				return this.engraverParams;
 			},
 			formatEngraverParams() {
 				let params = "";
@@ -240,7 +251,7 @@
 						params += "modelChanged: function(abcElem) { console.log(abcElem); }, ";
 					params += "},";
 				}
-				if (this.engraverParams.responsive)
+				if (this.engraverParams.responsiveResize)
 					params += "\n        responsive: \"resize\",";
 				if (params === "")
 					params = "{ }";
@@ -249,6 +260,7 @@
     }`;
 				return params;
 			},
+
 			formatRenderParams() {
 				let params = "";
 				if (this.renderParams.startingTune !== "1")
@@ -266,6 +278,12 @@
     }`;
 				return params;
 			},
+			highlightListenerCallback(abcElem) {
+				console.log(abcElem);
+			},
+			modelChangedListenerCallback(abcElem) {
+				console.log(abcElem);
+			},
 			redraw() {
 				const output = this.formatOutput();
 				const parserParams = this.formatParserParams();
@@ -281,7 +299,7 @@
 
 				for (let i = 1; i < 24; i++)
 					document.getElementById("paper"+i).innerText = "";
-				this.renderAbc()(this.constructOutput(), this.inputAbc(), { add_classes: true });
+				this.renderAbc()(this.constructOutput(), this.inputAbc(), this.parserParams, this.constructEngraverParams(), this.renderParams);
 },
 		},
 	// 	| Parameters | Description |
