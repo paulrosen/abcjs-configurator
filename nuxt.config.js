@@ -35,7 +35,9 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    'vuetify/src/stylus/main.styl'
+    'vuetify/src/stylus/main.styl',
+	  "font-awesome/css/font-awesome.min.css",
+      'abcjs/abcjs-midi.css'
   ],
 
   /*

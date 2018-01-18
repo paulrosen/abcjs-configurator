@@ -69,8 +69,8 @@
 					</v-layout>
 					<h2>Callback Params</h2>
 					<v-layout wrap justify-start>
-						<v-checkbox label="Listener?" v-model="midiParams.listener" light></v-checkbox>
-						<v-checkbox label="Animate?" v-model="midiParams.animate" light></v-checkbox>
+						<v-checkbox label="Listener?" v-model="midiParams.doListener" light></v-checkbox>
+						<v-checkbox label="Animate?" v-model="midiParams.doAnimate" light></v-checkbox>
 						<v-text-field
 								class="numeric"
 								v-model="midiParams.context"
@@ -133,8 +133,7 @@
 			<v-card class="section-card">
 				<v-card-title>Output</v-card-title>
 				<div id="paper"></div>
-				<div id="midi-controls"></div>
-				<div id="midi-download"></div>
+				<div id="midi-id"></div>
 			</v-card>
 		</v-flex>
 	</v-layout>
@@ -162,8 +161,8 @@
 					postTextDownload: "",
 					preTextInline: "",
 					postTextInline: "",
-					listener: false,
-					animate: false,
+					doListener: false,
+					doAnimate: false,
 					context: "",
 					inlineControls: {
 						loopToggle: false,
@@ -182,10 +181,11 @@
 					drumIntro: "0",
 				},
 				renderParams: {
-					startingTune: "1",
+					startingTune: "0",
 				},
 
 				javascriptString: "",
+				tunes: null,
 			};
 		},
 		watch: {
@@ -204,7 +204,14 @@
 		},
 
 		methods: {
-			...mapGetters(['appTitle']),
+			...mapGetters(['appTitle', 'renderAbc', 'renderMidi', 'inputAbc']),
+			constructMidiParams() {
+				this.midiParams.listener = this.midiParams.doListener ? this.listenerCallback : undefined;
+				this.midiParams.animate = this.midiParams.doAnimate ?
+					{ listener: this.animateCallback, target: this.tunes[0] }
+					: undefined;
+				return this.midiParams;
+			},
 			formatInlineControls() {
 				let params = "";
 				if (!this.midiParams.inlineControls.standard)
@@ -255,9 +262,9 @@
 					params += `\n        drumBars: ${this.midiParams.drumBars},`;
 				if (this.midiParams.drumIntro !== "0")
 					params += `\n        drumIntro: ${this.midiParams.drumIntro},`;
-				if (this.midiParams.listener)
+				if (this.midiParams.doListener)
 					params += `\n        listener: function(abcjsElement, currentEvent, context) {},`;
-				if (this.midiParams.animate)
+				if (this.midiParams.doAnimate)
 					params += `\n        animate: { listener: function(abcjsElement, currentEvent, context) {}, target: tunes[0], qpm: 120 },`;
 				if (this.midiParams.context)
 					params += `\n        context: ${this.midiParams.context},`;
@@ -284,15 +291,37 @@
     }`;
 				return params;
 			},
+			listenerCallback(abcjsElement, currentEvent, context) {
+				console.log(abcjsElement, currentEvent, context);
+			},
+			colorRange(range, color) {
+				if (range && range.elements) {
+					range.elements.forEach(function (set) {
+						set.forEach(function (item) {
+							item.attr({fill: color});
+						});
+					});
+				}
+			},
+			animateCallback(lastRange, currentRange, context) {
+				// This provides the actual visual note being played. It can be used to create the "bouncing ball" effect.
+				this.colorRange(lastRange, "#000000"); // Set the old note back to black.
+				this.colorRange(currentRange, "#3D9AFC"); // Set the currently sounding note to blue.
+			},
 			redraw() {
+				// import "font-awesome/css/font-awesome.min.css";
+				// import 'abcjs/abcjs-midi.css';
 				const midiParams = this.formatMidiParams();
 				const renderParams = this.formatRenderParams();
     			this.javascriptString = `ABCJS.renderMidi(
-    "paper",
+    "midi-id",
     abcString,
     {},
     ${midiParams},
     ${renderParams});`;
+
+    			this.tunes = this.renderAbc()("paper", this.inputAbc(), {}, {}, this.renderParams);
+				this.renderMidi()("midi-id", this.inputAbc(), {}, this.constructMidiParams(), this.renderParams);
 			},
 		}
 	}
