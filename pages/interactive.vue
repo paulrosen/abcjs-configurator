@@ -13,26 +13,26 @@
 				<v-card-text>
 					<h2>Editor Parameters</h2>
 					<v-layout wrap justify-start>
-					<v-checkbox label="Generate MIDI" v-model="editorParams.generate_midi" light></v-checkbox>
-					<v-checkbox label="Specify Inline MIDI Id" v-model="editorParams.specifyInlineMidiId" light></v-checkbox>
-					<v-checkbox label="Specify Download MIDI Id" v-model="editorParams.specifyDownloadMidiId" light></v-checkbox>
-					<v-checkbox label="Specify Warnings Id" v-model="editorParams.specifyWarningsId" light></v-checkbox>
-					<v-checkbox label="Generate Warnings" v-model="editorParams.generate_warnings" light></v-checkbox>
-					<v-checkbox label="Callback On Change" v-model="editorParams.callbackOnChange" light></v-checkbox>
-					<v-checkbox label="GUI Mode" v-model="editorParams.guiMode" light></v-checkbox>
-					<v-checkbox label="Use Dirty Flag" v-model="editorParams.indicate_changed" light></v-checkbox>
+					<v-checkbox label="Generate MIDI" v-model="editorParams.generate_midi"></v-checkbox>
+					<v-checkbox label="Specify Inline MIDI Id" v-model="editorParams.specifyInlineMidiId"></v-checkbox>
+					<v-checkbox label="Specify Download MIDI Id" v-model="editorParams.specifyDownloadMidiId"></v-checkbox>
+					<v-checkbox label="Specify Warnings Id" v-model="editorParams.specifyWarningsId"></v-checkbox>
+					<v-checkbox label="Generate Warnings" v-model="editorParams.generate_warnings"></v-checkbox>
+					<v-checkbox label="Callback On Change" v-model="editorParams.callbackOnChange"></v-checkbox>
+					<v-checkbox label="GUI Mode" v-model="editorParams.gui"></v-checkbox>
+					<v-checkbox label="Use Dirty Flag" v-model="editorParams.indicate_changed"></v-checkbox>
 					</v-layout>
 					<h2>Parser Parameters</h2>
 					<v-layout wrap justify-start>
-						<div>TODO</div>
+						<div>TODO - parser_options</div>
 					</v-layout>
 					<h2>MIDI Parameters</h2>
 					<v-layout wrap justify-start>
-						<div>TODO</div>
+						<div>TODO - midi_options</div>
 					</v-layout>
 					<h2>Render Parameters</h2>
 					<v-layout wrap justify-start>
-						<div>TODO</div>
+						<div>TODO - render_options</div>
 					</v-layout>
 					<h2>Commands</h2>
 					<div>
@@ -52,7 +52,18 @@
 			<v-card>
 				<v-card-title>Output</v-card-title>
 				<v-card-text>
+					<v-text-field
+							:value="inputAbc()"
+							@input="updateInput"
+							multi-line
+							textarea
+							label="abcString"
+							id="textarea-id"
+					></v-text-field>
+					<div id="warnings-id"></div>
 					<div id="paper"></div>
+					<div id="midi-download-id"></div>
+					<div id="midi-inline-id"></div>
 				</v-card-text>
 			</v-card>
 		</v-flex>
@@ -77,7 +88,7 @@
 					specifyWarningsId: false,
 					generate_warnings: false,
 					callbackOnChange: false,
-					guiMode: false,
+					gui: false,
 					indicate_changed: false,
 				},
 				isPaused: false,
@@ -97,10 +108,39 @@
 		},
 
 		methods: {
-			...mapGetters(['appTitle']),
+			...mapGetters(['appTitle', 'inputAbc']),
+			formatEditorParams() {
+				let params = "";
+				params += "\n        paper_id: \"paper\",";
+				if (this.editorParams.generate_warnings)
+					params += "\n        generate_warnings: true,";
+				if (this.editorParams.specifyWarningsId)
+					params += "\n        warnings_id: \"warnings-id\",";
+				if (this.editorParams.gui)
+					params += "\n        gui: true,";
+				if (this.editorParams.indicate_changed)
+					params += "\n        indicate_changed: true,";
+				if (this.editorParams.callbackOnChange)
+					params += "\n        onchange: function(editorInstance) {},";
+				if (this.editorParams.generate_midi) {
+					params += "\n        generate_midi: true,";
+					if (this.editorParams.specifyDownloadMidiId)
+						params += "\n        midi_download_id: \"midi-download-id\",";
+					if (this.editorParams.specifyInlineMidiId)
+						params += "\n        midi_id: \"midi-inline-id\",";
+				}
+				if (params === "")
+					params = "{ }";
+				else
+					params = `{${params}
+    }`;
+				return params;
+			},
 			redraw() {
-				this.javascriptString = `abc_editor = new ABCJS.Editor("abc", { canvas_id: "canvas0", midi_id:"midi", warnings_id:"warnings" });
-						abc_editor = new ABCJS.Editor(editArea, editorParams)`;
+				const editorParams = this.formatEditorParams();
+				this.javascriptString = `const abcEditor = new abcjs.Editor(
+    "textarea-id",
+    ${editorParams});`;
 			},
 			setNotDirty() {
 
