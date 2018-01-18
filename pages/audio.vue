@@ -28,6 +28,11 @@
 							v-model="midiParams.transpose"
 							label="Half-steps to transpose"
 					></v-text-field>
+					<v-text-field
+							class="numeric"
+							v-model="renderParams.startingTune"
+							label="Index of the Tune to Process"
+					></v-text-field>
 					</v-layout>
 					<h2>Download Params</h2>
 					<v-layout wrap justify-start>
@@ -147,9 +152,9 @@
 		data() {
 			return {
 				midiParams: {
-					qpm: 180,
-					program: 0,
-					transpose: 0,
+					qpm: "",
+					program: "",
+					transpose: "",
 					generateDownload: false,
 					generateInline: true,
 					downloadLabel: "download midi",
@@ -173,8 +178,11 @@
 						tooltipTempo: "Change the playback speed.",
 					},
 					drum: "",
-					drumBars: 1,
-					drumIntro: 0,
+					drumBars: "1",
+					drumIntro: "0",
+				},
+				renderParams: {
+					startingTune: "1",
 				},
 
 				javascriptString: "",
@@ -187,12 +195,104 @@
 				},
 				deep: true
 			},
+			'renderParams': {
+				handler: function () {
+					this.redraw();
+				},
+				deep: true
+			},
 		},
 
 		methods: {
 			...mapGetters(['appTitle']),
+			formatInlineControls() {
+				let params = "";
+				if (!this.midiParams.inlineControls.standard)
+					params += "\n            standard: false,";
+				if (this.midiParams.inlineControls.loopToggle)
+					params += "\n            loopToggle: true,";
+				if (this.midiParams.inlineControls.hide)
+					params += "\n            hide: true,";
+				if (this.midiParams.inlineControls.startPlaying)
+					params += "\n            startPlaying: true,";
+				if (this.midiParams.inlineControls.tempo)
+					params += "\n            tempo: true,";
+				if (this.midiParams.inlineControls.tooltipLoop !== "Click to toggle play once/repeat.")
+					params += `\n            tooltipLoop: "${this.midiParams.inlineControls.tooltipLoop}",`;
+				if (this.midiParams.inlineControls.tooltipReset !== "Click to go to beginning.")
+					params += `\n            tooltipReset: "${this.midiParams.inlineControls.tooltipReset}",`;
+				if (this.midiParams.inlineControls.tooltipPlay !== "Click to play/pause.")
+					params += `\n            tooltipPlay: "${this.midiParams.inlineControls.tooltipPlay}",`;
+				if (this.midiParams.inlineControls.tooltipProgress !== "Click to change the playback position.")
+					params += `\n            tooltipProgress: "${this.midiParams.inlineControls.tooltipProgress}",`;
+				if (this.midiParams.inlineControls.tooltipTempo !== "Change the playback speed.")
+					params += `\n            tooltipTempo: "${this.midiParams.inlineControls.tooltipTempo}",`;
+				return params;
+			},
+			formatMidiParams() {
+				let params = "";
+				if (this.midiParams.qpm !== "")
+					params += `\n        qpm: ${this.midiParams.qpm},`;
+				if (this.midiParams.program !== "")
+					params += `\n        program: ${this.midiParams.program},`;
+				if (this.midiParams.transpose !== "")
+					params += `\n        transpose: ${this.midiParams.transpose},`;
+				if (this.midiParams.generateDownload)
+					params += "\n        generateDownload: true,";
+				if (!this.midiParams.generateInline)
+					params += "\n        generateInline: false,";
+				if (this.midiParams.preTextDownload !== "")
+					params += `\n        preTextDownload: "${this.midiParams.preTextDownload}",`;
+				if (this.midiParams.postTextDownload !== "")
+					params += `\n        postTextDownload: "${this.midiParams.postTextDownload}",`;
+				if (this.midiParams.preTextInline !== "")
+					params += `\n        preTextInline: "${this.midiParams.preTextInline}",`;
+				if (this.midiParams.postTextInline !== "")
+					params += `\n        postTextInline: "${this.midiParams.postTextInline}",`;
+				if (this.midiParams.drum !== "")
+					params += `\n        drum: ${this.midiParams.drum},`;
+				if (this.midiParams.drumBars !== "1")
+					params += `\n        drumBars: ${this.midiParams.drumBars},`;
+				if (this.midiParams.drumIntro !== "0")
+					params += `\n        drumIntro: ${this.midiParams.drumIntro},`;
+				if (this.midiParams.listener)
+					params += `\n        listener: function(abcjsElement, currentEvent, context) {},`;
+				if (this.midiParams.animate)
+					params += `\n        animate: { listener: function(abcjsElement, currentEvent, context) {}, target: tunes[0], qpm: 120 },`;
+				if (this.midiParams.context)
+					params += `\n        context: ${this.midiParams.context},`;
+
+				const inlineControls = this.formatInlineControls();
+				if (inlineControls !== '')
+					params += `\n        inlineControls: {${inlineControls}\n        },`;
+
+				if (params === "")
+					params = "{ }";
+				else
+					params = `{${params}
+    }`;
+				return params;
+			},
+			formatRenderParams() {
+				let params = "";
+				if (this.renderParams.startingTune !== "1")
+					params += `\n        startingTune: ${this.renderParams.startingTune},`;
+				if (params === "")
+					params = "{ }";
+				else
+					params = `{${params}
+    }`;
+				return params;
+			},
 			redraw() {
-				this.javascriptString = "redraw";
+				const midiParams = this.formatMidiParams();
+				const renderParams = this.formatRenderParams();
+    			this.javascriptString = `ABCJS.renderMidi(
+    "paper",
+    abcString,
+    {},
+    ${midiParams},
+    ${renderParams});`;
 			},
 		}
 	}
