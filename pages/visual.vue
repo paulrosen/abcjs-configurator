@@ -127,7 +127,7 @@
 		},
 		data() {
 			return {
-				numberOfTunes: 1,
+				numberOfTunes: "1",
 				parserParams: {
 					print: false,
 					header_only: false,
@@ -181,17 +181,21 @@
 		},
 
 		methods: {
-			...mapGetters(['appTitle']),
-			formatOutput() {
-				let output = '"paper1"';
-				if (this.numberOfTunes > 1) {
-					output = '[';
-					for (let i = 0; i < this.numberOfTunes; i++) {
-						output += ' "paper' + (i+1) + '",'
-					}
-					output += " ]";
+			...mapGetters(['appTitle', 'renderAbc', 'inputAbc']),
+			constructOutput() {
+				if (this.numberOfTunes === "1")
+					return "paper1";
+				let papers = [];
+				for (let i = 0; i < this.numberOfTunes; i++) {
+					papers.push("paper" + (i+1));
 				}
-				return output;
+				return papers;
+			},
+			formatOutput() {
+				const papers = this.constructOutput();
+				if (typeof papers === "string")
+					return '"' + papers + '"';
+				return '[ "' + papers.join('", "') + '" ]';
 			},
 			formatParserParams() {
 				let params = "";
@@ -274,6 +278,10 @@
     ${parserParams},
     ${engraverParams},
     ${renderParams});`;
+
+				for (let i = 1; i < 24; i++)
+					document.getElementById("paper"+i).innerText = "";
+				this.renderAbc()(this.constructOutput(), this.inputAbc(), { add_classes: true });
 },
 		},
 	// 	| Parameters | Description |
