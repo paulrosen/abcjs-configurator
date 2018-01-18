@@ -121,4 +121,7 @@ document.getElementById("paper").querySelectorAll("${this.selector}").forEach((e
 		width: 190px;
 		display: inline-block;
 	}
+	.classes-page input-group--select {
+		width: 250px;
+	}
 </style>
