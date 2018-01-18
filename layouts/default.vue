@@ -450,5 +450,8 @@ ed2d- d4|"A7"eg2e gab2|"D7"a2aa a2Bc|"G"d2Bc d2gf|ed2d- d2AB|
 		border-radius: 4px;
 		overflow: auto;
 	}
+  .btn-toggle {
+    margin-right: 10px;
+  }
 
 </style>
