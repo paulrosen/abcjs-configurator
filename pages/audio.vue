@@ -1,109 +1,136 @@
 <template>
 	<v-layout class="audio-page">
 		<v-flex xs12 sm12 md12 lg12>
-			<v-card class="section-card">
+			<v-card>
 				<v-card-title>JavaScript</v-card-title>
 				<v-card-text>
-					<code>tuneObjectArray = ABCJS.renderMidi(output, tunebookString, parserParams, midiParams, renderParams)
-					</code>
+					<code>import abcjs from 'abcjs';
+{{javascriptString}}</code>
 				</v-card-text>
 			</v-card>
 			<v-card>
 				<v-card-title>Options</v-card-title>
 				<v-card-text>
-					<h2>MIDI Params</h2>
+					<h2>General Params</h2>
+					<v-layout wrap justify-start>
 					<v-text-field
 							class="numeric"
-							v-model="qpm"
+							v-model="midiParams.qpm"
 							label="Beats Per Minute"
 					></v-text-field>
 					<v-text-field
 							class="numeric"
-							v-model="program"
+							v-model="midiParams.program"
 							label="Instrument number (program)"
 					></v-text-field>
 					<v-text-field
 							class="numeric"
-							v-model="transpose"
+							v-model="midiParams.transpose"
 							label="Half-steps to transpose"
 					></v-text-field>
-					<v-checkbox label="Generate Downloadable MIDI" v-model="generateDownload" light></v-checkbox>
-					<v-checkbox label="Generate Inline MIDI" v-model="generateDownload" light></v-checkbox>
-					<v-text-field
-							class="numeric"
-							v-model="downloadLabel"
-							label="Label For Download Link"
-					></v-text-field>
-					<v-text-field
-							class="numeric"
-							v-model="preTextDownload"
-							label="Pre-Download Text"
-					></v-text-field>
-					<v-text-field
-							class="numeric"
-							v-model="postTextDownload"
-							label="Post-Download Text"
-					></v-text-field>
-					<v-text-field
-							class="numeric"
-							v-model="preTextInline"
-							label="Pre-Inline Text"
-					></v-text-field>
-					<v-text-field
-							class="numeric"
-							v-model="postTextInline"
-							label="Post-Inline Text"
-					></v-text-field>
+					</v-layout>
+					<h2>Download Params</h2>
+					<v-layout wrap justify-start>
+						<v-checkbox label="Downloadable MIDI?" v-model="midiParams.generateDownload" light></v-checkbox>
+						<v-text-field
+								class="numeric"
+								v-model="midiParams.downloadLabel"
+								label="Label For Download Link"
+						></v-text-field>
+						<v-text-field
+								class="numeric"
+								v-model="midiParams.preTextDownload"
+								label="Pre-Download Text"
+						></v-text-field>
+						<v-text-field
+								class="numeric"
+								v-model="midiParams.postTextDownload"
+								label="Post-Download Text"
+						></v-text-field>
+					</v-layout>
+					<h2>Inline Params</h2>
+					<v-layout wrap justify-start>
+						<v-checkbox label="Inline MIDI?" v-model="midiParams.generateInline" light></v-checkbox>
+						<v-text-field
+								class="numeric"
+								v-model="midiParams.preTextInline"
+								label="Pre-Inline Text"
+						></v-text-field>
+						<v-text-field
+								class="numeric"
+								v-model="midiParams.postTextInline"
+								label="Post-Inline Text"
+						></v-text-field>
+					</v-layout>
+					<h2>Callback Params</h2>
+					<v-layout wrap justify-start>
+						<v-checkbox label="Listener?" v-model="midiParams.listener" light></v-checkbox>
+						<v-checkbox label="Animate?" v-model="midiParams.animate" light></v-checkbox>
+						<v-text-field
+								class="numeric"
+								v-model="midiParams.context"
+								label="Callback Context"
+						></v-text-field>
+					</v-layout>
+					<h2>Look and Feel Params</h2>
+					<v-layout wrap justify-start>
+						<v-checkbox label="Show Loop Toggle?" v-model="midiParams.inlineControls.loopToggle" light></v-checkbox>
+						<v-checkbox label="Standard Controls?" v-model="midiParams.inlineControls.standard" light></v-checkbox>
+						<v-checkbox label="Tempo Control?" v-model="midiParams.inlineControls.tempo" light></v-checkbox>
+						<v-checkbox label="Hide?" v-model="midiParams.inlineControls.hide" light></v-checkbox>
+						<v-checkbox label="Auto Play?" v-model="midiParams.inlineControls.startPlaying" light></v-checkbox>
+						<v-text-field
+								class="numeric"
+								v-model="midiParams.inlineControls.tooltipLoop"
+								label="Loop Tooltip"
+						></v-text-field>
+						<v-text-field
+								class="numeric"
+								v-model="midiParams.inlineControls.tooltipReset"
+								label="Reset Tooltip"
+						></v-text-field>
+						<v-text-field
+								class="numeric"
+								v-model="midiParams.inlineControls.tooltipPlay"
+								label="Play Tooltip"
+						></v-text-field>
+						<v-text-field
+								class="numeric"
+								v-model="midiParams.inlineControls.tooltipProgress"
+								label="Progress Tooltip"
+						></v-text-field>
+						<v-text-field
+								class="numeric"
+								v-model="midiParams.inlineControls.tooltipTempo"
+								label="Tempo Tooltip"
+						></v-text-field>
+					</v-layout>
+					<h2>Metronome Params</h2>
+					<v-layout wrap justify-start>
+						<v-text-field
+								class="numeric"
+								v-model="midiParams.drum"
+								label="Drum String"
+						></v-text-field>
+						<v-text-field
+								class="numeric"
+								v-model="midiParams.drumBars"
+								label="Number of Bars"
+						></v-text-field>
+						<v-text-field
+								class="numeric"
+								v-model="midiParams.drumIntro"
+								label="Number Of Intro Bars"
+						></v-text-field>
+					</v-layout>
 				</v-card-text>
 			</v-card>
 			<v-card class="section-card">
 				<v-card-title>Output</v-card-title>
+				<div id="paper"></div>
+				<div id="midi-controls"></div>
+				<div id="midi-download"></div>
 			</v-card>
-			<pre>
-| `listener` | null | Function that is called for each midi event. The parameters are the current abcjs element and the current MIDI event. |
-| `animate` | null | Whether to do a "bouncing ball" effect on the visual music. `{ listener: callback, target: output of ABCJS.renderAbc, qpm: tempo }` This calls the listener whenever the current note has changed. It is called with both the last selected note and the newly selected note. The callback parameters are arrays of svg elements. |
-| `context` | null | A string that is passed back to both the listener and animate callbacks. |
-| `inlineControls` | { selectionToggle: false, loopToggle: false, standard: true, tempo: false, startPlaying: false } | These are the options for which buttons and functionality appear in the inline controls. This is a hash, and is defined below. |
-| `drum` | "" | A string formatted like the `%%MIDI drum` specification. Using this parameter also implies `%%MIDI drumon` |
-| `drumBars` | 1 |  How many bars to spread the drum pattern over. |
-| `drumIntro` | 0 | How many bars of drum should precede the music. |
-
-**Note on the drum parameter:**
-See the ABC documentation for the correct way to format the string that is passed as the drum parameter. Here is a table that provides a fairly reasonable default for drum, drumIntro, and drumBars when used as a metronome:
-```
-const drumBeats = {
-// the array is [0]=drum [1]=drumIntro
-"2/4": ["dd 92 90 60 30", 2],
-"3/4": ["ddd 92 90 90 60 30 30", 1],
-"4/4": ["dddd 92 90 90 90 60 30 30 30", 1],
-"5/4": ["ddddd 92 90 90 92 90 60 30 30 60 30", 1],
-"Cut Time": ["dd 92 90 60 30", 2],
-"6/8": ["dd 92 90 60 30", 2],
-"9/8": ["ddd 92 90 90 60 30 30", 1],
-"12/8": ["dddd 92 90 90 90 60 30 30 30", 1]
-};
-```
-A more complicated example that has the drum pattern fall over two measures of 2/4 time (This is a typical Bulgar pattern):
-```
-{ drum: "d2dd2ddz", drumBars: 2, drumIntro: 2 }
-```
-
-| `inlineControls` | Default | Description |
-| ------------- | ----------- | ----------- |
-| `selectionToggle` | false | Show a latched push button to play only the current selection. **Not yet implemented** |
-| `loopToggle` | false | Show a a latched push button to start playing again when the end is reached. |
-| `standard` | true | Show the start, pause, reset, and progress controls. |
-| `hide` | false | Whether to show the control at all. |
-| `startPlaying` | false | Whether to start the MIDI as soon as it is available. (Not available in the Editor. Only available when calling `ABCJS.renderMidi` ) |
-| `tempo` | false | Show the tempo change controls. This is a spinner that starts at 100%. There is an absolute tempo printed next to it.  **Not yet implemented** |
-| `tooltipSelection` | "Click to toggle play selection/play all." | The text of the tooltip.  **Not yet implemented** |
-| `tooltipLoop` | "Click to toggle play once/repeat." | The text of the tooltip. |
-| `tooltipReset` | "Click to go to beginning." | The text of the tooltip. |
-| `tooltipPlay` | "Click to play/pause." | The text of the tooltip. |
-| `tooltipProgress` | "Click to change the playback position." | The text of the tooltip. |
-| `tooltipTempo` | "Change the playback speed." | The text of the tooltip.  **Not yet implemented** |
-
-			</pre>
 		</v-flex>
 	</v-layout>
 </template>
@@ -119,21 +146,54 @@ A more complicated example that has the drum pattern fall over two measures of 2
 		},
 		data() {
 			return {
-				qpm: 180,
-				program: 0,
-				transpose: 0,
-				generateDownload: false,
-				generateInline: true,
-				downloadLabel: "download midi",
-				preTextDownload: "",
-				postTextDownload: "",
-				preTextInline: "",
-				postTextInline: "",
+				midiParams: {
+					qpm: 180,
+					program: 0,
+					transpose: 0,
+					generateDownload: false,
+					generateInline: true,
+					downloadLabel: "download midi",
+					preTextDownload: "",
+					postTextDownload: "",
+					preTextInline: "",
+					postTextInline: "",
+					listener: false,
+					animate: false,
+					context: "",
+					inlineControls: {
+						loopToggle: false,
+						standard: true,
+						hide: false,
+						startPlaying: false,
+						tempo: false,
+						tooltipLoop: "Click to toggle play once/repeat.",
+						tooltipReset: "Click to go to beginning.",
+						tooltipPlay: "Click to play/pause.",
+						tooltipProgress: "Click to change the playback position.",
+						tooltipTempo: "Change the playback speed.",
+					},
+					drum: "",
+					drumBars: 1,
+					drumIntro: 0,
+				},
+
+				javascriptString: "",
 			};
+		},
+		watch: {
+			'midiParams': {
+				handler: function () {
+					this.redraw();
+				},
+				deep: true
+			},
 		},
 
 		methods: {
 			...mapGetters(['appTitle']),
+			redraw() {
+				this.javascriptString = "redraw";
+			},
 		}
 	}
 // 	| `qpm` | 180 | The tempo, if not specified in abcString. |
@@ -190,3 +250,10 @@ A more complicated example that has the drum pattern fall over two measures of 2
 // 	| `tooltipTempo` | "Change the playback speed." | The text of the tooltip.  **Not yet implemented** |
 
 </script>
+
+<style>
+	.audio-page .input-group {
+		min-width: 200px;
+		margin-right: 10px;
+	}
+</style>
