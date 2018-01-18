@@ -444,5 +444,11 @@ ed2d- d4|"A7"eg2e gab2|"D7"a2aa a2Bc|"G"d2Bc d2gf|ed2d- d2AB|
   code::before {
     content:""
   }
+	.string {
+		font-family: "Lucida Console", Monaco, monospace;
+		padding: 10px;
+		border-radius: 4px;
+		overflow: auto;
+	}
 
 </style>

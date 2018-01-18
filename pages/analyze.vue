@@ -1,29 +1,29 @@
 <template>
 	<v-layout class="analyze-page">
-		<v-flex xs12 sm12 md10 lg8>
+		<v-flex xs12 sm12 md12 lg12>
 			<h1>Analysis Functions</h1>
 			<p>These functions are provided as a convenience, in case the app should do something different depending on what tunes have been input.
 			</p>
 			<p>Result of
-				<v-chip label>abcjs.numberOfTunes(abcString)</v-chip>
+				<code>abcjs.numberOfTunes(abcString)</code>
 				is
-				<v-chip label>{{numberOfTunes()}}</v-chip>
+				<pre class="amber lighten-4 string chip">{{numberOfTunes()}}</pre>
 			</p>
 			<template v-for="title,i in titles()">
 				<v-card :key="i" raised>
-					<v-card-title>abcjs.TuneBook(abcString).getTuneByTitle("{{title}}")</v-card-title>
+					<v-card-title><code>abcjs.TuneBook(abcString).getTuneByTitle("{{title}}")</code></v-card-title>
 					<v-card-text>
-						<p>Start Character: {{tuneByTitle()(title).startPos}}</p>
-						<code label>{{tuneByTitle()(title).abc}}</code>
+						<p>Start Character: <pre class="amber lighten-4 string chip">{{tuneByTitle()(title).startPos}}</pre></p>
+						<pre class="amber lighten-4 string">{{tuneByTitle()(title).abc}}</pre>
 					</v-card-text>
 				</v-card>
 			</template>
 			<template v-for="id,i in ids()">
 				<v-card :key="i" raised>
-					<v-card-title>abcjs.TuneBook(abcString).getTuneById("{{id}}")</v-card-title>
+					<v-card-title><code>abcjs.TuneBook(abcString).getTuneById("{{id}}")</code></v-card-title>
 					<v-card-text>
-						<p>Start Character: {{tuneById()(id).startPos}}</p>
-						<code label>{{tuneById()(id).abc}}</code>
+						<p>Start Character: <pre class="amber lighten-4 string chip">{{tuneById()(id).startPos}}</pre></p>
+						<pre class="amber lighten-4 string">{{tuneById()(id).abc}}</pre>
 					</v-card-text>
 				</v-card>
 			</template>
@@ -49,4 +49,10 @@
 </script>
 
 <style>
+	.analyze-page .card__title code {
+		width: 100%;
+	}
+	.analyze-page .card__text pre.chip {
+		display: inline;
+	}
 </style>
