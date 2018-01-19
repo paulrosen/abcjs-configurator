@@ -12,14 +12,10 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint"
   },
-  "dependencies": {
-    "@nuxtjs/axios": "^4.4.0",
-    "font-awesome": "^4.7.0",
-    "nuxt": "^1.0.0",
-    "vuetify": "^0.17.3"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "abcjs": "^3.3.0",
+    "@nuxtjs/axios": "^4.4.0",
+    "abcjs": "^3.3.1",
     "babel-eslint": "^8.2.1",
     "cross-env": "^5.0.1",
     "eslint": "^4.3.0",
@@ -30,7 +26,10 @@
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "font-awesome": "^4.7.0",
+    "nuxt": "^1.0.0",
     "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1"
+    "stylus-loader": "^3.0.1",
+    "vuetify": "^0.17.3"
   }
 }

@@ -26,12 +26,15 @@
 					<v-card>
 						<v-card-title>Package Manager (small, no MIDI)</v-card-title>
 						<v-card-text>
+							<code class="code-full">npm install --save-dev abcjs</code>
 							<code class="code-full">import abcjs from 'abcjs';</code>
 						</v-card-text>
 					</v-card>
 					<v-card>
 						<v-card-title>Package Manager (with MIDI)</v-card-title>
 						<v-card-text>
+							<code class="code-full">npm install --save-dev abcjs
+npm install --save-dev font-awesome</code>
 							<code class="code-full">import 'font-awesome/css/font-awesome.min.css';
 import 'abcjs/abcjs-midi.css';
 import abcjs from 'abcjs/midi';</code>
