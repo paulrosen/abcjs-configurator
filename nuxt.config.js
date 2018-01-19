@@ -14,7 +14,14 @@ module.exports = {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'theme-color', content: '#ffffff' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      { hid: 'description', name: 'description', content: pkg.description },
+	    { property:"og:url", content: "https://configurator.abcjs.net"},
+	    { property:"og:title", content: "abcjs: Javascript Music Library"},
+	    { property:"og:description", content: "abcjs allows web designers and programmers to add sheet music and audio to their websites using the ABC music notation standard and a tiny amount of JavaScript. The music can be animated and can be dynamically created."},
+	    { property:"og:image", content: "https://configurator.abcjs.net/abcjs-fb.png"},
+	    { property:"og:image:width", content: "000"},
+	    { property:"og:image:height", content: "000"},
+
     ],
     link: [
       { rel: 'apple-touch-icon', sizes: "180x180", href: '/apple-touch-icon.png' },
