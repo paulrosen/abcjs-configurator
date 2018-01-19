@@ -24,6 +24,9 @@ const createStore = () => {
 			signature(state) {
 				return state.signature;
 			},
+			abcjsVersion(state) {
+				return state.signature.split('v')[1];
+			},
 			inputAbc(state) {
 				return state.inputAbc;
 			},

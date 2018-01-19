@@ -318,10 +318,10 @@
 				// import 'abcjs/abcjs-midi.css';
 				const midiParams = this.formatMidiParams();
 				const renderParams = this.formatRenderParams();
-    			this.javascriptString = `ABCJS.renderMidi(
+    			this.javascriptString = `abcjs.renderMidi(
     "midi-id",
     abcString,
-    {},
+    { },
     ${midiParams},
     ${renderParams});`;
 

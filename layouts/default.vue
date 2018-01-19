@@ -495,5 +495,8 @@ V:1 nm="abcjs"
 		font-weight: bold;
 		font-family: "Lucida Console", Monaco, monospace;
 	}
+	p {
+		max-width: 700px;
+	}
 
 </style>
