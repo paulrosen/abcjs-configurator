@@ -436,8 +436,9 @@ V:1 nm="abcjs"
 `;
 	      this.renderAbc()("abcjs-logo", logoMusic, {}, {responsive: "resize"});
 	      const titleEl = document.querySelector('#abcjs-logo text');
+	      titleEl.setAttribute("x", 40);
 	      titleEl.setAttribute("y", 50);
-	      titleEl.setAttribute("fill", "#42A5F5");
+	      document.querySelector('#abcjs-logo svg').setAttribute("viewBox", "35 0 420 100");
       }
   }
 </script>
@@ -468,11 +469,17 @@ V:1 nm="abcjs"
 		padding: 10px;
 		border-radius: 3px;
 		overflow: auto;
-      box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, .2), 0px 1px 1px 0px rgba(0, 0, 0, .14), 0px 1px 3px 0px rgba(0, 0, 0, .12);
+      box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
       font-size: 16px;
 	}
   .btn-toggle {
     margin-right: 10px;
+  }
+	#abcjs-logo .staff, #abcjs-logo .staff-extra, #abcjs-logo .symbol, #abcjs-logo .bar {
+		fill: #b3b38b !important;
+	}
+  #abcjs-logo .voice-name, #abcjs-logo .note, #abcjs-logo .beam-elem {
+	  fill: #42A5F5 !important;
   }
 
 </style>
