@@ -47,19 +47,20 @@
 							<v-btn outline color="primary" @click="pauseMidi">Pause MIDI</v-btn>
 						</v-btn-toggle>
 					</div>
+					<div>
+						<v-text-field
+								v-model="abcInput"
+								multi-line
+								textarea
+								label="abcString"
+								id="textarea-id"
+						></v-text-field>
+					</div>
 				</v-card-text>
 			</v-card>
 			<v-card>
 				<v-card-title>Output</v-card-title>
 				<v-card-text>
-					<v-text-field
-							:value="inputAbc()"
-							@input="updateInput"
-							multi-line
-							textarea
-							label="abcString"
-							id="textarea-id"
-					></v-text-field>
 					<div id="warnings-id"></div>
 					<div id="paper"></div>
 					<div id="midi-download-id"></div>
@@ -72,6 +73,7 @@
 
 <script>
 	import {mapGetters, mapMutations} from 'vuex';
+	const abcjs = process.browser ? require('abcjs/midi.js') : null; // This requires document and window, so can't be used on the server side.
 
 	export default {
 		head() {
@@ -94,6 +96,20 @@
 				isPaused: false,
 				isReadOnly: false,
 				isMidiPaused: false,
+				abcInput: `X: 31
+T:Green Light
+M:4/4
+L:1/8
+Q:1/2=112
+C:Paul Rosen
+S:Copyright 2007, Paul Rosen
+R:Reel
+K:Em
+"Em"E2EG (ED)B,E|e2"D"d4Bd|"Am (C)"(AB)AG (FD)FG|(AB)AG "D"(FE)DF|
+"Em"E2EG (ED)B,E|e2 d4(ef|"C"gf)ed "Bm7 (D)"(BA)Bd|1"Em"e4e3G:|2"Em"e4e2(ef)||
+|:"Em"(gf)ed (Bd)(ef|"D"af)ef (af)(ef|"Em"gf)ed (Bd)(ef|"Bm"g).d.f.d. e.d.ef|
+"Em"(gf)ed (Bd)(ef|"D"af)ef (af)ef|"Am7 (C7)"b2a2 (fe)d2|1"B"(ef)ed (Bd)(ef):|2"B"(ef)ed (BA)FF|
+`,
 
 				javascriptString: "",
 			}
@@ -113,8 +129,7 @@
 		},
 
 		methods: {
-			...mapGetters(['appTitle', 'inputAbc']),
-			...mapMutations(['updateInput']),
+			...mapGetters(['appTitle']),
 			formatEditorParams() {
 				let params = "";
 				params += "\n        paper_id: \"paper\",";
@@ -142,11 +157,28 @@
     }`;
 				return params;
 			},
+			resetDiv(id) {
+				const paper = document.getElementById(id);
+				paper.innerText = "";
+				paper.setAttribute("style", "");
+			},
 			redraw() {
 				const editorParams = this.formatEditorParams();
 				this.javascriptString = `const abcEditor = new abcjs.Editor(
     "textarea-id",
     ${editorParams});`;
+
+				this.editorParams.paper_id = "paper";
+				this.editorParams.warnings_id = this.editorParams.specifyWarningsId ? "warnings-id" : undefined;
+				this.editorParams.midi_download_id = this.editorParams.specifyDownloadMidiId ? "midi-download-id" : undefined;
+				this.editorParams.midi_id = this.editorParams.specifyInlineMidiId ? "midi-inline-id" : undefined;
+
+				this.resetDiv("warnings-id");
+				this.resetDiv("midi-download-id");
+				this.resetDiv("midi-inline-id");
+
+				new abcjs.Editor("textarea-id",
+					this.editorParams);
 			},
 			setNotDirty() {
 
