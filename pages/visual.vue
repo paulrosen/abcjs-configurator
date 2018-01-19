@@ -8,8 +8,12 @@
 				</v-card-text>
 			</v-card>
 			<v-card>
-				<v-card-title>JavaScript</v-card-title>
-				<v-card-text>
+				<v-card-title>
+					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
+						<v-icon>{{javascriptOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
+					</v-btn>
+					JavaScript</v-card-title>
+				<v-card-text v-if="javascriptOpen">
 					<code class="code-full">import abcjs from 'abcjs';
 {{javascriptString}}</code>
 					<p></p>
@@ -23,8 +27,12 @@
 				</v-card-text>
 			</v-card>
 			<v-card>
-				<v-card-title>Options</v-card-title>
-				<v-card-text>
+				<v-card-title>
+					<v-btn flat icon @click="optionsOpen = !optionsOpen">
+						<v-icon>{{optionsOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
+					</v-btn>
+					Options</v-card-title>
+				<v-card-text v-if="optionsOpen">
 					<p>All of these options have a default value, so they are all optional.</p>
 					<h2>Elements</h2>
 					<v-text-field
@@ -94,8 +102,12 @@
 				</v-card-text>
 			</v-card>
 			<v-card>
-				<v-card-title>Output</v-card-title>
-				<v-card-text>
+				<v-card-title>
+					<v-btn flat icon @click="outputOpen = !outputOpen">
+						<v-icon>{{outputOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
+					</v-btn>
+					Output</v-card-title>
+				<v-card-text v-if="outputOpen">
 					<div id="paper1"></div>
 					<div id="paper2"></div>
 					<div id="paper3"></div>
@@ -164,6 +176,9 @@
 					oneSvgPerLine: false,
 				},
 				javascriptString: "",
+				javascriptOpen: true,
+				optionsOpen: true,
+				outputOpen: true,
 			};
 		},
 		watch: {
