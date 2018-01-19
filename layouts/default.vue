@@ -8,6 +8,9 @@
       app
     >
       <v-list>
+        <v-list-tile>
+          <div id="abcjs-logo"></div>
+        </v-list-tile>
         <v-list-tile
           router
           :to="item.to"
@@ -65,7 +68,7 @@
       }
     },
 	  methods: {
-		  ...mapGetters(['appTitle']),
+		  ...mapGetters(['appTitle', 'renderAbc']),
 		  ...mapMutations(['setRoute']),
 		  ...mapActions(['initializeAbcjs']),
 	  },
@@ -423,6 +426,18 @@ d2B2GD-D2|"A7"A,B,^CD EFG2|"D7"AGAB AGFE|"G"D2G2 DEGB|d2B2GD-D2|
 ed2d- d4|"A7"eg2e gab2|"D7"a2aa a2Bc|"G"d2Bc d2gf|ed2d- d2AB|
 "C"cBce- "A7"ed^c2|"D7"d8|"C"cBcd eg-gf|"G"ed^cd- d4|"D7"=cA-AF DEF2|"G"G8||
 `);
+	      const logoMusic = `X:1
+%%staffwidth 300
+%%voicefont  Arial-Bold 26
+M:4/4
+L:1/8
+K:Bb
+V:1 nm="abcjs"
+|:GBcd-d4|zcdc dc3|
+`;
+	      this.renderAbc()("abcjs-logo", logoMusic, {}, {responsive: "resize"});
+	      const titleEl = document.querySelector('#abcjs-logo text');
+	      titleEl.setAttribute("y", 50);
       }
   }
 </script>
