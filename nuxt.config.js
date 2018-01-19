@@ -19,8 +19,8 @@ module.exports = {
 	    { property:"og:title", content: "abcjs: Javascript Music Library"},
 	    { property:"og:description", content: "abcjs allows web designers and programmers to add sheet music and audio to their websites using the ABC music notation standard and a tiny amount of JavaScript. The music can be animated and can be dynamically created."},
 	    { property:"og:image", content: "https://configurator.abcjs.net/abcjs-fb.png"},
-	    { property:"og:image:width", content: "000"},
-	    { property:"og:image:height", content: "000"},
+	    { property:"og:image:width", content: "2850"},
+	    { property:"og:image:height", content: "1470"},
 
     ],
     link: [
