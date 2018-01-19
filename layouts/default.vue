@@ -481,5 +481,8 @@ V:1 nm="abcjs"
   #abcjs-logo .voice-name, #abcjs-logo .note, #abcjs-logo .beam-elem {
 	  fill: #42A5F5 !important;
   }
+	.list__tile--active {
+		background-color: #DFDBC3;
+	}
 
 </style>
