@@ -436,9 +436,13 @@ V:1 nm="abcjs"
 `;
 	      this.renderAbc()("abcjs-logo", logoMusic, {}, {responsive: "resize"});
 	      const titleEl = document.querySelector('#abcjs-logo text');
-	      titleEl.setAttribute("x", 40);
-	      titleEl.setAttribute("y", 50);
-	      document.querySelector('#abcjs-logo svg').setAttribute("viewBox", "35 0 420 100");
+	      titleEl.setAttribute("x", "58");
+	      titleEl.setAttribute("y", "50");
+	      titleEl.setAttribute("font-family", '"Lucida Console", Monaco, monospace');
+	      titleEl.parentElement.appendChild(titleEl);
+	      document.querySelector('#abcjs-logo svg').setAttribute("viewBox", "57 0 420 100");
+	      const staffExtra = document.querySelectorAll('#abcjs-logo svg .staff-extra');
+	      staffExtra[0].classList.add("clef");
       }
   }
 </script>
@@ -478,11 +482,18 @@ V:1 nm="abcjs"
 	#abcjs-logo .staff, #abcjs-logo .staff-extra, #abcjs-logo .symbol, #abcjs-logo .bar {
 		fill: #b3b38b !important;
 	}
+  #abcjs-logo .staff-extra.clef {
+	  fill-opacity: 0.3;
+  }
   #abcjs-logo .voice-name, #abcjs-logo .note, #abcjs-logo .beam-elem {
 	  fill: #42A5F5 !important;
   }
 	.list__tile--active {
 		background-color: #DFDBC3;
+	}
+	.abcjs-text {
+		font-weight: bold;
+		font-family: "Lucida Console", Monaco, monospace;
 	}
 
 </style>
