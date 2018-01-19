@@ -10,12 +10,16 @@
 			<v-card>
 				<v-card-title>JavaScript</v-card-title>
 				<v-card-text>
-					<p>(The <code>abcString</code> is whatever is in the textarea on the <nuxt-link to="/">main page</nuxt-link>.)</p>
 					<code class="code-full">import abcjs from 'abcjs';
 {{javascriptString}}</code>
 					<p></p>
-					<p>(The <code>tuneObjectArray</code> contains each of the tunes that was processed. This is not normally needed,
-						unless you need to pass it to the animation function or the MIDI "bouncing ball".</p>
+					<div class="explanation">
+						<p>The <span class="subtle-code">abcString</span> is whatever is in the textarea on the <nuxt-link to="/">main page</nuxt-link>.</p>
+					</div>
+					<div class="explanation">
+						<p>The <span class="subtle-code">tuneObjectArray</span> contains the processed instance for each of the tunes. This is not normally needed,
+							unless you need to pass it to the animation function or the MIDI "bouncing ball".</p>
+					</div>
 				</v-card-text>
 			</v-card>
 			<v-card>

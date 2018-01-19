@@ -454,6 +454,12 @@ V:1 nm="abcjs"
   .card__title {
     font-weight: bold;
   }
+  .subtle-code {
+	  font-family: "Lucida Console", Monaco, monospace;
+	  background-color: #DFDBC3;
+	  color: #333333;
+	  padding: 2px;
+  }
   code {
     font-family: "Lucida Console", Monaco, monospace;
     background-color: #DFDBC3;
@@ -497,6 +503,18 @@ V:1 nm="abcjs"
 	}
 	p {
 		max-width: 700px;
+	}
+	.explanation {
+		margin: 0 30px;
+		display: flex;
+		flex-direction: row;
+	}
+	.explanation::before {
+		content: "*";
+		color: #ff0000;
+		float: left;
+		margin-right: 10px;
+		font-size: 25px;
 	}
 
 </style>
