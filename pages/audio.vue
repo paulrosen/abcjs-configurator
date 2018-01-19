@@ -4,7 +4,7 @@
 			<v-card>
 				<v-card-title>JavaScript</v-card-title>
 				<v-card-text>
-					<code>import abcjs from 'abcjs';
+					<code class="code-full">import abcjs from 'abcjs/midi';
 {{javascriptString}}</code>
 				</v-card-text>
 			</v-card>
@@ -201,6 +201,11 @@
 				},
 				deep: true
 			},
+		},
+		mounted() {
+			setTimeout(() => {
+				this.redraw();
+			}, 1);
 		},
 
 		methods: {

@@ -2,10 +2,16 @@
 	<v-layout class="visual-page">
 		<v-flex xs12 sm12 md12 lg12>
 			<v-card>
+				<v-card-title>Standard Notation</v-card-title>
+				<v-card-text>
+					<p>The primary mission of <span class="blue--text text--lighten-1">abcjs</span> is to display standard sheet music. This page demonstrates all of the options available for doing that. This uses only the functionality in the basic library (the one without MIDI).</p>
+				</v-card-text>
+			</v-card>
+			<v-card>
 				<v-card-title>JavaScript</v-card-title>
 				<v-card-text>
 					<p>(The <code>abcString</code> is whatever is in the textarea on the <nuxt-link to="/">main page</nuxt-link>.)</p>
-					<code>import abcjs from 'abcjs';
+					<code class="code-full">import abcjs from 'abcjs';
 {{javascriptString}}</code>
 					<p></p>
 					<p>(The <code>tuneObjectArray</code> contains each of the tunes that was processed. This is not normally needed,
@@ -148,7 +154,7 @@
 					responsiveResize: false,
 				},
 				renderParams: {
-					startingTune: "1",
+					startingTune: "0",
 					viewportHorizontal: false,
 					scrollHorizontal: false,
 					oneSvgPerLine: false,
@@ -178,6 +184,11 @@
 				},
 				deep: true
 			},
+		},
+		mounted() {
+			setTimeout(() => {
+				this.redraw();
+			}, 1);
 		},
 
 		methods: {
@@ -263,7 +274,7 @@
 
 			formatRenderParams() {
 				let params = "";
-				if (this.renderParams.startingTune !== "1")
+				if (this.renderParams.startingTune !== "0")
 					params += `\n        startingTune: ${this.renderParams.startingTune},`;
 				if (this.renderParams.viewportHorizontal)
 					params += "\n        viewportHorizontal: true,";
@@ -296,9 +307,21 @@
     ${parserParams},
     ${engraverParams},
     ${renderParams});`;
+				if (this.parserParams.hint_measures) {
+					this.javascriptString += `
 
-				for (let i = 1; i < 24; i++)
-					document.getElementById("paper"+i).innerText = "";
+<style>
+    .abcjs-hint {
+        fill: #aaaaaa;
+    }
+</style>`;
+				}
+
+				for (let i = 1; i < 24; i++) {
+					const paper = document.getElementById("paper" + i);
+					paper.innerText = "";
+					paper.setAttribute("style", "");
+				}
 				this.renderAbc()(this.constructOutput(), this.inputAbc(), this.parserParams, this.constructEngraverParams(), this.renderParams);
 },
 		},
@@ -338,7 +361,11 @@
 
 <style>
 	.visual-page .input-group {
-		min-width: 200px;
+		min-width: 240px;
+		max-width: 240px;
 		margin-right: 10px;
+	}
+	.visual-page .abcjs-hint {
+		fill: #aaaaaa;
 	}
 </style>

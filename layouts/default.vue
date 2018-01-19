@@ -38,7 +38,7 @@
       </v-container>
     </v-content>
     <v-footer :fixed="fixed" app>
-      <span>&copy; 2018 <a href="https://paulrosen.net">Paul Rosen</a>, used with <a href="https://abcjs.net">abcjs</a>.</span>
+      <span>&copy; 2018 <a href="https://paulrosen.net">Paul Rosen</a>, companion app to <a href="https://abcjs.net">abcjs</a>.</span>
     </v-footer>
   </v-app>
 </template>
@@ -76,8 +76,7 @@
 	      this.setRoute(this.$route.name);
 	      document.title = this.appTitle();
 
-	      this.initializeAbcjs(`
-X: 22
+	      this.initializeAbcjs(`X: 22
 T:Cats and Birds
 C:Paul Rosen
 S:Copyright 2005, Paul Rosen
@@ -438,6 +437,7 @@ V:1 nm="abcjs"
 	      this.renderAbc()("abcjs-logo", logoMusic, {}, {responsive: "resize"});
 	      const titleEl = document.querySelector('#abcjs-logo text');
 	      titleEl.setAttribute("y", 50);
+	      titleEl.setAttribute("fill", "#42A5F5");
       }
   }
 </script>
@@ -456,14 +456,20 @@ V:1 nm="abcjs"
     padding: 10px;
     font-size: 16px;
   }
-  code::before {
+  code::before, code::after {
     content:""
+  }
+.code-full {
+	  width: 100%;
+	  overflow: auto;
   }
 	.string {
 		font-family: "Lucida Console", Monaco, monospace;
 		padding: 10px;
-		border-radius: 4px;
+		border-radius: 3px;
 		overflow: auto;
+      box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, .2), 0px 1px 1px 0px rgba(0, 0, 0, .14), 0px 1px 3px 0px rgba(0, 0, 0, .12);
+      font-size: 16px;
 	}
   .btn-toggle {
     margin-right: 10px;

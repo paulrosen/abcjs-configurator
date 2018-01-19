@@ -2,6 +2,12 @@
 	<v-layout class="animation-page">
 		<v-flex xs12 sm12 md12 lg12>
 			<v-card>
+				<v-card-title>Animation</v-card-title>
+				<v-card-text>
+					There are two types of animation available. The type that is demonstrated here does not require the MIDI option, so it can be used with the smaller, basic library. To see the type of animation that can be synced up with the sound, go to the <nuxt-link to="/audio">Audio page</nuxt-link>. There are three effects that can be achieved here: a cursor, the measures disappearing after they've been played, and the measures disappearing just before they're to be played. The effects can be combined.
+				</v-card-text>
+			</v-card>
+			<v-card>
 				<v-card-title>JavaScript</v-card-title>
 				<v-card-text>
 					<code>import abcjs from 'abcjs';
@@ -25,7 +31,7 @@ abcjs.pauseAnimation(true | false);
 			<v-card>
 				<v-card-title>Options</v-card-title>
 				<v-card-text>
-					<p>You must check at least one of these checkboxes to see the animation. If you leave the Beats Per Minute blank, then the the tempo found in the music is used. If you put a number in, then that is used for the Beats Per Minute.</p>
+					<p>You must check at least one of these checkboxes to see the animation. If you leave the Beats Per Minute blank, then the the tempo found in the ABC input string is used. If you put a number in, then that overrides the tempo in the ABC string.</p>
 					<v-checkbox label="Hide Finished Measures" v-model="hideFinishedMeasures" light></v-checkbox>
 					<v-checkbox label="Hide Current Measure" v-model="hideCurrentMeasure" light></v-checkbox>
 					<v-checkbox label="Show Cursor" v-model="showCursor" light></v-checkbox>
