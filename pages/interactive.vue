@@ -71,7 +71,7 @@
 </template>
 
 <script>
-	import {mapGetters} from 'vuex';
+	import {mapGetters, mapMutations} from 'vuex';
 
 	export default {
 		head() {
@@ -109,6 +109,7 @@
 
 		methods: {
 			...mapGetters(['appTitle', 'inputAbc']),
+			...mapMutations(['updateInput']),
 			formatEditorParams() {
 				let params = "";
 				params += "\n        paper_id: \"paper\",";
