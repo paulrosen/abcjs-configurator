@@ -13,16 +13,16 @@
 						<v-icon>{{javascriptOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
 					</v-btn>
 					JavaScript</v-card-title>
-				<v-card-text v-if="javascriptOpen">
+				<v-card-text :class="javascriptOpen ? 'opened' : 'closed'">
 					<code class="code-full">import abcjs from 'abcjs';
-{{javascriptString}}</code>
+<div v-html="javascriptString"></div></code>
 					<p></p>
-					<div class="explanation">
-						<p>The <span class="subtle-code">abcString</span> is whatever is in the textarea on the <nuxt-link to="/">main page</nuxt-link>.</p>
-					</div>
-					<div class="explanation">
+					<div class="footnote">
 						<p>The <span class="subtle-code">tuneObjectArray</span> contains the processed instance for each of the tunes. This is not normally needed,
-							unless you need to pass it to the animation function or the MIDI "bouncing ball".</p>
+							unless you need to pass it to the animation function or the MIDI "bouncing ball". Note that the structure of the individual objects returned are <em class="red--text"><b>not</b></em> guaranteed to be the same from one version of <span class="blue--text text--lighten-1 abcjs-text">abcjs</span> to the next.</p>
+					</div>
+					<div class="footnote">
+						<p>The <span class="subtle-code">abcString</span> is whatever is in the textarea on the <nuxt-link to="/">main page</nuxt-link>.</p>
 					</div>
 				</v-card-text>
 			</v-card>
@@ -32,7 +32,7 @@
 						<v-icon>{{optionsOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
 					</v-btn>
 					Options</v-card-title>
-				<v-card-text v-if="optionsOpen">
+				<v-card-text :class="optionsOpen ? 'opened' : 'closed'">
 					<p>All of these options have a default value, so they are all optional.</p>
 					<h2>Elements</h2>
 					<v-text-field
@@ -107,7 +107,7 @@
 						<v-icon>{{outputOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
 					</v-btn>
 					Output</v-card-title>
-				<v-card-text v-if="outputOpen">
+				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
 					<div id="paper1"></div>
 					<div id="paper2"></div>
 					<div id="paper3"></div>
@@ -320,9 +320,9 @@
 				const engraverParams = this.formatEngraverParams();
 				const renderParams = this.formatRenderParams();
 
-				this.javascriptString = `const tuneObjectArray = ABCJS.renderAbc(
+				this.javascriptString = `const tuneObjectArray<span class="red--text">*</span> = ABCJS.renderAbc(
     ${output},
-    abcString,
+    abcString<span class="red--text">*</span>,
     ${parserParams},
     ${engraverParams},
     ${renderParams});`;

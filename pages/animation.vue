@@ -8,8 +8,12 @@
 				</v-card-text>
 			</v-card>
 			<v-card>
-				<v-card-title>JavaScript</v-card-title>
-				<v-card-text>
+				<v-card-title>
+					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
+						<v-icon>{{javascriptOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
+					</v-btn>
+					JavaScript</v-card-title>
+				<v-card-text :class="javascriptOpen ? 'opened' : 'closed'">
 					<code>import abcjs from 'abcjs';
 const tunes = abcjs.renderAbc("paper", abcString, { add_classes: true });
 abcjs.startAnimation("paper", tunes[0], {
@@ -29,8 +33,12 @@ abcjs.pauseAnimation(true | false);
 				</v-card-text>
 			</v-card>
 			<v-card>
-				<v-card-title>Options</v-card-title>
-				<v-card-text>
+				<v-card-title>
+					<v-btn flat icon @click="optionsOpen = !optionsOpen">
+						<v-icon>{{optionsOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
+					</v-btn>
+					Options</v-card-title>
+				<v-card-text :class="optionsOpen ? 'opened' : 'closed'">
 					<p>You must check at least one of these checkboxes to see the animation. If you leave the Beats Per Minute blank, then the the tempo found in the ABC input string is used. If you put a number in, then that overrides the tempo in the ABC string.</p>
 					<v-checkbox label="Hide Finished Measures" v-model="hideFinishedMeasures" light></v-checkbox>
 					<v-checkbox label="Hide Current Measure" v-model="hideCurrentMeasure" light></v-checkbox>
@@ -48,8 +56,12 @@ abcjs.pauseAnimation(true | false);
 				</v-card-text>
 			</v-card>
 			<v-card>
-				<v-card-title>Output</v-card-title>
-				<v-card-text>
+				<v-card-title>
+					<v-btn flat icon @click="outputOpen = !outputOpen">
+						<v-icon>{{outputOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
+					</v-btn>
+					Output</v-card-title>
+				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
 					<div id="paper"></div>
 				</v-card-text>
 			</v-card>
@@ -73,6 +85,9 @@ abcjs.pauseAnimation(true | false);
 				showCursor: false,
 				bpm: "",
 				isPaused: null,
+				javascriptOpen: true,
+				optionsOpen: true,
+				outputOpen: true,
 			};
 		},
 		mounted() {

@@ -2,15 +2,23 @@
 	<v-layout class="interactive-page">
 		<v-flex xs12 sm12 md12 lg12>
 			<v-card>
-				<v-card-title>JavaScript</v-card-title>
-				<v-card-text>
+				<v-card-title>
+					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
+						<v-icon>{{javascriptOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
+					</v-btn>
+					JavaScript</v-card-title>
+				<v-card-text :class="javascriptOpen ? 'opened' : 'closed'">
 					<code class="code-full">import abcjs from 'abcjs';
 {{javascriptString}}</code>
 				</v-card-text>
 			</v-card>
 			<v-card>
-				<v-card-title>Options</v-card-title>
-				<v-card-text>
+				<v-card-title>
+					<v-btn flat icon @click="optionsOpen = !optionsOpen">
+						<v-icon>{{optionsOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
+					</v-btn>
+					Options</v-card-title>
+				<v-card-text :class="optionsOpen ? 'opened' : 'closed'">
 					<h2>Editor Parameters</h2>
 					<v-layout wrap justify-start>
 					<v-checkbox label="Generate MIDI" v-model="editorParams.generate_midi"></v-checkbox>
@@ -59,8 +67,12 @@
 				</v-card-text>
 			</v-card>
 			<v-card>
-				<v-card-title>Output</v-card-title>
-				<v-card-text>
+				<v-card-title>
+					<v-btn flat icon @click="outputOpen = !outputOpen">
+						<v-icon>{{outputOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
+					</v-btn>
+					Output</v-card-title>
+				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
 					<div id="warnings-id"></div>
 					<div id="paper"></div>
 					<div id="midi-download-id"></div>
@@ -112,6 +124,9 @@ K:Em
 `,
 
 				javascriptString: "",
+				javascriptOpen: true,
+				optionsOpen: true,
+				outputOpen: true,
 			}
 		},
 		watch: {

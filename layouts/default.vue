@@ -504,17 +504,32 @@ V:1 nm="abcjs"
 	p {
 		max-width: 700px;
 	}
-	.explanation {
+	.footnote {
 		margin: 0 30px;
 		display: flex;
 		flex-direction: row;
 	}
-	.explanation::before {
+	.footnote::before {
 		content: "*";
 		color: #ff0000;
 		float: left;
 		margin-right: 10px;
 		font-size: 25px;
+		line-height: 27px;
 	}
 
+  .closed, .opened {
+	  max-height: 0;
+	  overflow-y: hidden;
+	  transition: max-height 0.3s ease-in-out, padding-top 0.25s linear, padding-bottom 0.25s linear, margin-top 0.25s linear, margin-bottom 0.25s linear;
+  }
+  .closed {
+	  padding-top: 0;
+	  padding-bottom: 0;
+	  margin-top: 0;
+	  margin-bottom: 0;
+  }
+  .opened {
+	  max-height: 5000px;
+  }
 </style>

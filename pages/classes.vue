@@ -2,15 +2,23 @@
 	<v-layout class="classes-page">
 		<v-flex xs12 sm12 md12 lg12>
 			<v-card>
-				<v-card-title>JavaScript</v-card-title>
-				<v-card-text>
+				<v-card-title>
+					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
+						<v-icon>{{javascriptOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
+					</v-btn>
+					JavaScript</v-card-title>
+				<v-card-text :class="javascriptOpen ? 'opened' : 'closed'">
 					<code>import abcjs from 'abcjs';
 {{formatCommand()}}{{formatClassSelection()}}</code>
 				</v-card-text>
 			</v-card>
 			<v-card>
-				<v-card-title>Available Classes</v-card-title>
-				<v-card-text>
+				<v-card-title>
+					<v-btn flat icon @click="optionsOpen = !optionsOpen">
+						<v-icon>{{optionsOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
+					</v-btn>
+					Available Classes</v-card-title>
+				<v-card-text :class="optionsOpen ? 'opened' : 'closed'">
 					<v-select
 							v-bind:items="titles()"
 							v-model="tuneTitle"
@@ -27,8 +35,12 @@
 				</v-card-text>
 			</v-card>
 			<v-card>
-				<v-card-title>Output</v-card-title>
-				<v-card-text>
+				<v-card-title>
+					<v-btn flat icon @click="outputOpen = !outputOpen">
+						<v-icon>{{outputOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
+					</v-btn>
+					Output</v-card-title>
+				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
 					<div id="paper"></div>
 				</v-card-text>
 			</v-card>
@@ -51,6 +63,9 @@
 				checkedClasses: [],
 				selector: "",
 				tuneTitle: null,
+				javascriptOpen: true,
+				optionsOpen: true,
+				outputOpen: true,
 			}
 		},
 		watch: {
