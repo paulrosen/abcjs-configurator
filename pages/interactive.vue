@@ -25,7 +25,6 @@
 					<v-checkbox label="Specify Inline MIDI Id" v-model="editorParams.specifyInlineMidiId"></v-checkbox>
 					<v-checkbox label="Specify Download MIDI Id" v-model="editorParams.specifyDownloadMidiId"></v-checkbox>
 					<v-checkbox label="Specify Warnings Id" v-model="editorParams.specifyWarningsId"></v-checkbox>
-					<v-checkbox label="Generate Warnings" v-model="editorParams.generate_warnings"></v-checkbox>
 					<v-checkbox label="Callback On Change" v-model="editorParams.callbackOnChange"></v-checkbox>
 					<v-checkbox label="GUI Mode" v-model="editorParams.gui"></v-checkbox>
 					<v-checkbox label="Use Dirty Flag" v-model="editorParams.indicate_changed"></v-checkbox>
@@ -98,7 +97,6 @@
 					specifyInlineMidiId: false,
 					specifyDownloadMidiId: false,
 					specifyWarningsId: false,
-					generate_warnings: false,
 					callbackOnChange: false,
 					gui: false,
 					indicate_changed: false,
@@ -156,8 +154,6 @@ K:Em
 			formatEditorParams() {
 				let params = "";
 				params += "\n        paper_id: \"paper\",";
-				if (this.editorParams.generate_warnings)
-					params += "\n        generate_warnings: true,";
 				if (this.editorParams.specifyWarningsId)
 					params += "\n        warnings_id: \"warnings-id\",";
 				if (this.editorParams.gui)
@@ -257,7 +253,6 @@ K:Em
 	// | `generate_midi` | if present, then midi is generated. |
 	// | `midi_id` | if present, the HTML id to place the midi control. Otherwise it is placed in the same div as the paper. An encompassing `div` surrounds each control with the class in the format `"inline-midi midi-%d"`. |
 	// | `midi_download_id` | if present, the HTML id to place the midi download link. Otherwise, if `midi_id` is present it is placed there, otherwise it is placed in the same div as the paper. An encompassing `div` surrounds each control with the class in the format `"download-midi midi-%d"`.|
-	// | `generate_warnings` | if present, then parser warnings are displayed on the page. |
 	// | `warnings_id` | if present, the HTML id to place the warnings. Otherwise they are placed in the same div as the paper. |
 	// | `onchange` | if present, the callback function to call whenever there has been a change. |
 	// | `gui` | if present, the paper can send changes back to the editor (presumably because the user changed something directly.) |
@@ -270,7 +265,7 @@ K:Em
 
 <style>
 	.abc_textarea_dirty {
-		background-color: #eeeeee;
+		background: linear-gradient(to right, rgba(230,230,230,0) 0%,rgba(230,230,230,1) 100%);
 	}
 	.interactive-page .input-group {
 		min-width: 250px;
@@ -279,5 +274,14 @@ K:Em
 	}
 	.interactive-page .input-group.input-group--textarea {
 		max-width: inherit;
+	}
+	.interactive-page #warnings-id {
+		border: 2px solid #E53935;
+		color: #E53935;
+		padding: 10px;
+		margin-bottom: 10px;
+	}
+	.interactive-page #warnings-id:empty {
+		display: none;
 	}
 </style>
