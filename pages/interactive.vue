@@ -20,7 +20,7 @@
 					Options</v-card-title>
 				<v-card-text :class="optionsOpen ? 'opened' : 'closed'">
 					<h2>Editor Parameters</h2>
-					<v-layout wrap justify-start>
+					<v-layout wrap justify-start align-center>
 					<v-checkbox label="Generate MIDI" v-model="editorParams.generate_midi"></v-checkbox>
 					<v-checkbox label="Specify Inline MIDI Id" v-model="editorParams.specifyInlineMidiId"></v-checkbox>
 					<v-checkbox label="Specify Download MIDI Id" v-model="editorParams.specifyDownloadMidiId"></v-checkbox>
@@ -31,16 +31,14 @@
 					<v-checkbox label="Use Dirty Flag" v-model="editorParams.indicate_changed"></v-checkbox>
 					</v-layout>
 					<h2>Parser Parameters</h2>
-					<v-layout wrap justify-start>
-						<div>TODO - parser_options</div>
+					<v-layout wrap justify-start align-center>
+						<v-checkbox label="Format For Printing" v-model="editorParams.parser_options.print"></v-checkbox>
 					</v-layout>
+
 					<h2>MIDI Parameters</h2>
-					<v-layout wrap justify-start>
-						<div>TODO - midi_options</div>
-					</v-layout>
-					<h2>Render Parameters</h2>
-					<v-layout wrap justify-start>
-						<div>TODO - render_options</div>
+					<p>See the <nuxt-link to="/audio">audio page</nuxt-link>: all of the same parameters apply.</p>
+					<v-layout wrap justify-start align-center>
+						<v-checkbox label="Specify MIDI params" v-model="midiParams"></v-checkbox>
 					</v-layout>
 					<h2>Commands</h2>
 					<div>
@@ -104,7 +102,11 @@
 					callbackOnChange: false,
 					gui: false,
 					indicate_changed: false,
+					parser_options: {
+						print: false
+					},
 				},
+				midiParams: false,
 				isPaused: false,
 				isReadOnly: false,
 				isMidiPaused: false,
@@ -131,6 +133,12 @@ K:Em
 		},
 		watch: {
 			'editorParams': {
+				handler: function () {
+					this.redraw();
+				},
+				deep: true
+			},
+			'midiParams': {
 				handler: function () {
 					this.redraw();
 				},
@@ -164,6 +172,12 @@ K:Em
 						params += "\n        midi_download_id: \"midi-download-id\",";
 					if (this.editorParams.specifyInlineMidiId)
 						params += "\n        midi_id: \"midi-inline-id\",";
+				}
+				if (this.editorParams.parser_options.print) {
+					params += "\n        parser_options: {\n            print: true\n        },";
+				}
+				if (this.midiParams) {
+					params += "\n        midi_options: {\n            etc...\n        },";
 				}
 				if (params === "")
 					params = "{ }";
@@ -259,7 +273,11 @@ K:Em
 		background-color: #eeeeee;
 	}
 	.interactive-page .input-group {
-		min-width: 200px;
+		min-width: 250px;
+		max-width: 250px;
 		margin-right: 10px;
+	}
+	.interactive-page .input-group.input-group--textarea {
+		max-width: inherit;
 	}
 </style>

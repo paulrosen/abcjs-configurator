@@ -42,7 +42,7 @@
 					></v-text-field>
 
 					<h2>Parser Parameters</h2>
-					<v-layout wrap justify-start>
+					<v-layout wrap justify-start align-center>
 					<v-checkbox label="Format For Printing" v-model="parserParams.print"></v-checkbox>
 					<v-checkbox label="Parse Header Only" v-model="parserParams.header_only"></v-checkbox>
 					<v-checkbox label="Stop Parsing on Warning" v-model="parserParams.stop_on_warning"></v-checkbox>
@@ -50,7 +50,7 @@
 					</v-layout>
 
 					<h2>Engraver Parameters</h2>
-					<v-layout wrap justify-start>
+					<v-layout wrap justify-start align-center>
 					<v-text-field
 							class="numeric"
 							v-model="engraverParams.scale"
@@ -89,7 +89,7 @@
 					</v-layout>
 
 					<h2>Renderer Params</h2>
-					<v-layout wrap justify-start>
+					<v-layout wrap justify-start align-center>
 					<v-text-field
 							class="numeric"
 							v-model="renderParams.startingTune"
