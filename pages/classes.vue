@@ -41,7 +41,7 @@
 					</v-btn>
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
-					<div id="paper" class="amber lighten-4"></div>
+					<div id="paper" class="paper amber lighten-4"></div>
 				</v-card-text>
 			</v-card>
 		</v-flex>

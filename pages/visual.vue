@@ -410,9 +410,6 @@
 		margin-left: 30px;
 		margin-bottom: 10px;
 	}
-	.visual-page .paper {
-		margin-bottom: 15px;
-	}
 	.visual-page .paper svg {
 		background-color: #ffecb3 !important;
 	}

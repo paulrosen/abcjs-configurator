@@ -20,7 +20,7 @@
 					Options</v-card-title>
 				<v-card-text :class="optionsOpen ? 'opened' : 'closed'">
 					<h2>General Params</h2>
-					<v-layout wrap justify-start>
+					<v-layout wrap justify-start align-center>
 					<v-text-field
 							class="numeric"
 							v-model="midiParams.qpm"
@@ -39,16 +39,16 @@
 					<v-text-field
 							class="numeric"
 							v-model="renderParams.startingTune"
-							label="Index of the Tune to Process"
+							label="Index of the Tune"
 					></v-text-field>
 					</v-layout>
 					<h2>Download Params</h2>
-					<v-layout wrap justify-start>
+					<v-layout wrap justify-start align-center>
 						<v-checkbox label="Downloadable MIDI?" v-model="midiParams.generateDownload" light></v-checkbox>
 						<v-text-field
 								class="numeric"
 								v-model="midiParams.downloadLabel"
-								label="Label For Download Link"
+								label="Download Link Label (%T=title)"
 						></v-text-field>
 						<v-text-field
 								class="numeric"
@@ -62,31 +62,18 @@
 						></v-text-field>
 					</v-layout>
 					<h2>Inline Params</h2>
-					<v-layout wrap justify-start>
+					<v-layout wrap justify-start align-center>
 						<v-checkbox label="Inline MIDI?" v-model="midiParams.generateInline" light></v-checkbox>
 						<v-text-field
 								class="numeric"
 								v-model="midiParams.preTextInline"
-								label="Pre-Inline Text"
+								label="Pre-Inline Text (%T=title)"
 						></v-text-field>
 						<v-text-field
 								class="numeric"
 								v-model="midiParams.postTextInline"
-								label="Post-Inline Text"
+								label="Post-Inline Text (%T=title)"
 						></v-text-field>
-					</v-layout>
-					<h2>Callback Params</h2>
-					<v-layout wrap justify-start>
-						<v-checkbox label="Listener?" v-model="midiParams.doListener" light></v-checkbox>
-						<v-checkbox label="Animate?" v-model="midiParams.doAnimate" light></v-checkbox>
-						<v-text-field
-								class="numeric"
-								v-model="midiParams.context"
-								label="Callback Context"
-						></v-text-field>
-					</v-layout>
-					<h2>Look and Feel Params</h2>
-					<v-layout wrap justify-start>
 						<v-checkbox label="Show Loop Toggle?" v-model="midiParams.inlineControls.loopToggle" light></v-checkbox>
 						<v-checkbox label="Standard Controls?" v-model="midiParams.inlineControls.standard" light></v-checkbox>
 						<v-checkbox label="Tempo Control?" v-model="midiParams.inlineControls.tempo" light></v-checkbox>
@@ -118,8 +105,20 @@
 								label="Tempo Tooltip"
 						></v-text-field>
 					</v-layout>
+
+					<h2>Callback Params</h2>
+					<v-layout wrap justify-start align-center>
+						<v-checkbox label="Listener?" v-model="midiParams.doListener" light></v-checkbox>
+						<v-checkbox label="Animate?" v-model="midiParams.doAnimate" light></v-checkbox>
+						<v-text-field
+								class="numeric"
+								v-model="midiParams.context"
+								label="Callback Context"
+						></v-text-field>
+					</v-layout>
+
 					<h2>Metronome Params</h2>
-					<v-layout wrap justify-start>
+					<v-layout wrap justify-start align-center>
 						<v-text-field
 								class="numeric"
 								v-model="midiParams.drum"
@@ -145,8 +144,8 @@
 					</v-btn>
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
-					<div id="paper" class="amber lighten-4"></div>
 					<div id="midi-id"></div>
+					<div id="paper" class="paper amber lighten-4"></div>
 				</v-card-text>
 			</v-card>
 		</v-flex>
@@ -404,7 +403,12 @@
 
 <style>
 	.audio-page .input-group {
-		min-width: 200px;
+		min-width: 250px;
+		max-width: 250px;
 		margin-right: 10px;
+	}
+	.audio-page 	#midi-id {
+		margin-bottom: 15px;
+		max-width: 770px;
 	}
 </style>

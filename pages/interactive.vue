@@ -74,7 +74,7 @@
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
 					<div id="warnings-id"></div>
-					<div id="paper" class="amber lighten-4"></div>
+					<div id="paper" class="paper amber lighten-4"></div>
 					<div id="midi-download-id"></div>
 					<div id="midi-inline-id"></div>
 				</v-card-text>

@@ -16,6 +16,7 @@
 				<v-card-text :class="javascriptOpen ? 'opened' : 'closed'">
 					<code>import abcjs from 'abcjs';
 const tunes = abcjs.renderAbc("paper", abcString, { add_classes: true });
+
 abcjs.startAnimation("paper", tunes[0], {
 <div v-if="hideCurrentMeasure">    hideCurrentMeasure: true,</div><div v-if="hideFinishedMeasures">    hideFinishedMeasures: true,</div><div v-if="showCursor">    showCursor: true,</div><div v-if="bpm">    bpm: {{bpm}},</div>});
 
@@ -40,14 +41,16 @@ abcjs.pauseAnimation(true | false);
 					Options</v-card-title>
 				<v-card-text :class="optionsOpen ? 'opened' : 'closed'">
 					<p>You must check at least one of these checkboxes to see the animation. If you leave the Beats Per Minute blank, then the the tempo found in the ABC input string is used. If you put a number in, then that overrides the tempo in the ABC string.</p>
-					<v-checkbox label="Hide Finished Measures" v-model="hideFinishedMeasures" light></v-checkbox>
-					<v-checkbox label="Hide Current Measure" v-model="hideCurrentMeasure" light></v-checkbox>
-					<v-checkbox label="Show Cursor" v-model="showCursor" light></v-checkbox>
+					<v-layout wrap justify-start align-center>
 					<v-text-field
 							class="bpm-input"
 							v-model="bpm"
 							label="Beats Per Minute"
 					></v-text-field>
+					<v-checkbox label="Hide Finished Measures" v-model="hideFinishedMeasures" light></v-checkbox>
+					<v-checkbox label="Hide Current Measure" v-model="hideCurrentMeasure" light></v-checkbox>
+					<v-checkbox label="Show Cursor" v-model="showCursor" light></v-checkbox>
+					</v-layout>
 					<v-btn round color="primary" @click="start">Start</v-btn>
 					<v-btn outline color="primary" @click="stop">Stop</v-btn>
 					<v-btn-toggle v-model="isPaused">
@@ -62,7 +65,7 @@ abcjs.pauseAnimation(true | false);
 					</v-btn>
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
-					<div id="paper" class="amber lighten-4"></div>
+					<div id="paper" class="paper amber lighten-4"></div>
 				</v-card-text>
 			</v-card>
 		</v-flex>
@@ -119,6 +122,11 @@ abcjs.pauseAnimation(true | false);
 </script>
 
 <style>
+	.animation-page .input-group {
+		min-width: 250px;
+		max-width: 250px;
+		margin-right: 10px;
+	}
 	.cursor {
 		border-left: 1px solid #3D9AFC;
 	}

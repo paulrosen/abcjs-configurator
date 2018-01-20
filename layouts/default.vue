@@ -539,4 +539,7 @@ V:1 nm="abcjs"
   .opened {
 	  max-height: 5000px;
   }
+  .paper {
+	  margin-bottom: 15px;
+  }
 </style>
