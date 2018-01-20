@@ -470,6 +470,9 @@ V:1 nm="abcjs"
   code::before, code::after {
     content:""
   }
+  code:empty {
+	  padding: 0;
+  }
 .code-full {
 	  width: 100%;
 	  overflow: auto;
@@ -505,9 +508,10 @@ V:1 nm="abcjs"
 		max-width: 700px;
 	}
 	.footnote {
-		margin: 0 30px;
+		margin: 0 0 10px 30px;
 		display: flex;
 		flex-direction: row;
+		align-items: center;
 	}
 	.footnote::before {
 		content: "*";
@@ -517,14 +521,17 @@ V:1 nm="abcjs"
 		font-size: 25px;
 		line-height: 27px;
 	}
+	.footnote > * {
+		margin-right: 0.5em;
+	}
 
   .closed, .opened {
 	  max-height: 0;
+	  padding-top: 0;
 	  overflow-y: hidden;
-	  transition: max-height 0.3s ease-in-out, padding-top 0.25s linear, padding-bottom 0.25s linear, margin-top 0.25s linear, margin-bottom 0.25s linear;
+	  transition: max-height 0.3s ease-in-out, padding-bottom 0.25s linear, margin-top 0.25s linear, margin-bottom 0.25s linear;
   }
   .closed {
-	  padding-top: 0;
 	  padding-bottom: 0;
 	  margin-top: 0;
 	  margin-bottom: 0;

@@ -5,7 +5,7 @@
 			<p>These functions are provided as a convenience, in case the app should do something different depending on what tunes have been input.
 			</p>
 			<p>Result of
-				<code>abcjs.numberOfTunes(abcString)</code>
+				<code class="subtle-code">abcjs.numberOfTunes(abcString)</code>
 				is
 				<pre class="amber lighten-4 string chip">{{numberOfTunes()}}</pre>
 			</p>
@@ -19,7 +19,7 @@
 				</v-card>
 			</template>
 			<template v-for="id,i in ids()">
-				<v-card :key="i" raised>
+				<v-card :key="1000+i" raised>
 					<v-card-title><code>abcjs.TuneBook(abcString).getTuneById("{{id}}")</code></v-card-title>
 					<v-card-text>
 						<p>Start Character: <pre class="amber lighten-4 string chip">{{tuneById()(id).startPos}}</pre></p>

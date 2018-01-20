@@ -145,7 +145,7 @@
 					</v-btn>
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
-					<div id="paper"></div>
+					<div id="paper" class="amber lighten-4"></div>
 					<div id="midi-id"></div>
 				</v-card-text>
 			</v-card>

@@ -41,7 +41,7 @@
 					</v-btn>
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
-					<div id="paper"></div>
+					<div id="paper" class="amber lighten-4"></div>
 				</v-card-text>
 			</v-card>
 		</v-flex>
@@ -78,11 +78,7 @@
 				});
 
 				this.selector = (val.length > 0) ? "." + val.join(".") : "";
-				if (this.selector.length > 0) {
-					document.getElementById('paper').querySelectorAll(this.selector).forEach((el) => {
-						el.setAttribute("fill", "#3D9AFC");
-					});
-				}
+				this.highlightSelectedClasses();
 			},
 			tuneTitle: function(val) {
 				if (!this.tuneTitle) {
@@ -93,6 +89,7 @@
 					this.renderAbc()("paper", tune.abc, { add_classes: true });
 				}
 				this.getClassNames();
+				this.highlightSelectedClasses();
 			},
 		},
 		methods: {
@@ -108,6 +105,13 @@
 					classes = classes.concat(arr);
 				});
 				this.classNames = [...new Set(classes)].filter(Boolean).sort();
+			},
+			highlightSelectedClasses() {
+				if (this.selector.length > 0) {
+					document.getElementById('paper').querySelectorAll(this.selector).forEach((el) => {
+						el.setAttribute("fill", "#3D9AFC");
+					});
+				}
 			},
 			formatCommand() {
 				if (!this.tuneTitle)

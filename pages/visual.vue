@@ -97,7 +97,7 @@
 					></v-text-field>
 					<v-checkbox label="viewportHorizontal" v-model="renderParams.viewportHorizontal"></v-checkbox>
 					<v-checkbox label="scrollHorizontal" v-model="renderParams.scrollHorizontal"></v-checkbox>
-					<v-checkbox label="oneSvgPerLine" v-model="renderParams.oneSvgPerLine"></v-checkbox>
+					<v-checkbox label="Separate SVG Per Line" v-model="renderParams.oneSvgPerLine"></v-checkbox>
 					</v-layout>
 				</v-card-text>
 			</v-card>
@@ -108,30 +108,39 @@
 					</v-btn>
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
-					<div id="paper1"></div>
-					<div id="paper2"></div>
-					<div id="paper3"></div>
-					<div id="paper4"></div>
-					<div id="paper5"></div>
-					<div id="paper6"></div>
-					<div id="paper7"></div>
-					<div id="paper8"></div>
-					<div id="paper9"></div>
-					<div id="paper10"></div>
-					<div id="paper11"></div>
-					<div id="paper12"></div>
-					<div id="paper13"></div>
-					<div id="paper14"></div>
-					<div id="paper15"></div>
-					<div id="paper16"></div>
-					<div id="paper17"></div>
-					<div id="paper18"></div>
-					<div id="paper19"></div>
-					<div id="paper20"></div>
-					<div id="paper21"></div>
-					<div id="paper22"></div>
-					<div id="paper23"></div>
-					<div id="paper24"></div>
+					<div>
+					<div v-if="engraverParams.highlightListener">
+						<div class="footnote">Click on the displayed music to see the output of the callback function.</div>
+						<code class="indented">{{highlightListenerOutput}}</code>
+					</div>
+					<div v-if="engraverParams.responsive === 'resize'">
+						<div class="footnote"><span>When using resize, do not place the </span><code class="subtle-code">&lt;div id="paper"&gt;</code><span> as a flex element: the flex functionality will interfere. Just wrap in another </span><code class="subtle-code">&lt;div&gt;</code></div>
+					</div>
+					<div id="paper1" class="paper"></div>
+					<div id="paper2" class="paper"></div>
+					<div id="paper3" class="paper"></div>
+					<div id="paper4" class="paper"></div>
+					<div id="paper5" class="paper"></div>
+					<div id="paper6" class="paper"></div>
+					<div id="paper7" class="paper"></div>
+					<div id="paper8" class="paper"></div>
+					<div id="paper9" class="paper"></div>
+					<div id="paper10" class="paper"></div>
+					<div id="paper11" class="paper"></div>
+					<div id="paper12" class="paper"></div>
+					<div id="paper13" class="paper"></div>
+					<div id="paper14" class="paper"></div>
+					<div id="paper15" class="paper"></div>
+					<div id="paper16" class="paper"></div>
+					<div id="paper17" class="paper"></div>
+					<div id="paper18" class="paper"></div>
+					<div id="paper19" class="paper"></div>
+					<div id="paper20" class="paper"></div>
+					<div id="paper21" class="paper"></div>
+					<div id="paper22" class="paper"></div>
+					<div id="paper23" class="paper"></div>
+					<div id="paper24" class="paper"></div>
+					</div>
 				</v-card-text>
 			</v-card>
 		</v-flex>
@@ -179,6 +188,7 @@
 				javascriptOpen: true,
 				optionsOpen: true,
 				outputOpen: true,
+				highlightListenerOutput: "",
 			};
 		},
 		watch: {
@@ -308,8 +318,17 @@
     }`;
 				return params;
 			},
-			highlightListenerCallback(abcElem) {
-				console.log(abcElem);
+			highlightListenerCallback(abcElem,tuneNumber) {
+				this.highlightListenerOutput = `highlightListenerCallback(abcElem,tuneNumber)\n\nabcElem:\n`;
+				Object.keys(abcElem).forEach((key) => {
+					if (key === "abselem")
+						this.highlightListenerOutput += "    abselem: [object]\n";
+					else {
+						const value = JSON.stringify(abcElem[key]);
+						this.highlightListenerOutput += `    ${key}: ${value}\n`;
+					}
+				});
+				this.highlightListenerOutput += `tuneNumber: ${tuneNumber}\n`;
 			},
 			modelChangedListenerCallback(abcElem) {
 				console.log(abcElem);
@@ -386,5 +405,18 @@
 	}
 	.visual-page .abcjs-hint {
 		fill: #aaaaaa;
+	}
+	.visual-page .indented {
+		margin-left: 30px;
+		margin-bottom: 10px;
+	}
+	.visual-page .paper {
+		margin-bottom: 15px;
+	}
+	.visual-page .paper svg {
+		background-color: #ffecb3 !important;
+	}
+	.visual-page .paper > div {
+		margin-bottom: 3px;
 	}
 </style>
