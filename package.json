@@ -30,6 +30,6 @@
     "nuxt": "^1.0.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
-    "vuetify": "^0.17.3"
+    "vuetify": "^0.17.6"
   }
 }
