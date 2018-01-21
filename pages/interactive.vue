@@ -21,9 +21,9 @@
 				<v-card-text :class="optionsOpen ? 'opened' : 'closed'">
 					<h2>Editor Parameters</h2>
 					<v-layout wrap justify-start align-center>
-					<v-checkbox label="Specify Inline MIDI Id" v-model="editorParams.specifyInlineMidiId"></v-checkbox>
-					<v-checkbox label="Specify Download MIDI Id" v-model="editorParams.specifyDownloadMidiId"></v-checkbox>
-					<v-checkbox label="Specify Warnings Id" v-model="editorParams.specifyWarningsId"></v-checkbox>
+					<v-checkbox label="Inline MIDI" v-model="editorParams.specifyInlineMidiId"></v-checkbox>
+					<v-checkbox label="Download MIDI" v-model="editorParams.specifyDownloadMidiId"></v-checkbox>
+					<v-checkbox label="Show Warnings" v-model="editorParams.specifyWarningsId"></v-checkbox>
 					<v-checkbox label="Callback On Change" v-model="editorParams.callbackOnChange"></v-checkbox>
 					<v-checkbox label="GUI Mode" v-model="editorParams.gui"></v-checkbox>
 					<v-checkbox label="Use Dirty Flag" v-model="editorParams.indicate_changed"></v-checkbox>
