@@ -257,23 +257,23 @@ K:Em
 			formatEngraverParams() {
 				let params = "";
 				if (this.editorParams.render_options.scale !== "1")
-					params += `\n        scale: ${this.editorParams.render_options.scale},`;
+					params += `\n            scale: ${this.editorParams.render_options.scale},`;
 				if (this.editorParams.render_options.staffwidth !== "740")
-					params += `\n        staffwidth: ${this.editorParams.render_options.staffwidth},`;
+					params += `\n            staffwidth: ${this.editorParams.render_options.staffwidth},`;
 				if (this.editorParams.render_options.paddingtop !== "15")
-					params += `\n        paddingtop: ${this.editorParams.render_options.paddingtop},`;
+					params += `\n            paddingtop: ${this.editorParams.render_options.paddingtop},`;
 				if (this.editorParams.render_options.paddingbottom !== "30")
-					params += `\n        paddingbottom: ${this.editorParams.render_options.paddingbottom},`;
+					params += `\n            paddingbottom: ${this.editorParams.render_options.paddingbottom},`;
 				if (this.editorParams.render_options.paddingright !== "50")
-					params += `\n        paddingright: ${this.editorParams.render_options.paddingright},`;
+					params += `\n            paddingright: ${this.editorParams.render_options.paddingright},`;
 				if (this.editorParams.render_options.paddingleft !== "15")
-					params += `\n        paddingleft: ${this.editorParams.render_options.paddingleft},`;
+					params += `\n            paddingleft: ${this.editorParams.render_options.paddingleft},`;
 				if (this.editorParams.render_options.editable)
-					params += "\n        editable: true,";
+					params += "\n            editable: true,";
 				if (this.editorParams.render_options.add_classes)
-					params += "\n        add_classes: true,";
+					params += "\n            add_classes: true,";
 				if (this.editorParams.render_options.highlightListener || this.editorParams.render_options.modelChangedListener) {
-					params += "\n        listener: { ";
+					params += "\n            listener: { ";
 					if (this.editorParams.render_options.highlightListener)
 						params += "highlight: function(abcElem) { console.log(abcElem, tuneNumber); }, ";
 					if (this.editorParams.render_options.modelChangedListener)
@@ -281,12 +281,12 @@ K:Em
 					params += "},";
 				}
 				if (this.editorParams.render_options.responsiveResize)
-					params += "\n        responsive: \"resize\",";
+					params += "\n            responsive: \"resize\",";
 				if (params === "")
 					params = "{ }";
 				else
 					params = `{${params}
-    }`;
+        }`;
 				return params;
 			},
 			highlightListenerCallback(abcElem,tuneNumber) {
