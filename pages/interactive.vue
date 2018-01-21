@@ -21,7 +21,6 @@
 				<v-card-text :class="optionsOpen ? 'opened' : 'closed'">
 					<h2>Editor Parameters</h2>
 					<v-layout wrap justify-start align-center>
-					<v-checkbox label="Generate MIDI" v-model="editorParams.generate_midi"></v-checkbox>
 					<v-checkbox label="Specify Inline MIDI Id" v-model="editorParams.specifyInlineMidiId"></v-checkbox>
 					<v-checkbox label="Specify Download MIDI Id" v-model="editorParams.specifyDownloadMidiId"></v-checkbox>
 					<v-checkbox label="Specify Warnings Id" v-model="editorParams.specifyWarningsId"></v-checkbox>
@@ -35,10 +34,7 @@
 					</v-layout>
 
 					<h2>MIDI Parameters</h2>
-					<p>See the <nuxt-link to="/audio">audio page</nuxt-link>: all of the same parameters apply.</p>
-					<v-layout wrap justify-start align-center>
-						<v-checkbox label="Specify MIDI params" v-model="midiParams"></v-checkbox>
-					</v-layout>
+					<p>See the <nuxt-link to="/audio">audio page</nuxt-link>: all of the same parameters apply. Put the parameters in the property <code class="subtle-code">midi_options</code>.</p>
 					<h2>Commands</h2>
 					<div>
 						<v-btn outline color="primary" @click="setNotDirty">Set Not Dirty</v-btn>
@@ -72,8 +68,8 @@
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
 					<div id="warnings-id"></div>
 					<div id="paper" class="paper amber lighten-4"></div>
-					<div id="midi-download-id"></div>
-					<div id="midi-inline-id"></div>
+					<div id="midi-download"></div>
+					<div id="midi-inline"></div>
 				</v-card-text>
 			</v-card>
 		</v-flex>
@@ -103,8 +99,11 @@
 					parser_options: {
 						print: false
 					},
+					midi_options: {
+						midi_download_id: null,
+						midi_id: null,
+					}
 				},
-				midiParams: false,
 				isPaused: false,
 				isReadOnly: false,
 				isMidiPaused: false,
@@ -136,12 +135,6 @@ K:Em
 				},
 				deep: true
 			},
-			'midiParams': {
-				handler: function () {
-					this.redraw();
-				},
-				deep: true
-			},
 		},
 		mounted() {
 			setTimeout(() => {
@@ -162,18 +155,23 @@ K:Em
 					params += "\n        indicate_changed: true,";
 				if (this.editorParams.callbackOnChange)
 					params += "\n        onchange: function(editorInstance) {},";
-				if (this.editorParams.generate_midi) {
-					params += "\n        generate_midi: true,";
-					if (this.editorParams.specifyDownloadMidiId)
-						params += "\n        midi_download_id: \"midi-download-id\",";
-					if (this.editorParams.specifyInlineMidiId)
-						params += "\n        midi_id: \"midi-inline-id\",";
-				}
 				if (this.editorParams.parser_options.print) {
 					params += "\n        parser_options: {\n            print: true\n        },";
 				}
-				if (this.midiParams) {
-					params += "\n        midi_options: {\n            etc...\n        },";
+				if (this.editorParams.specifyDownloadMidiId || this.editorParams.specifyInlineMidiId) {
+					params += "\n        generate_midi: true,";
+					params += "\n        midi_options: {";
+					if (this.editorParams.specifyDownloadMidiId) {
+						params += "\n            generateDownload: true,";
+						params += "\n            midi_download_id: \"midi-download\",";
+					}
+					if (this.editorParams.specifyInlineMidiId) {
+						params += "\n            midi_id: \"midi-inline\",";
+					} else {
+						params += "\n            generateInline: false,";
+					}
+					params += "\n            // Add any other MIDI options from \"Audio\" page.";
+					params += "\n        },";
 				}
 				if (params === "")
 					params = "{ }";
@@ -195,12 +193,17 @@ K:Em
 
 				this.editorParams.paper_id = "paper";
 				this.editorParams.warnings_id = this.editorParams.specifyWarningsId ? "warnings-id" : undefined;
-				this.editorParams.midi_download_id = this.editorParams.specifyDownloadMidiId ? "midi-download-id" : undefined;
-				this.editorParams.midi_id = this.editorParams.specifyInlineMidiId ? "midi-inline-id" : undefined;
+				this.editorParams.midi_download_id = this.editorParams.specifyDownloadMidiId ? "midi-download" : undefined;
+				this.editorParams.midi_id = this.editorParams.specifyInlineMidiId ? "midi-inline" : undefined;
+				this.editorParams.generate_midi = (this.editorParams.specifyDownloadMidiId || this.editorParams.specifyInlineMidiId);
+				this.editorParams.midi_options.midi_id = this.editorParams.specifyInlineMidiId ? "midi-inline" : undefined;
+				this.editorParams.midi_options.generateInline = this.editorParams.specifyInlineMidiId;
+				this.editorParams.midi_options.generateDownload = this.editorParams.specifyDownloadMidiId;
+				this.editorParams.midi_options.midi_download_id = this.editorParams.specifyDownloadMidiId ? "midi-download" : undefined;
 
 				this.resetDiv("warnings-id");
-				this.resetDiv("midi-download-id");
-				this.resetDiv("midi-inline-id");
+				this.resetDiv("midi-download");
+				this.resetDiv("midi-inline");
 
 				new abcjs.Editor("textarea-id",
 					this.editorParams);
@@ -226,7 +229,6 @@ K:Em
 	}
 	// | Editor entry points | Description |
 	// | ------------- | ----------- |
-	// | `abc_editor = new ABCJS.Editor(editArea, editorParams)` | constructor of the editor object |
 	// | `setReadOnly(bool)` |adds or removes the class abc_textarea_readonly, and adds or removes the attribute readonly=yes |
 	// 	| `setDirtyStyle(bool)` | adds or removes the class abc_textarea_dirty |
 	// | `renderTune(abc, parserParams, domElement)` | Immediately renders the tune. (Useful for creating the SVG output behind the scenes, if div is hidden) |
@@ -242,15 +244,9 @@ K:Em
 	// | `pause(bool)` | Stops the automatic rendering when the user is typing. |
 	// | `pauseMidi(shouldPause)` | Stops the automatic re-rendering of the MIDI. |
 	//
-	// | Edit parameters | Description |
-	// | ------------- | ----------- |
-	// | `editArea` | If it is a string, then it is an HTML id of a textarea control. Otherwise, it should be an instantiation of an object that expresses the `EditArea` interface. |
-	// | `editorParams` | Hash of parameters for the editor. |
-	//
 	// | editorParams | Description |
 	// | ------------- | ----------- |
 	// | `canvas_id` or `paper_id` | HTML id to draw in. If not present, then the drawing happens just below the editor. |
-	// | `generate_midi` | if present, then midi is generated. |
 	// | `midi_id` | if present, the HTML id to place the midi control. Otherwise it is placed in the same div as the paper. An encompassing `div` surrounds each control with the class in the format `"inline-midi midi-%d"`. |
 	// | `midi_download_id` | if present, the HTML id to place the midi download link. Otherwise, if `midi_id` is present it is placed there, otherwise it is placed in the same div as the paper. An encompassing `div` surrounds each control with the class in the format `"download-midi midi-%d"`.|
 	// | `warnings_id` | if present, the HTML id to place the warnings. Otherwise they are placed in the same div as the paper. |
