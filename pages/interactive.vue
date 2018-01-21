@@ -28,13 +28,54 @@
 					<v-checkbox label="GUI Mode" v-model="editorParams.gui"></v-checkbox>
 					<v-checkbox label="Use Dirty Flag" v-model="editorParams.indicate_changed"></v-checkbox>
 					</v-layout>
+
 					<h2>Parser Parameters</h2>
 					<v-layout wrap justify-start align-center>
 						<v-checkbox label="Format For Printing" v-model="editorParams.parser_options.print"></v-checkbox>
 					</v-layout>
 
+					<h2>Engraver Parameters</h2>
+					<v-layout wrap justify-start align-center>
+						<v-text-field
+								class="numeric"
+								v-model="editorParams.render_options.scale"
+								label="Scale"
+						></v-text-field>
+						<v-text-field
+								class="numeric"
+								v-model="editorParams.render_options.staffwidth"
+								label="Staff Width"
+						></v-text-field>
+						<v-text-field
+								class="numeric"
+								v-model="editorParams.render_options.paddingtop"
+								label="Padding Top"
+						></v-text-field>
+						<v-text-field
+								class="numeric"
+								v-model="editorParams.render_options.paddingbottom"
+								label="Padding Bottom"
+						></v-text-field>
+						<v-text-field
+								class="numeric"
+								v-model="editorParams.render_options.paddingright"
+								label="Padding Right"
+						></v-text-field>
+						<v-text-field
+								class="numeric"
+								v-model="editorParams.render_options.paddingleft"
+								label="Padding Left"
+						></v-text-field>
+						<v-checkbox label="Editable" v-model="editorParams.render_options.editable"></v-checkbox>
+						<v-checkbox label="Add Classes" v-model="editorParams.render_options.add_classes"></v-checkbox>
+						<v-checkbox label="User Click Listener" v-model="editorParams.render_options.highlightListener"></v-checkbox>
+						<v-checkbox label="Music Changed Listener" v-model="editorParams.render_options.modelChangedListener"></v-checkbox>
+						<v-checkbox label="Responsive Sizing" v-model="editorParams.render_options.responsiveResize"></v-checkbox>
+					</v-layout>
+
 					<h2>MIDI Parameters</h2>
 					<p>See the <nuxt-link to="/audio">audio page</nuxt-link>: all of the same parameters apply. Put the parameters in the property <code class="subtle-code">midi_options</code>.</p>
+
 					<h2>Commands</h2>
 					<div>
 						<v-btn outline color="primary" @click="setNotDirty">Set Not Dirty</v-btn>
@@ -66,10 +107,19 @@
 					</v-btn>
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
+					<div>
+						<div v-if="editorParams.render_options.highlightListener">
+							<div class="footnote">Click on the displayed music to see the output of the callback function.</div>
+							<code class="indented">{{highlightListenerOutput}}</code>
+						</div>
+						<div v-if="editorParams.render_options.responsive === 'resize'">
+							<div class="footnote"><span>When using resize, do not place the </span><code class="subtle-code">&lt;div id="paper"&gt;</code><span> as a flex element: the flex functionality will interfere. Just wrap in another </span><code class="subtle-code">&lt;div&gt;</code></div>
+						</div>
 					<div id="warnings-id"></div>
 					<div id="paper" class="paper amber lighten-4"></div>
 					<div id="midi-download"></div>
 					<div id="midi-inline"></div>
+					</div>
 				</v-card-text>
 			</v-card>
 		</v-flex>
@@ -99,6 +149,19 @@
 					parser_options: {
 						print: false
 					},
+					render_options: {
+						scale: "1",
+						staffwidth: "740",
+						paddingtop: "15",
+						paddingbottom: "30",
+						paddingright: "50",
+						paddingleft: "15",
+						editable: false,
+						add_classes: false,
+						highlightListener: false,
+						modelChangedListener: false,
+						responsiveResize: false,
+					},
 					midi_options: {
 						midi_download_id: null,
 						midi_id: null,
@@ -126,6 +189,7 @@ K:Em
 				javascriptOpen: true,
 				optionsOpen: true,
 				outputOpen: true,
+				highlightListenerOutput: "",
 			}
 		},
 		watch: {
@@ -158,6 +222,7 @@ K:Em
 				if (this.editorParams.parser_options.print) {
 					params += "\n        parser_options: {\n            print: true\n        },";
 				}
+				params += "\n        render_options: " + this.formatEngraverParams() + ",";
 				if (this.editorParams.specifyDownloadMidiId || this.editorParams.specifyInlineMidiId) {
 					params += "\n        generate_midi: true,";
 					params += "\n        midi_options: {";
@@ -180,6 +245,65 @@ K:Em
     }`;
 				return params;
 			},
+			constructEngraverParams() {
+				this.editorParams.render_options.listener = {};
+				if (this.editorParams.render_options.highlightListener)
+					this.editorParams.render_options.listener.highlight = this.highlightListenerCallback;
+				if (this.editorParams.render_options.modelChangedListener)
+					this.editorParams.render_options.listener.modelChanged = this.modelChangedListenerCallback;
+				this.editorParams.render_options.responsive = this.editorParams.render_options.responsiveResize ? "resize" : undefined;
+				return this.editorParams.render_options;
+			},
+			formatEngraverParams() {
+				let params = "";
+				if (this.editorParams.render_options.scale !== "1")
+					params += `\n        scale: ${this.editorParams.render_options.scale},`;
+				if (this.editorParams.render_options.staffwidth !== "740")
+					params += `\n        staffwidth: ${this.editorParams.render_options.staffwidth},`;
+				if (this.editorParams.render_options.paddingtop !== "15")
+					params += `\n        paddingtop: ${this.editorParams.render_options.paddingtop},`;
+				if (this.editorParams.render_options.paddingbottom !== "30")
+					params += `\n        paddingbottom: ${this.editorParams.render_options.paddingbottom},`;
+				if (this.editorParams.render_options.paddingright !== "50")
+					params += `\n        paddingright: ${this.editorParams.render_options.paddingright},`;
+				if (this.editorParams.render_options.paddingleft !== "15")
+					params += `\n        paddingleft: ${this.editorParams.render_options.paddingleft},`;
+				if (this.editorParams.render_options.editable)
+					params += "\n        editable: true,";
+				if (this.editorParams.render_options.add_classes)
+					params += "\n        add_classes: true,";
+				if (this.editorParams.render_options.highlightListener || this.editorParams.render_options.modelChangedListener) {
+					params += "\n        listener: { ";
+					if (this.editorParams.render_options.highlightListener)
+						params += "highlight: function(abcElem) { console.log(abcElem, tuneNumber); }, ";
+					if (this.editorParams.render_options.modelChangedListener)
+						params += "modelChanged: function(abcElem) { console.log(abcElem); }, ";
+					params += "},";
+				}
+				if (this.editorParams.render_options.responsiveResize)
+					params += "\n        responsive: \"resize\",";
+				if (params === "")
+					params = "{ }";
+				else
+					params = `{${params}
+    }`;
+				return params;
+			},
+			highlightListenerCallback(abcElem,tuneNumber) {
+				this.highlightListenerOutput = `highlightListenerCallback(abcElem,tuneNumber)\n\nabcElem:\n`;
+				Object.keys(abcElem).forEach((key) => {
+					if (key === "abselem")
+						this.highlightListenerOutput += "    abselem: [object]\n";
+					else {
+						const value = JSON.stringify(abcElem[key]);
+						this.highlightListenerOutput += `    ${key}: ${value}\n`;
+					}
+				});
+				this.highlightListenerOutput += `tuneNumber: ${tuneNumber}\n`;
+			},
+			modelChangedListenerCallback(abcElem) {
+				console.log(abcElem);
+			},
 			resetDiv(id) {
 				const paper = document.getElementById(id);
 				paper.innerText = "";
@@ -200,6 +324,7 @@ K:Em
 				this.editorParams.midi_options.generateInline = this.editorParams.specifyInlineMidiId;
 				this.editorParams.midi_options.generateDownload = this.editorParams.specifyDownloadMidiId;
 				this.editorParams.midi_options.midi_download_id = this.editorParams.specifyDownloadMidiId ? "midi-download" : undefined;
+				this.constructEngraverParams();
 
 				this.resetDiv("warnings-id");
 				this.resetDiv("midi-download");
@@ -279,5 +404,9 @@ K:Em
 	}
 	.interactive-page #warnings-id:empty {
 		display: none;
+	}
+	.interactive-page .indented {
+		margin-left: 30px;
+		margin-bottom: 10px;
 	}
 </style>
