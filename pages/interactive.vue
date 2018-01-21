@@ -108,6 +108,10 @@
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
 					<div>
+						<div v-if="editorParams.callbackOnChange">
+							<div class="footnote">Type in the textarea to see the output of the callback function.</div>
+							<code class="indented">{{onChangeOutput}}</code>
+						</div>
 						<div v-if="editorParams.render_options.highlightListener">
 							<div class="footnote">Click on the displayed music to see the output of the callback function.</div>
 							<code class="indented">{{highlightListenerOutput}}</code>
@@ -190,6 +194,7 @@ K:Em
 				optionsOpen: true,
 				outputOpen: true,
 				highlightListenerOutput: "",
+				onChangeOutput: "",
 			}
 		},
 		watch: {
@@ -304,6 +309,9 @@ K:Em
 			modelChangedListenerCallback(abcElem) {
 				console.log(abcElem);
 			},
+			onChangeCallback(editorInstance) {
+				this.onChangeOutput = `onChangeCallback(editorInstance)\n\neditorInstance.isDirty() returns ${editorInstance.isDirty()}\n`;
+			},
 			resetDiv(id) {
 				const paper = document.getElementById(id);
 				paper.innerText = "";
@@ -317,6 +325,8 @@ K:Em
 
 				this.editorParams.paper_id = "paper";
 				this.editorParams.warnings_id = this.editorParams.specifyWarningsId ? "warnings-id" : undefined;
+				this.editorParams.onchange = this.editorParams.callbackOnChange ? this.onChangeCallback : undefined;
+
 				this.editorParams.midi_download_id = this.editorParams.specifyDownloadMidiId ? "midi-download" : undefined;
 				this.editorParams.midi_id = this.editorParams.specifyInlineMidiId ? "midi-inline" : undefined;
 				this.editorParams.generate_midi = (this.editorParams.specifyDownloadMidiId || this.editorParams.specifyInlineMidiId);
@@ -324,6 +334,7 @@ K:Em
 				this.editorParams.midi_options.generateInline = this.editorParams.specifyInlineMidiId;
 				this.editorParams.midi_options.generateDownload = this.editorParams.specifyDownloadMidiId;
 				this.editorParams.midi_options.midi_download_id = this.editorParams.specifyDownloadMidiId ? "midi-download" : undefined;
+
 				this.constructEngraverParams();
 
 				this.resetDiv("warnings-id");
