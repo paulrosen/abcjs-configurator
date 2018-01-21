@@ -80,13 +80,13 @@
 					<div>
 						<v-btn outline color="primary" @click="setNotDirty">Set Not Dirty</v-btn>
 						<v-btn-toggle v-model="isReadOnly">
-							<v-btn outline color="primary" @click="setReadOnly">Set Read Only</v-btn>
+							<v-btn outline color="primary" value="writable" @click="setReadOnly">Set Read Only</v-btn>
 						</v-btn-toggle>
 						<v-btn-toggle v-model="isPaused">
-							<v-btn outline color="primary" @click="pause">Pause</v-btn>
+							<v-btn outline color="primary" value="running" @click="pause">Pause</v-btn>
 						</v-btn-toggle>
 						<v-btn-toggle v-model="isMidiPaused">
-							<v-btn outline color="primary" @click="pauseMidi">Pause MIDI</v-btn>
+							<v-btn outline color="primary" value="running" @click="pauseMidi">Pause MIDI</v-btn>
 						</v-btn-toggle>
 					</div>
 					<div>
@@ -171,9 +171,12 @@
 						midi_id: null,
 					}
 				},
-				isPaused: false,
-				isReadOnly: false,
-				isMidiPaused: false,
+
+				theEditor: null,
+				isPaused: null,
+				isReadOnly: null,
+				isMidiPaused: null,
+
 				abcInput: `X: 31
 T:Green Light
 M:4/4
@@ -341,20 +344,27 @@ K:Em
 				this.resetDiv("midi-download");
 				this.resetDiv("midi-inline");
 
-				new abcjs.Editor("textarea-id",
+				this.theEditor = new abcjs.Editor("textarea-id",
 					this.editorParams);
 			},
 			setNotDirty() {
-
+				if (this.theEditor)
+					this.theEditor.setNotDirty();
 			},
 			setReadOnly() {
-
+				if (this.theEditor) {
+					this.theEditor.setReadOnly(this.isReadOnly !== 'writable');
+				}
 			},
 			pause() {
-
+				if (this.theEditor) {
+					this.theEditor.pause(this.isPaused !== 'running');
+				}
 			},
 			pauseMidi() {
-
+				if (this.theEditor) {
+					this.theEditor.pauseMidi(this.isMidiPaused !== 'running');
+				}
 			},
 	// 	| `setReadOnly(bool)` |adds or removes the class abc_textarea_readonly, and adds or removes the attribute readonly=yes |
 	// 	| `setNotDirty()` | Called by the client app to reset the dirty flag |
@@ -419,5 +429,8 @@ K:Em
 	.interactive-page .indented {
 		margin-left: 30px;
 		margin-bottom: 10px;
+	}
+	.abc_textarea_readonly {
+		background: linear-gradient(to right, rgba(230,150,150,0) 0%,rgba(230,150,150,1) 100%);
 	}
 </style>
