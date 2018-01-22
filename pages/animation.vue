@@ -24,12 +24,14 @@ abcjs.stopAnimation();
 
 abcjs.pauseAnimation(true | false);
 
+<template v-if="showCursor">
 &lt;style&gt;
-    .cursor {
+    #paper .cursor {
         background-color: #ffffc0;
         opacity: 0.5
     }
 &lt;/style&gt;
+</template>
 </code>
 				</v-card-text>
 			</v-card>
@@ -47,9 +49,9 @@ abcjs.pauseAnimation(true | false);
 							v-model="bpm"
 							label="Beats Per Minute"
 					></v-text-field>
-					<v-checkbox label="Hide Finished Measures" v-model="hideFinishedMeasures" light></v-checkbox>
-					<v-checkbox label="Hide Current Measure" v-model="hideCurrentMeasure" light></v-checkbox>
-					<v-checkbox label="Show Cursor" v-model="showCursor" light></v-checkbox>
+						<CheckboxItem label="Hide Finished Measures" :help="helpText.hideFinishedMeasures" v-model="hideFinishedMeasures"></CheckboxItem>
+						<CheckboxItem label="Hide Current Measure" :help="helpText.hideCurrentMeasure" v-model="hideCurrentMeasure"></CheckboxItem>
+						<CheckboxItem label="Show Cursor" :help="helpText.showCursor" v-model="showCursor"></CheckboxItem>
 					</v-layout>
 					<v-btn round color="primary" @click="start">Start</v-btn>
 					<v-btn outline color="primary" @click="stop">Stop</v-btn>
@@ -74,8 +76,10 @@ abcjs.pauseAnimation(true | false);
 
 <script>
 	import {mapGetters} from 'vuex';
+	import CheckboxItem from "../components/CheckboxItem";
 
 	export default {
+		components: {CheckboxItem},
 		head() {
 			return {
 				title: this.appTitle()
@@ -91,6 +95,12 @@ abcjs.pauseAnimation(true | false);
 				javascriptOpen: true,
 				optionsOpen: true,
 				outputOpen: true,
+
+				helpText: {
+					hideFinishedMeasures: "As soon as a measure has been passed in the animation, then it is hidden. This is useful if you are trying to keep the user focused on the upcoming music and not look back at previously played measures.",
+					hideCurrentMeasure: "As soon as a measure is about to be played, it is hidden. This is useful if you are trying to get the user to read ahead and memorize each measure as it happens.",
+					showCursor: "When animating, move an element along in time. This element has the selector \"#paper .cursor\" and needs to have some CSS applied to it to be visible. A possible styling is shown.",
+				}
 			};
 		},
 		mounted() {
@@ -127,7 +137,7 @@ abcjs.pauseAnimation(true | false);
 		max-width: 250px;
 		margin-right: 10px;
 	}
-	.cursor {
+	#paper .cursor {
 		border-left: 1px solid #3D9AFC;
 	}
 	.bpm-input {
