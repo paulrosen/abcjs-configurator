@@ -1,15 +1,15 @@
 <template>
 	<div class="checkbox-item">
-		<v-checkbox :label="label" v-model="checkValue" persistent-hint :hint="help+helpButton()"></v-checkbox>
-		<v-btn color="primary" dark @click.stop="openDialog = true">Open Dialog 2</v-btn>
-		<v-dialog v-model="openDialog" max-width="500px">
+		<v-checkbox :label="label" v-model="checkValue"></v-checkbox>
+		<v-btn flat icon @click.stop="openDialog = true" class="help-button blue-gray" v-if="help" title="Click for more info.">
+			<v-icon>info_outline</v-icon>
+		</v-btn>
+		<v-dialog v-model="openDialog" max-width="400px" v-if="help">
 			<v-card>
 				<v-card-title>
-					Dialog 2
+					Explanation of {{label}}
 				</v-card-title>
-				<v-card-text>
-					here it is.
-				</v-card-text>
+				<v-card-text v-html="help"></v-card-text>
 				<v-card-actions>
 					<v-btn color="primary" flat @click.stop="openDialog=false">Close</v-btn>
 				</v-card-actions>
@@ -37,31 +37,39 @@
 			this.checkValue = this.value;
 			if (this.help) {
 				const label = this.$children[0].$el.querySelector("label");
-				// label.innerHTML = `${label.innerHTML}<button type="button" class="info-button blue-gray" title="${this.help}" onclick="this.helpRequested()"><div><i aria-hidden="true" class="material-icons icon">info_outline</i></div></button>`;
+				const box = this.$children[0].$el.querySelector(".input-group--selection-controls__ripple");
+				const width = box.offsetWidth + label.offsetWidth - 14; // not sure where the 14 comes from.
+				const helpButton = this.$children[1].$el;
+				helpButton.classList.remove("btn");
+				helpButton.classList.remove("btn--flat");
+				helpButton.classList.remove("btn--icon");
+				helpButton.style.left = width + "px";
 			}
 		},
 		methods: {
-			helpRequested(ev) {
-				ev.preventDefault();
-				console.log("got here");
-			},
-			helpButton() {
-				return `<button type="button" class="info-button blue-gray" title="${this.help}" @click.stop="openDialog = true"><div><i aria-hidden="true" class="material-icons icon">info_outline</i></div></button>`
-			},
 		}
 	};
 </script>
 
 <style>
 	.checkbox-item {
+		position: relative;
 		min-width: 250px;
 		max-width: 250px;
 		margin-right: 10px;
 	}
-	.info-button i {
-		font-size: 12px;
+	.checkbox-item label {
+		width: initial;
+	}
+	.checkbox-item .help-button {
 		position: absolute;
-		top: 4px;
-		margin-left: 2px;
+		top: 5px;
+	}
+	.checkbox-item .help-button .btn__content {
+		padding: 0;
+	}
+	.checkbox-item .help-button i {
+		font-size: 12px;
+		float: left;
 	}
 </style>
