@@ -23,6 +23,7 @@
 					<v-layout wrap justify-start align-center>
 					<v-checkbox label="Inline MIDI" v-model="editorParams.specifyInlineMidiId"></v-checkbox>
 					<v-checkbox label="Download MIDI" v-model="editorParams.specifyDownloadMidiId"></v-checkbox>
+						<!--<CheckboxItem label="Through Component" help="Here's some text." v-model="editorParams.gui"></CheckboxItem>-->
 					<v-checkbox label="Show Warnings" v-model="editorParams.specifyWarningsId"></v-checkbox>
 					<v-checkbox label="Callback On Change" v-model="editorParams.callbackOnChange"></v-checkbox>
 					<v-checkbox label="GUI Mode" v-model="editorParams.gui"></v-checkbox>
@@ -132,9 +133,12 @@
 
 <script>
 	import {mapGetters, mapMutations} from 'vuex';
+	import CheckboxItem from "../components/CheckboxItem";
+
 	const abcjs = process.browser ? require('abcjs/midi.js') : null; // This requires document and window, so can't be used on the server side.
 
 	export default {
+		components: {CheckboxItem},
 		head() {
 			return {
 				title: this.appTitle()
