@@ -21,13 +21,12 @@
 				<v-card-text :class="optionsOpen ? 'opened' : 'closed'">
 					<h2>Editor Parameters</h2>
 					<v-layout wrap justify-start align-center>
-					<v-checkbox label="Inline MIDI" v-model="editorParams.specifyInlineMidiId"></v-checkbox>
-					<v-checkbox label="Download MIDI" v-model="editorParams.specifyDownloadMidiId"></v-checkbox>
-						<!--<CheckboxItem label="Through Component" help="Here's some text." v-model="editorParams.gui"></CheckboxItem>-->
-					<v-checkbox label="Show Warnings" v-model="editorParams.specifyWarningsId"></v-checkbox>
-					<v-checkbox label="Callback On Change" v-model="editorParams.callbackOnChange"></v-checkbox>
-					<v-checkbox label="GUI Mode" v-model="editorParams.gui"></v-checkbox>
-					<v-checkbox label="Use Dirty Flag" v-model="editorParams.indicate_changed"></v-checkbox>
+						<CheckboxItem label="Inline MIDI" :help="helpText.specifyInlineMidiId" v-model="editorParams.specifyInlineMidiId"></CheckboxItem>
+						<CheckboxItem label="Download MIDI" :help="helpText.specifyDownloadMidiId" v-model="editorParams.specifyDownloadMidiId"></CheckboxItem>
+						<CheckboxItem label="Show Warnings" :help="helpText.specifyWarningsId" v-model="editorParams.specifyWarningsId"></CheckboxItem>
+						<CheckboxItem label="Callback On Change" :help="helpText.callbackOnChange" v-model="editorParams.callbackOnChange"></CheckboxItem>
+						<CheckboxItem label="GUI Mode" :help="helpText.gui" v-model="editorParams.gui"></CheckboxItem>
+						<CheckboxItem label="Use Dirty Flag" :help="helpText.indicate_changed" v-model="editorParams.indicate_changed"></CheckboxItem>
 					</v-layout>
 
 					<h2>Parser Parameters</h2>
@@ -174,6 +173,14 @@
 						midi_download_id: null,
 						midi_id: null,
 					}
+				},
+				helpText: {
+					specifyInlineMidiId: "This creates an audio player in the element that is passed in. That control keeps up with changes to the textarea so the audio is always reflective of the user's input. If you use this, then you must use the \"abcjs/midi\" version of the library. There is also some CSS that is required. You can use the default in \"abcjs-midi.css\" or you can use your own.",
+					specifyDownloadMidiId: "This creates a link in the element that is passed in that allows the user to download a MIDI file that is generated from the ABC string in the textarea.  If you use this, then you must use the \"abcjs/midi\" version of the library.",
+					specifyWarningsId: "This will print all warnings from the parser in the element that is passed in. It is a good idea to supply this because this provides valuable feedback to the end user.",
+					callbackOnChange: "Pass a function in that will be called everytime the user types anything in the textarea. This is particularly useful for knowing when the user has unsaved changes. The parameter that is passed to this function is the instance of the editor. Note that there are many undocumented functions and variables in this -- use them with caution because they could change in a future version of abcjs. The one function that will not change is the isDirty() function. Note that isDirty() will always return false unless you also specify \"Use Dirty Flag\".",
+					gui: "TODO",
+					indicate_changed: "Set this flag if you care about whether the user has changed the contents of the textarea. If you are creating an app that allows the user to create and save ABC strings, you can use this to prompt the user to save their changes. The class \"abc_textarea_dirty\" is put on the editor. Combined with the \"Callback On Change\" parameter, you have the tools to create a full editor.",
 				},
 
 				theEditor: null,
@@ -393,19 +400,6 @@ K:Em
 	// | `highlight(abcelem)` | Called by the engraver_controller to highlight an area. |
 	// | `pause(bool)` | Stops the automatic rendering when the user is typing. |
 	// | `pauseMidi(shouldPause)` | Stops the automatic re-rendering of the MIDI. |
-	//
-	// | editorParams | Description |
-	// | ------------- | ----------- |
-	// | `canvas_id` or `paper_id` | HTML id to draw in. If not present, then the drawing happens just below the editor. |
-	// | `midi_id` | if present, the HTML id to place the midi control. Otherwise it is placed in the same div as the paper. An encompassing `div` surrounds each control with the class in the format `"inline-midi midi-%d"`. |
-	// | `midi_download_id` | if present, the HTML id to place the midi download link. Otherwise, if `midi_id` is present it is placed there, otherwise it is placed in the same div as the paper. An encompassing `div` surrounds each control with the class in the format `"download-midi midi-%d"`.|
-	// | `warnings_id` | if present, the HTML id to place the warnings. Otherwise they are placed in the same div as the paper. |
-	// | `onchange` | if present, the callback function to call whenever there has been a change. |
-	// | `gui` | if present, the paper can send changes back to the editor (presumably because the user changed something directly.) |
-	// | `parser_options` | options to send to the parser engine. |
-	// | `midi_options` | options to send to the midi engine. |
-	// | `render_options` | options to send to the render engine. |
-	// | `indicate_changed` | the dirty flag is set if this is true. |
 
 </script>
 
