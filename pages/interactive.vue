@@ -31,7 +31,7 @@
 
 					<h2>Parser Parameters</h2>
 					<v-layout wrap justify-start align-center>
-						<v-checkbox label="Format For Printing" v-model="editorParams.parser_options.print"></v-checkbox>
+						<CheckboxItem label="Format For Printing" :help="helpText.print" v-model="editorParams.parser_options.print"></CheckboxItem>
 					</v-layout>
 
 					<h2>Engraver Parameters</h2>
@@ -66,11 +66,11 @@
 								v-model="editorParams.render_options.paddingleft"
 								label="Padding Left"
 						></v-text-field>
-						<v-checkbox label="Editable" v-model="editorParams.render_options.editable"></v-checkbox>
-						<v-checkbox label="Add Classes" v-model="editorParams.render_options.add_classes"></v-checkbox>
-						<v-checkbox label="User Click Listener" v-model="editorParams.render_options.highlightListener"></v-checkbox>
-						<v-checkbox label="Music Changed Listener" v-model="editorParams.render_options.modelChangedListener"></v-checkbox>
-						<v-checkbox label="Responsive Sizing" v-model="editorParams.render_options.responsiveResize"></v-checkbox>
+						<CheckboxItem label="Editable" :help="helpText.editable" v-model="editorParams.render_options.editable"></CheckboxItem>
+						<CheckboxItem label="Add Classes" :help="helpText.add_classes" v-model="editorParams.render_options.add_classes"></CheckboxItem>
+						<CheckboxItem label="User Click Listener" :help="helpText.highlightListener" v-model="editorParams.render_options.highlightListener"></CheckboxItem>
+						<CheckboxItem label="Music Changed Listener" :help="helpText.modelChangedListener" v-model="editorParams.render_options.modelChangedListener"></CheckboxItem>
+						<CheckboxItem label="Responsive Sizing" :help="helpText.responsiveResize" v-model="editorParams.render_options.responsiveResize"></CheckboxItem>
 					</v-layout>
 
 					<h2>MIDI Parameters</h2>
@@ -181,6 +181,12 @@
 					callbackOnChange: "Pass a function in that will be called everytime the user types anything in the textarea. This is particularly useful for knowing when the user has unsaved changes. The parameter that is passed to this function is the instance of the editor. Note that there are many undocumented functions and variables in this -- use them with caution because they could change in a future version of abcjs. The one function that will not change is the isDirty() function. Note that isDirty() will always return false unless you also specify \"Use Dirty Flag\".",
 					gui: "TODO",
 					indicate_changed: "Set this flag if you care about whether the user has changed the contents of the textarea. If you are creating an app that allows the user to create and save ABC strings, you can use this to prompt the user to save their changes. The class \"abc_textarea_dirty\" is put on the editor. Combined with the \"Callback On Change\" parameter, you have the tools to create a full editor.",
+					print: "Make the size of the SVG appropriate for a letter-sized area.",
+					editable: "TODO",
+					add_classes: "This adds many classes to the elements in the SVG. That allows the various parts of the music to be found and manipulated after being drawn.",
+					highlightListener: "This is a callback whenever the user clicks on an element of the SVG. The parameters passed are \"abcElem\" and \"tuneNumber\". The \"abcElem\" contains many properties that are useful for determining what was clicked on. Those properties are subject to change in a future version of abcjs, though, so use with caution. If there are multiple tunes in the source ABC string, then \"tuneNumber\" is the tune that was clicked on.",
+					modelChangedListener: "TODO",
+					responsiveResize: "This changes the styles on both the encompassing element and the SVG element that causes the SVG to grow and shrink in response to changes of the width of the parent element.",
 				},
 
 				theEditor: null,

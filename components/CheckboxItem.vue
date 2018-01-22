@@ -7,7 +7,7 @@
 		<v-dialog v-model="openDialog" max-width="400px" v-if="help">
 			<v-card>
 				<v-card-title>
-					Explanation of {{label}}
+					Explanation of "{{label}}"
 				</v-card-title>
 				<v-card-text v-html="help"></v-card-text>
 				<v-card-actions>
