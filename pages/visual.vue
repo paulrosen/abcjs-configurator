@@ -43,10 +43,10 @@
 
 					<h2>Parser Parameters</h2>
 					<v-layout wrap justify-start align-center>
-					<v-checkbox label="Format For Printing" v-model="parserParams.print"></v-checkbox>
-					<v-checkbox label="Parse Header Only" v-model="parserParams.header_only"></v-checkbox>
-					<v-checkbox label="Stop Parsing on Warning" v-model="parserParams.stop_on_warning"></v-checkbox>
-					<v-checkbox label="Insert Hint Measures" v-model="parserParams.hint_measures"></v-checkbox>
+						<CheckboxItem label="Format For Printing" :help="helpText.print" v-model="parserParams.print"></CheckboxItem>
+						<CheckboxItem label="Parse Header Only" :help="helpText.header_only" v-model="parserParams.header_only"></CheckboxItem>
+						<CheckboxItem label="Stop Parsing on Warning" :help="helpText.stop_on_warning" v-model="parserParams.stop_on_warning"></CheckboxItem>
+						<CheckboxItem label="Insert Hint Measures" :help="helpText.hint_measures" v-model="parserParams.hint_measures"></CheckboxItem>
 					</v-layout>
 
 					<h2>Engraver Parameters</h2>
@@ -149,8 +149,10 @@
 
 <script>
 	import {mapGetters} from 'vuex';
+	import CheckboxItem from "../components/CheckboxItem";
 
 	export default {
+		components: {CheckboxItem},
 		head() {
 			return {
 				title: this.appTitle()
@@ -189,6 +191,16 @@
 				optionsOpen: true,
 				outputOpen: true,
 				highlightListenerOutput: "",
+
+				helpText: {
+					print: "Make the size of the SVG appropriate for a letter-sized area.",
+					editable: "TODO",
+					add_classes: "This adds many classes to the elements in the SVG. That allows the various parts of the music to be found and manipulated after being drawn.",
+					responsiveResize: "This changes the styles on both the encompassing element and the SVG element that causes the SVG to grow and shrink in response to changes of the width of the parent element.",
+					header_only: "Only parse the header of each tune instead of the whole tune. This is useful to create an index.",
+					stop_on_warning: "Only parse a tune until a warning is encountered.",
+					hint_measures: "At the end of each line, put a copy of the first measure of the next line. This measure has the class \"abcjs-hint\" and should be styled in a unique way so that it is clear.",
+				},
 			};
 		},
 		watch: {

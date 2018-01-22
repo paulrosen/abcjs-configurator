@@ -511,7 +511,7 @@ V:1 nm="abcjs"
 		margin: 0 0 10px 30px;
 		display: flex;
 		flex-direction: row;
-		align-items: center;
+		align-items: top;
 	}
 	.footnote::before {
 		content: "*";
