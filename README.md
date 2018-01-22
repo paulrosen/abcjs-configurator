@@ -1,6 +1,10 @@
 # abcjs-configurator
 > Understanding the options that are passed to abcjs
 
+This app contains every option that can be used in [abcjs](https://abcjs.net) and allows the user to easily play with each option.
+
+This app is deployed to [Configurator](https://configurator.abcjs.net) so you don't have to clone the project to get the benefit of it.
+
 ## This Project's Creation
 
 The initial generation of this project was done with:
