@@ -350,14 +350,16 @@ import abcjs from 'abcjs/midi;
 				return params;
 			},
 			listenerCallback(abcjsElement, currentEvent, context) {
-				this.listenerOutput = `<code class="indented">abcjsElement: &lt;div class="abcjs-inline-midi"&gt;
-currentEvent: {
-    currentTime: ${currentEvent.currentTime},
-    newBeat: ${currentEvent.newBeat},
-    duration: ${currentEvent.duration},
-    progress: ${currentEvent.progress},
-},
-context: ${context}
+				this.listenerOutput = `<code class="indented">listenerCallback(abcjsElement, currentEvent, context) {
+    abcjsElement: &lt;div class="abcjs-inline-midi"&gt;
+    currentEvent: {
+        currentTime: ${currentEvent.currentTime},
+        newBeat: ${currentEvent.newBeat},
+        duration: ${currentEvent.duration},
+        progress: ${currentEvent.progress},
+    },
+    context: ${context}
+}
 </code>`;
 			},
 			colorRange(range, color) {
@@ -378,12 +380,12 @@ context: ${context}
 						el.forEach((item) => {
 							classes.push(item.attrs.class);
 						});
-						arr.push(`        ${classes.join(" | ")}`);
+						arr.push(`            ${classes.join(" | ")}`);
 					});
 					str = arr.join("\n");
 				}
 				if (!str)
-					str = "(no elements)";
+					str = "        (no elements)";
 				return str;
 			},
 			formatRange(range) {
@@ -391,22 +393,24 @@ context: ${context}
 					return "(null)";
 
 				return `{
-    type: ${range.type},
-    elements (SVG paths):
+        type: ${range.type},
+        elements (SVG paths):
 ${this.formatElements(range.elements)},
-    milliseconds: ${range.milliseconds},
-    top: ${range.top},
-    left: ${range.left},
-    width: ${range.width},
-    height: ${range.height},
-}
+        milliseconds: ${range.milliseconds},
+        top: ${range.top},
+        left: ${range.left},
+        width: ${range.width},
+        height: ${range.height},
+    }
 `;
 			},
 			animateCallback(lastRange, currentRange, context) {
 				// This provides the actual visual note being played. It can be used to create the "bouncing ball" effect.
-				this.animationOutput = `<code class="indented">lastRange: ${this.formatRange(lastRange)}
-currentRange: ${this.formatRange(currentRange)}
-context: ${context}
+				this.animationOutput = `<code class="indented">animateCallback(lastRange, currentRange, context) {
+    lastRange: ${this.formatRange(lastRange)}
+    currentRange: ${this.formatRange(currentRange)}
+    context: ${context}
+}
 </code>`;
 
 				this.colorRange(lastRange, "#000000"); // Set the old note back to black.
