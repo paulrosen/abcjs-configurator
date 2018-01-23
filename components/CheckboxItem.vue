@@ -54,8 +54,8 @@
 <style>
 	.checkbox-item {
 		position: relative;
-		min-width: 250px;
-		max-width: 250px;
+		min-width: 240px;
+		max-width: 240px;
 		margin-right: 10px;
 	}
 	.checkbox-item label {

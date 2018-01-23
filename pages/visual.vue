@@ -81,11 +81,11 @@
 							v-model="engraverParams.paddingleft"
 							label="Padding Left"
 					></v-text-field>
-					<v-checkbox label="Editable" v-model="engraverParams.editable"></v-checkbox>
-					<v-checkbox label="Add Classes" v-model="engraverParams.add_classes"></v-checkbox>
-					<v-checkbox label="User Click Listener" v-model="engraverParams.highlightListener"></v-checkbox>
-					<v-checkbox label="Music Changed Listener" v-model="engraverParams.modelChangedListener"></v-checkbox>
-					<v-checkbox label="Responsive Sizing" v-model="engraverParams.responsiveResize"></v-checkbox>
+						<CheckboxItem label="Editable" :help="helpText.editable" v-model="engraverParams.editable"></CheckboxItem>
+						<CheckboxItem label="Add Classes" :help="helpText.add_classes" v-model="engraverParams.add_classes"></CheckboxItem>
+						<CheckboxItem label="User Click Listener" :help="helpText.highlightListener" v-model="engraverParams.highlightListener"></CheckboxItem>
+						<CheckboxItem label="Music Changed Listener" :help="helpText.modelChangedListener" v-model="engraverParams.modelChangedListener"></CheckboxItem>
+						<CheckboxItem label="Responsive Sizing" :help="helpText.responsiveResize" v-model="engraverParams.responsiveResize"></CheckboxItem>
 					</v-layout>
 
 					<h2>Renderer Params</h2>
@@ -95,9 +95,9 @@
 							v-model="renderParams.startingTune"
 							label="Starting Tune"
 					></v-text-field>
-					<v-checkbox label="viewportHorizontal" v-model="renderParams.viewportHorizontal"></v-checkbox>
-					<v-checkbox label="scrollHorizontal" v-model="renderParams.scrollHorizontal"></v-checkbox>
-					<v-checkbox label="Separate SVG Per Line" v-model="renderParams.oneSvgPerLine"></v-checkbox>
+						<CheckboxItem label="viewportHorizontal" :help="helpText.viewportHorizontal" v-model="renderParams.viewportHorizontal"></CheckboxItem>
+						<CheckboxItem label="scrollHorizontal" :help="helpText.scrollHorizontal" v-model="renderParams.scrollHorizontal"></CheckboxItem>
+						<CheckboxItem label="Separate SVG Per Line" :help="helpText.oneSvgPerLine" v-model="renderParams.oneSvgPerLine"></CheckboxItem>
 					</v-layout>
 				</v-card-text>
 			</v-card>
@@ -200,7 +200,12 @@
 					header_only: "Only parse the header of each tune instead of the whole tune. This is useful to create an index.",
 					stop_on_warning: "Only parse a tune until a warning is encountered.",
 					hint_measures: "At the end of each line, put a copy of the first measure of the next line. This measure has the class \"abcjs-hint\" and should be styled in a unique way so that it is clear.",
-				},
+					highlightListener: "This is a callback whenever the user clicks on an element of the SVG. The parameters passed are \"abcElem\" and \"tuneNumber\". The \"abcElem\" contains many properties that are useful for determining what was clicked on. Those properties are subject to change in a future version of abcjs, though, so use with caution. If there are multiple tunes in the source ABC string, then \"tuneNumber\" is the tune that was clicked on.",
+					modelChangedListener: "TODO",
+					viewportHorizontal: "TODO",
+					scrollHorizontal: "TODO",
+					oneSvgPerLine: "Each line of music is rendered in its own SVG. They all appear as children of the original element that the music is drawn to, and each SVG is also wrapped in a DIV. The heading is attached to the first line of music and the footer is attached to the last line of music.",
+				}
 			};
 		},
 		watch: {
