@@ -67,6 +67,11 @@ import abcjs from 'abcjs/midi;
 					<h2>Inline Params</h2>
 					<v-layout wrap justify-start align-center>
 						<CheckboxItem label="Inline MIDI?" :help="helpText.generateInline" v-model="midiParams.generateInline"></CheckboxItem>
+						<CheckboxItem label="Show Loop Toggle?" :help="helpText.loopToggle" v-model="midiParams.inlineControls.loopToggle"></CheckboxItem>
+						<CheckboxItem label="Standard Controls?" :help="helpText.standard" v-model="midiParams.inlineControls.standard"></CheckboxItem>
+						<CheckboxItem label="Tempo Control?" :help="helpText.tempo" v-model="midiParams.inlineControls.tempo"></CheckboxItem>
+						<CheckboxItem label="Hide?" :help="helpText.hide" v-model="midiParams.inlineControls.hide"></CheckboxItem>
+						<CheckboxItem label="Auto Play?" :help="helpText.startPlaying" v-model="midiParams.inlineControls.startPlaying"></CheckboxItem>
 						<v-text-field
 								class="numeric"
 								v-model="midiParams.preTextInline"
@@ -77,11 +82,6 @@ import abcjs from 'abcjs/midi;
 								v-model="midiParams.postTextInline"
 								label="Post-Inline Text (%T=title)"
 						></v-text-field>
-						<CheckboxItem label="Show Loop Toggle?" :help="helpText.loopToggle" v-model="midiParams.inlineControls.loopToggle"></CheckboxItem>
-						<CheckboxItem label="Standard Controls?" :help="helpText.standard" v-model="midiParams.inlineControls.standard"></CheckboxItem>
-						<CheckboxItem label="Tempo Control?" :help="helpText.tempo" v-model="midiParams.inlineControls.tempo"></CheckboxItem>
-						<CheckboxItem label="Hide?" :help="helpText.hide" v-model="midiParams.inlineControls.hide"></CheckboxItem>
-						<CheckboxItem label="Auto Play?" :help="helpText.startPlaying" v-model="midiParams.inlineControls.startPlaying"></CheckboxItem>
 						<v-text-field
 								class="numeric"
 								v-model="midiParams.inlineControls.tooltipLoop"
@@ -150,6 +150,7 @@ import abcjs from 'abcjs/midi;
 					<div v-html="listenerOutput" v-if="listenerOutput"></div>
 					<div id="midi-id"></div>
 					<div id="paper" class="paper amber lighten-4"></div>
+					<div v-html="animationOutput" v-if="animationOutput"></div>
 				</v-card-text>
 			</v-card>
 		</v-flex>
@@ -209,6 +210,7 @@ import abcjs from 'abcjs/midi;
 				outputOpen: true,
 				tunes: null,
 				listenerOutput: null,
+				animationOutput: null,
 
 				helpText: {
 					generateDownload: "Do you want to generate a MIDI file? The user can click on a generated link to download that file.",
@@ -367,13 +369,52 @@ context: ${context}
 					});
 				}
 			},
+			formatElements(elements) {
+				let str = "";
+				let arr = [];
+				if (elements) {
+					elements.forEach((el) => {
+						let classes = [];
+						el.forEach((item) => {
+							classes.push(item.attrs.class);
+						});
+						arr.push(`        ${classes.join(" | ")}`);
+					});
+					str = arr.join("\n");
+				}
+				if (!str)
+					str = "(no elements)";
+				return str;
+			},
+			formatRange(range) {
+				if (!range)
+					return "(null)";
+
+				return `{
+    type: ${range.type},
+    elements (SVG paths):
+${this.formatElements(range.elements)},
+    milliseconds: ${range.milliseconds},
+    top: ${range.top},
+    left: ${range.left},
+    width: ${range.width},
+    height: ${range.height},
+}
+`;
+			},
 			animateCallback(lastRange, currentRange, context) {
 				// This provides the actual visual note being played. It can be used to create the "bouncing ball" effect.
+				this.animationOutput = `<code class="indented">lastRange: ${this.formatRange(lastRange)}
+currentRange: ${this.formatRange(currentRange)}
+context: ${context}
+</code>`;
+
 				this.colorRange(lastRange, "#000000"); // Set the old note back to black.
 				this.colorRange(currentRange, "#3D9AFC"); // Set the currently sounding note to blue.
 			},
 			redraw() {
 				this.listenerOutput = null;
+				this.animationOutput = null;
 				const midiParams = this.formatMidiParams();
 				const renderParams = this.formatRenderParams();
     			this.javascriptString = `abcjs.renderMidi(
