@@ -8,7 +8,10 @@
 					</v-btn>
 					JavaScript</v-card-title>
 				<v-card-text :class="javascriptOpen ? 'opened' : 'closed'">
-					<code class="code-full">import abcjs from 'abcjs/midi';
+					<code class="code-full">import 'font-awesome/css/font-awesome.min.css';
+import 'abcjs/abcjs-midi.css';
+import abcjs from 'abcjs/midi;
+
 {{javascriptString}}</code>
 				</v-card-text>
 			</v-card>
@@ -44,7 +47,7 @@
 					</v-layout>
 					<h2>Download Params</h2>
 					<v-layout wrap justify-start align-center>
-						<v-checkbox label="Downloadable MIDI?" v-model="midiParams.generateDownload" light></v-checkbox>
+						<CheckboxItem label="Downloadable MIDI?" :help="helpText.generateDownload" v-model="midiParams.generateDownload"></CheckboxItem>
 						<v-text-field
 								class="numeric"
 								v-model="midiParams.downloadLabel"
@@ -63,7 +66,7 @@
 					</v-layout>
 					<h2>Inline Params</h2>
 					<v-layout wrap justify-start align-center>
-						<v-checkbox label="Inline MIDI?" v-model="midiParams.generateInline" light></v-checkbox>
+						<CheckboxItem label="Inline MIDI?" :help="helpText.generateInline" v-model="midiParams.generateInline"></CheckboxItem>
 						<v-text-field
 								class="numeric"
 								v-model="midiParams.preTextInline"
@@ -74,11 +77,11 @@
 								v-model="midiParams.postTextInline"
 								label="Post-Inline Text (%T=title)"
 						></v-text-field>
-						<v-checkbox label="Show Loop Toggle?" v-model="midiParams.inlineControls.loopToggle" light></v-checkbox>
-						<v-checkbox label="Standard Controls?" v-model="midiParams.inlineControls.standard" light></v-checkbox>
-						<v-checkbox label="Tempo Control?" v-model="midiParams.inlineControls.tempo" light></v-checkbox>
-						<v-checkbox label="Hide?" v-model="midiParams.inlineControls.hide" light></v-checkbox>
-						<v-checkbox label="Auto Play?" v-model="midiParams.inlineControls.startPlaying" light></v-checkbox>
+						<CheckboxItem label="Show Loop Toggle?" :help="helpText.loopToggle" v-model="midiParams.inlineControls.loopToggle"></CheckboxItem>
+						<CheckboxItem label="Standard Controls?" :help="helpText.standard" v-model="midiParams.inlineControls.standard"></CheckboxItem>
+						<CheckboxItem label="Tempo Control?" :help="helpText.tempo" v-model="midiParams.inlineControls.tempo"></CheckboxItem>
+						<CheckboxItem label="Hide?" :help="helpText.hide" v-model="midiParams.inlineControls.hide"></CheckboxItem>
+						<CheckboxItem label="Auto Play?" :help="helpText.startPlaying" v-model="midiParams.inlineControls.startPlaying"></CheckboxItem>
 						<v-text-field
 								class="numeric"
 								v-model="midiParams.inlineControls.tooltipLoop"
@@ -108,8 +111,8 @@
 
 					<h2>Callback Params</h2>
 					<v-layout wrap justify-start align-center>
-						<v-checkbox label="Listener?" v-model="midiParams.doListener" light></v-checkbox>
-						<v-checkbox label="Animate?" v-model="midiParams.doAnimate" light></v-checkbox>
+						<CheckboxItem label="Listener?" :help="helpText.doListener" v-model="midiParams.doListener"></CheckboxItem>
+						<CheckboxItem label="Animate?" :help="helpText.doAnimate" v-model="midiParams.doAnimate"></CheckboxItem>
 						<v-text-field
 								class="numeric"
 								v-model="midiParams.context"
@@ -154,8 +157,10 @@
 
 <script>
 	import {mapGetters} from 'vuex';
+	import CheckboxItem from "../components/CheckboxItem";
 
 	export default {
+		components: {CheckboxItem},
 		head() {
 			return {
 				title: this.appTitle()
@@ -202,6 +207,34 @@
 				optionsOpen: true,
 				outputOpen: true,
 				tunes: null,
+
+				helpText: {
+					generateDownload: "Do you want to generate a MIDI file? The user can click on a generated link to download that file.",
+					generateInline: "Do you want to create an audio control so the user can interact with the audio in a familiar way? (Note that if you want to programmatically interact with the audio but not let the user have control, you should choose this option, but then hide the generated control.) The control has the class \"abcjs-inline-midi\".",
+
+					loopToggle: "Should the audio control contain a \"loop\" icon? This is a toggle. When set by the user, the audio will play repeatedly.",
+					standard: "Should the audio control contain the \"restart\", \"start/pause\", \"progress\", and \"clock\" elements? See the audio control on this page to see how they work.",
+					tempo: "Should the audio control contain an element that allows the user to change the speed of the playback?",
+					hide: "Should the audio control be hidden from the page? It can still be interacted with programmatically with the abcjs.midi.startPlaying() and abcjs.midi.stopPlaying() functions.",
+					startPlaying: "Should the music auto play as soon as it is ready? Combining this with \"hide\" and \"animate\" is a nice effect.",
+
+					doListener: "Pass a callback function here to receive a notification at regular intervals when time has passed. (That is, whether a note has started or stopped.) The function receives three parameters: the audio control element, and a status object, containing the fields: { currentTime, duration, newBeat, progress }, and whatever value is in the \"context\" parameter. The purpose of the \"context\" is to differentiate between multiple audio controls on a page.",
+					doAnimate: `Pass a callback function here to receive a notification whenever a MIDI event has passed. (That is, whether a note has started or stopped.) The function receives three parameters: lastRange, currentRange, and whatever value is in the \"context\" parameter. The purpose of the \"context\" is to differentiate between multiple audio controls on a page. The ranges are arrays of elements that can be manipulated however you like. The following is an example where the currently played notes are colored blue:
+
+		colorRange(range, color) {
+			if (range && range.elements) {
+				range.elements.forEach(function (set) {
+					set.forEach(function (item) {
+						item.attr({fill: color});
+					});
+				});
+			}
+		},
+		animateCallback(lastRange, currentRange, context) {
+			this.colorRange(lastRange, "#000000");
+			this.colorRange(currentRange, "#3D9AFC");
+		},`,
+				}
 			};
 		},
 		watch: {
@@ -346,11 +379,15 @@
 			},
 		}
 	}
+
+// soundfontUrl
+
+	// midi.startPlaying(audio element)
+	// midi.stopPlaying()
+
 // 	| `qpm` | 180 | The tempo, if not specified in abcString. |
 // 	| `program` | 0 | The midi program (aka "instrument") to use, if not specified in abcString. |
 // 	| `transpose` | 0 | The number of half-steps to transpose the everything, if not specified in abcString. |
-// 	| `generateDownload` | false | Whether to generate a download MIDI link. |
-// 	| `generateInline` | true | Whether to generate the inline MIDI controls. |
 // 	| `downloadLabel` | "download midi" | The text for the MIDI download. If it contains `%T` then that is replaced with the first title. If this is a function, then the result of that function is called. The function takes two parameters: the parsed tune and the zero-based index of the tune in the tunebook. |
 // 	| `preTextDownload` | "" | Text that appears right before the download link (can contain HTML markup). |
 // 	| `postTextDownload` | "" | Text that appears right after the download link (can contain HTML markup). |

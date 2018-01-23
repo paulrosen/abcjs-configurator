@@ -9,7 +9,7 @@
 				<v-card-title>
 					Explanation of "{{label}}"
 				</v-card-title>
-				<v-card-text v-html="help"></v-card-text>
+				<v-card-text v-html="help.replace(/\n/g, '<br>').replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;')"></v-card-text>
 				<v-card-actions>
 					<v-btn color="primary" flat @click.stop="openDialog=false">Close</v-btn>
 				</v-card-actions>

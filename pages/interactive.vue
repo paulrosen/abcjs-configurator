@@ -8,7 +8,8 @@
 					</v-btn>
 					JavaScript</v-card-title>
 				<v-card-text :class="javascriptOpen ? 'opened' : 'closed'">
-					<code class="code-full">import abcjs from 'abcjs';
+					<code class="code-full">{{importStatements}}
+
 {{javascriptString}}</code>
 				</v-card-text>
 			</v-card>
@@ -209,6 +210,7 @@ K:Em
 "Em"(gf)ed (Bd)(ef|"D"af)ef (af)ef|"Am7 (C7)"b2a2 (fe)d2|1"B"(ef)ed (Bd)(ef):|2"B"(ef)ed (BA)FF|
 `,
 
+				importStatements: "",
 				javascriptString: "",
 				javascriptOpen: true,
 				optionsOpen: true,
@@ -342,6 +344,9 @@ K:Em
 				this.javascriptString = `const abcEditor = new abcjs.Editor(
     "textarea-id",
     ${editorParams});`;
+				this.importStatements = this.editorParams.specifyInlineMidiId || this.editorParams.specifyDownloadMidiId ? `import 'font-awesome/css/font-awesome.min.css';
+import 'abcjs/abcjs-midi.css';
+import abcjs from 'abcjs/midi;` : "import abcjs from 'abcjs;";
 
 				this.editorParams.paper_id = "paper";
 				this.editorParams.warnings_id = this.editorParams.specifyWarningsId ? "warnings-id" : undefined;
