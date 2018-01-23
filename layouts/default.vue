@@ -295,4 +295,10 @@ V:1 nm="abcjs"
   .paper {
 	  margin-bottom: 15px;
   }
+
+  code.indented {
+	  margin-left: 30px;
+	  margin-bottom: 10px;
+  }
+
 </style>

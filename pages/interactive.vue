@@ -435,10 +435,6 @@ import abcjs from 'abcjs/midi;` : "import abcjs from 'abcjs;";
 	.interactive-page #warnings-id:empty {
 		display: none;
 	}
-	.interactive-page .indented {
-		margin-left: 30px;
-		margin-bottom: 10px;
-	}
 	.abc_textarea_readonly {
 		background: linear-gradient(to right, rgba(230,150,150,0) 0%,rgba(230,150,150,1) 100%);
 	}

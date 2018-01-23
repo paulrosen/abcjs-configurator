@@ -147,6 +147,7 @@ import abcjs from 'abcjs/midi;
 					</v-btn>
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
+					<div v-html="listenerOutput" v-if="listenerOutput"></div>
 					<div id="midi-id"></div>
 					<div id="paper" class="paper amber lighten-4"></div>
 				</v-card-text>
@@ -207,6 +208,7 @@ import abcjs from 'abcjs/midi;
 				optionsOpen: true,
 				outputOpen: true,
 				tunes: null,
+				listenerOutput: null,
 
 				helpText: {
 					generateDownload: "Do you want to generate a MIDI file? The user can click on a generated link to download that file.",
@@ -218,7 +220,7 @@ import abcjs from 'abcjs/midi;
 					hide: "Should the audio control be hidden from the page? It can still be interacted with programmatically with the abcjs.midi.startPlaying() and abcjs.midi.stopPlaying() functions.",
 					startPlaying: "Should the music auto play as soon as it is ready? Combining this with \"hide\" and \"animate\" is a nice effect.",
 
-					doListener: "Pass a callback function here to receive a notification at regular intervals when time has passed. (That is, whether a note has started or stopped.) The function receives three parameters: the audio control element, and a status object, containing the fields: { currentTime, duration, newBeat, progress }, and whatever value is in the \"context\" parameter. The purpose of the \"context\" is to differentiate between multiple audio controls on a page.",
+					doListener: "Pass a callback function here to receive a notification at regular intervals when time has passed. (That is, whether a note has started or stopped.) The function receives three parameters: the audio control element, a status object containing the fields: { currentTime, duration, newBeat, progress }, and whatever value is in the \"context\" parameter. The purpose of the \"context\" is to differentiate between multiple audio controls on a page.",
 					doAnimate: `Pass a callback function here to receive a notification whenever a MIDI event has passed. (That is, whether a note has started or stopped.) The function receives three parameters: lastRange, currentRange, and whatever value is in the \"context\" parameter. The purpose of the \"context\" is to differentiate between multiple audio controls on a page. The ranges are arrays of elements that can be manipulated however you like. The following is an example where the currently played notes are colored blue:
 
 		colorRange(range, color) {
@@ -346,7 +348,15 @@ import abcjs from 'abcjs/midi;
 				return params;
 			},
 			listenerCallback(abcjsElement, currentEvent, context) {
-				console.log(abcjsElement, currentEvent, context);
+				this.listenerOutput = `<code class="indented">abcjsElement: &lt;div class="abcjs-inline-midi"&gt;
+currentEvent: {
+    currentTime: ${currentEvent.currentTime},
+    newBeat: ${currentEvent.newBeat},
+    duration: ${currentEvent.duration},
+    progress: ${currentEvent.progress},
+},
+context: ${context}
+</code>`;
 			},
 			colorRange(range, color) {
 				if (range && range.elements) {
@@ -363,8 +373,7 @@ import abcjs from 'abcjs/midi;
 				this.colorRange(currentRange, "#3D9AFC"); // Set the currently sounding note to blue.
 			},
 			redraw() {
-				// import "font-awesome/css/font-awesome.min.css";
-				// import 'abcjs/abcjs-midi.css';
+				this.listenerOutput = null;
 				const midiParams = this.formatMidiParams();
 				const renderParams = this.formatRenderParams();
     			this.javascriptString = `abcjs.renderMidi(
@@ -393,10 +402,7 @@ import abcjs from 'abcjs/midi;
 // 	| `postTextDownload` | "" | Text that appears right after the download link (can contain HTML markup). |
 // 	| `preTextInline` | "" | Text that appears right before the MIDI controls (can contain HTML markup). If it contains `%T` then that is replaced with the first title. |
 // 	| `postTextInline` | "" | Text that appears right after the MIDI controls (can contain HTML markup). If it contains `%T` then that is replaced with the first title. |
-// 	| `listener` | null | Function that is called for each midi event. The parameters are the current abcjs element and the current MIDI event. |
-// 	| `animate` | null | Whether to do a "bouncing ball" effect on the visual music. `{ listener: callback, target: output of ABCJS.renderAbc, qpm: tempo }` This calls the listener whenever the current note has changed. It is called with both the last selected note and the newly selected note. The callback parameters are arrays of svg elements. |
 // 	| `context` | null | A string that is passed back to both the listener and animate callbacks. |
-// 	| `inlineControls` | { selectionToggle: false, loopToggle: false, standard: true, tempo: false, startPlaying: false } | These are the options for which buttons and functionality appear in the inline controls. This is a hash, and is defined below. |
 // 	| `drum` | "" | A string formatted like the `%%MIDI drum` specification. Using this parameter also implies `%%MIDI drumon` |
 // 	| `drumBars` | 1 |  How many bars to spread the drum pattern over. |
 // 	| `drumIntro` | 0 | How many bars of drum should precede the music. |
@@ -423,12 +429,6 @@ import abcjs from 'abcjs/midi;
 //
 // 	| `inlineControls` | Default | Description |
 // 	| ------------- | ----------- | ----------- |
-// 	| `selectionToggle` | false | Show a latched push button to play only the current selection. **Not yet implemented** |
-// 	| `loopToggle` | false | Show a a latched push button to start playing again when the end is reached. |
-// 	| `standard` | true | Show the start, pause, reset, and progress controls. |
-// 	| `hide` | false | Whether to show the control at all. |
-// 	| `startPlaying` | false | Whether to start the MIDI as soon as it is available. (Not available in the Editor. Only available when calling `ABCJS.renderMidi` ) |
-// 	| `tempo` | false | Show the tempo change controls. This is a spinner that starts at 100%. There is an absolute tempo printed next to it.  **Not yet implemented** |
 // 	| `tooltipSelection` | "Click to toggle play selection/play all." | The text of the tooltip.  **Not yet implemented** |
 // 	| `tooltipLoop` | "Click to toggle play once/repeat." | The text of the tooltip. |
 // 	| `tooltipReset` | "Click to go to beginning." | The text of the tooltip. |
