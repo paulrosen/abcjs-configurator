@@ -222,8 +222,8 @@ import abcjs from 'abcjs/midi;
 					hide: "Should the audio control be hidden from the page? It can still be interacted with programmatically with the abcjs.midi.startPlaying() and abcjs.midi.stopPlaying() functions.",
 					startPlaying: "Should the music auto play as soon as it is ready? Combining this with \"hide\" and \"animate\" is a nice effect.",
 
-					doListener: "Pass a callback function here to receive a notification at regular intervals when time has passed. (That is, whether a note has started or stopped.) The function receives three parameters: the audio control element, a status object containing the fields: { currentTime, duration, newBeat, progress }, and whatever value is in the \"context\" parameter. The purpose of the \"context\" is to differentiate between multiple audio controls on a page.",
-					doAnimate: `Pass a callback function here to receive a notification whenever a MIDI event has passed. (That is, whether a note has started or stopped.) The function receives three parameters: lastRange, currentRange, and whatever value is in the \"context\" parameter. The purpose of the \"context\" is to differentiate between multiple audio controls on a page. The ranges are arrays of elements that can be manipulated however you like. The following is an example where the currently played notes are colored blue:
+					doListener: "Pass a callback function here to receive a notification at regular intervals when time has passed. (That is, whether a note has started or stopped.) The function receives three parameters: the audio control element, a status object containing the fields: { currentTime, duration, newBeat, progress }, and whatever value is in the \"context\" parameter. The purpose of the \"context\" is to differentiate between multiple audio controls on a page. WARNING: Do not do any long processing in this function. It needs to return before the next MIDI event happens.",
+					doAnimate: `Pass a callback function here to receive a notification whenever a MIDI event has passed. (That is, whether a note has started or stopped.) The function receives three parameters: lastRange, currentRange, and whatever value is in the \"context\" parameter. The purpose of the \"context\" is to differentiate between multiple audio controls on a page. The ranges are arrays of elements that can be manipulated however you like. WARNING: Do not do any long processing in this function. It needs to return before the next MIDI event happens. The following is an example where the currently played notes are colored blue:
 
 		colorRange(range, color) {
 			if (range && range.elements) {
@@ -350,7 +350,8 @@ import abcjs from 'abcjs/midi;
 				return params;
 			},
 			listenerCallback(abcjsElement, currentEvent, context) {
-				this.listenerOutput = `<code class="indented">listenerCallback(abcjsElement, currentEvent, context) {
+				setTimeout(() => {
+					this.listenerOutput = `<code class="indented">listenerCallback(abcjsElement, currentEvent, context) {
     abcjsElement: &lt;div class="abcjs-inline-midi"&gt;
     currentEvent: {
         currentTime: ${currentEvent.currentTime},
@@ -361,6 +362,7 @@ import abcjs from 'abcjs/midi;
     context: ${context}
 }
 </code>`;
+				}, 0);
 			},
 			colorRange(range, color) {
 				if (range && range.elements) {

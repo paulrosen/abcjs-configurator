@@ -1,6 +1,10 @@
 <template>
-	<div class="checkbox-item">
-		<v-checkbox :label="label" v-model="checkValue"></v-checkbox>
+	<div class="text-input-item">
+		<v-text-field
+				class="numeric"
+				v-model="textValue"
+				:label="label"
+		></v-text-field>
 		<v-btn flat icon @click.stop="openDialog = true" class="help-button blue-gray" v-if="help" title="Click for more info.">
 			<v-icon>info_outline</v-icon>
 		</v-btn>
@@ -20,30 +24,27 @@
 
 <script>
 	export default {
-		name: "CheckboxItem",
+		name: "TextInputItem",
 		data() {
 			return {
-				checkValue: null,
+				textValue: "",
 				openDialog: false,
 			};
 		},
 		watch: {
-			checkValue: function () {
-				this.$emit('input', this.checkValue);
+			textValue: function () {
+				this.$emit('input', this.textValue);
 			},
 		},
 		props: ['label', 'value', 'help'],
 		mounted() {
-			this.checkValue = this.value;
+			this.textValue = this.value;
 			if (this.help) {
-				const label = this.$children[0].$el.querySelector("label");
-				const box = this.$children[0].$el.querySelector(".input-group--selection-controls__ripple");
-				const width = box.offsetWidth + label.offsetWidth - 14; // not sure where the 14 comes from.
 				const helpButton = this.$children[1].$el;
 				helpButton.classList.remove("btn");
 				helpButton.classList.remove("btn--flat");
 				helpButton.classList.remove("btn--icon");
-				helpButton.style.left = width + "px";
+				helpButton.style.left = "230px";
 			}
 		},
 		methods: {
@@ -52,23 +53,25 @@
 </script>
 
 <style>
-	.checkbox-item {
+	.text-input-item {
 		position: relative;
-		min-width: 240px;
-		max-width: 240px;
-		margin-right: 20px;
 	}
-	.checkbox-item label {
+	.text-input-item .input-group.input-group--text-field {
+		min-width: 230px;
+		max-width: 230px;
+		margin-right: 30px;
+	}
+	.text-input-item label {
 		width: initial;
 	}
-	.checkbox-item .help-button {
+	.text-input-item .help-button {
 		position: absolute;
-		top: 5px;
+		top: 36px;
 	}
-	.checkbox-item .help-button .btn__content {
+	.text-input-item .help-button .btn__content {
 		padding: 0;
 	}
-	.checkbox-item .help-button i {
+	.text-input-item .help-button i {
 		font-size: 12px;
 		float: left;
 	}

@@ -37,36 +37,12 @@
 
 					<h2>Engraver Parameters</h2>
 					<v-layout wrap justify-start align-center>
-						<v-text-field
-								class="numeric"
-								v-model="editorParams.render_options.scale"
-								label="Scale"
-						></v-text-field>
-						<v-text-field
-								class="numeric"
-								v-model="editorParams.render_options.staffwidth"
-								label="Staff Width"
-						></v-text-field>
-						<v-text-field
-								class="numeric"
-								v-model="editorParams.render_options.paddingtop"
-								label="Padding Top"
-						></v-text-field>
-						<v-text-field
-								class="numeric"
-								v-model="editorParams.render_options.paddingbottom"
-								label="Padding Bottom"
-						></v-text-field>
-						<v-text-field
-								class="numeric"
-								v-model="editorParams.render_options.paddingright"
-								label="Padding Right"
-						></v-text-field>
-						<v-text-field
-								class="numeric"
-								v-model="editorParams.render_options.paddingleft"
-								label="Padding Left"
-						></v-text-field>
+						<TextInputItem label="Scale" :help="helpText.scale" v-model="editorParams.render_options.scale"></TextInputItem>
+						<TextInputItem label="Staff Width" :help="helpText.staffwidth" v-model="editorParams.render_options.staffwidth"></TextInputItem>
+						<TextInputItem label="Padding Left" :help="helpText.paddingleft" v-model="editorParams.render_options.paddingleft"></TextInputItem>
+						<TextInputItem label="Padding Top" :help="helpText.paddingtop" v-model="editorParams.render_options.paddingtop"></TextInputItem>
+						<TextInputItem label="Padding Right" :help="helpText.paddingright" v-model="editorParams.render_options.paddingright"></TextInputItem>
+						<TextInputItem label="Padding Bottom" :help="helpText.paddingbottom" v-model="editorParams.render_options.paddingbottom"></TextInputItem>
 						<CheckboxItem label="Responsive Sizing" :help="helpText.responsiveResize" v-model="editorParams.render_options.responsiveResize"></CheckboxItem>
 						<CheckboxItem label="Add Classes" :help="helpText.add_classes" v-model="editorParams.render_options.add_classes"></CheckboxItem>
 						<CheckboxItem label="User Click Listener" :help="helpText.highlightListener" v-model="editorParams.render_options.highlightListener"></CheckboxItem>
@@ -134,11 +110,12 @@
 <script>
 	import {mapGetters, mapMutations} from 'vuex';
 	import CheckboxItem from "../components/CheckboxItem";
+	import TextInputItem from "../components/TextInputItem";
 
 	const abcjs = process.browser ? require('abcjs/midi.js') : null; // This requires document and window, so can't be used on the server side.
 
 	export default {
-		components: {CheckboxItem},
+		components: {CheckboxItem, TextInputItem},
 		head() {
 			return {
 				title: this.appTitle()
@@ -188,6 +165,12 @@
 					highlightListener: "This is a callback whenever the user clicks on an element of the SVG. The parameters passed are \"abcElem\" and \"tuneNumber\". The \"abcElem\" contains many properties that are useful for determining what was clicked on. Those properties are subject to change in a future version of abcjs, though, so use with caution. If there are multiple tunes in the source ABC string, then \"tuneNumber\" is the tune that was clicked on.",
 					modelChangedListener: "Warning: This feature is currently broken and has no effect!\n\nThis will provide a callback when an element on the SVG is dragged. This requires the variable \"editable\" to be set.\n\nWarning: This feature is currently broken and has no effect!",
 					responsiveResize: "This changes the styles on both the encompassing element and the SVG element that causes the SVG to grow and shrink in response to changes of the width of the parent element.",
+					scale: "Sets the size of the music. Full size is \"1\". \"2\" is twice as large. \"0.5\" is half as large. Note that this doesn't change the staff width, so it will change the layout. If you just want to make the SVG bigger, use the css transform() functionality. Experiment with this in conjunction with \"Staff Width\".",
+					staffwidth: "This is the width of the staff line in pixels. This is not the total width, because there are margins.",
+					paddingleft: "The padding numbers are how much padding to put in the SVG around the edges. This differs from CSS padding because it is inside the SVG. Note that the right and bottom padding is ignored if the \"Print\" option is selected.",
+					paddingtop: "",
+					paddingright: "",
+					paddingbottom: "",
 				},
 
 				theEditor: null,
@@ -195,19 +178,18 @@
 				isReadOnly: null,
 				isMidiPaused: null,
 
-				abcInput: `X: 31
-T:Green Light
-M:4/4
+				abcInput: `X: 24
+T:Clouds Thicken
+C:Paul Rosen
+S:Copyright 2005, Paul Rosen
+M:6/8
 L:1/8
 Q:1/2=112
-C:Paul Rosen
-S:Copyright 2007, Paul Rosen
-R:Reel
+R:Creepy Jig
 K:Em
-"Em"E2EG (ED)B,E|e2"D"d4Bd|"Am (C)"(AB)AG (FD)FG|(AB)AG "D"(FE)DF|
-"Em"E2EG (ED)B,E|e2 d4(ef|"C"gf)ed "Bm7 (D)"(BA)Bd|1"Em"e4e3G:|2"Em"e4e2(ef)||
-|:"Em"(gf)ed (Bd)(ef|"D"af)ef (af)(ef|"Em"gf)ed (Bd)(ef|"Bm"g).d.f.d. e.d.ef|
-"Em"(gf)ed (Bd)(ef|"D"af)ef (af)ef|"Am7 (C7)"b2a2 (fe)d2|1"B"(ef)ed (Bd)(ef):|2"B"(ef)ed (BA)FF|
+|:"Em"EEE E2G|"C7"_B2A G2F|"Em"EEE E2G|"C7"_B2A "B7"=B3|"Em"EEE E2G|
+"C7"_B2A G2F|"Em (Am7)"GFE "D (Bm7)"F2D|1"Em"E3-E3:|2"Em"E3-E2B|:"Em"e2e gfe|
+"G"g2ab3|"Em"gfeg2e|"D"fedB2A|"Em"e2e gfe|"G"g2ab3|"Em"gfe"D"f2d|"Em"e3-e3:|
 `,
 
 				importStatements: "",

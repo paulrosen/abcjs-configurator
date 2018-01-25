@@ -35,11 +35,7 @@
 				<v-card-text :class="optionsOpen ? 'opened' : 'closed'">
 					<p>All of these options have a default value, so they are all optional.</p>
 					<h2>Elements</h2>
-					<v-text-field
-							class="numeric"
-							v-model="numberOfTunes"
-							label="Number of Tunes To Show"
-					></v-text-field>
+					<TextInputItem label="Number of Tunes To Show" :help="helpText.numberOfTunes" v-model="numberOfTunes"></TextInputItem>
 
 					<h2>Parser Parameters</h2>
 					<v-layout wrap justify-start align-center>
@@ -51,36 +47,12 @@
 
 					<h2>Engraver Parameters</h2>
 					<v-layout wrap justify-start align-center>
-					<v-text-field
-							class="numeric"
-							v-model="engraverParams.scale"
-							label="Scale"
-					></v-text-field>
-					<v-text-field
-							class="numeric"
-							v-model="engraverParams.staffwidth"
-							label="Staff Width"
-					></v-text-field>
-					<v-text-field
-							class="numeric"
-							v-model="engraverParams.paddingtop"
-							label="Padding Top"
-					></v-text-field>
-					<v-text-field
-							class="numeric"
-							v-model="engraverParams.paddingbottom"
-							label="Padding Bottom"
-					></v-text-field>
-					<v-text-field
-							class="numeric"
-							v-model="engraverParams.paddingright"
-							label="Padding Right"
-					></v-text-field>
-					<v-text-field
-							class="numeric"
-							v-model="engraverParams.paddingleft"
-							label="Padding Left"
-					></v-text-field>
+						<TextInputItem label="Scale" :help="helpText.scale" v-model="engraverParams.scale"></TextInputItem>
+						<TextInputItem label="Staff Width" :help="helpText.staffwidth" v-model="engraverParams.staffwidth"></TextInputItem>
+						<TextInputItem label="Padding Left" :help="helpText.paddingleft" v-model="engraverParams.paddingleft"></TextInputItem>
+						<TextInputItem label="Padding Top" :help="helpText.paddingtop" v-model="engraverParams.paddingtop"></TextInputItem>
+						<TextInputItem label="Padding Right" :help="helpText.paddingright" v-model="engraverParams.paddingright"></TextInputItem>
+						<TextInputItem label="Padding Bottom" :help="helpText.paddingbottom" v-model="engraverParams.paddingbottom"></TextInputItem>
 						<CheckboxItem label="Responsive Sizing" :help="helpText.responsiveResize" v-model="engraverParams.responsiveResize"></CheckboxItem>
 						<CheckboxItem label="Add Classes" :help="helpText.add_classes" v-model="engraverParams.add_classes"></CheckboxItem>
 						<CheckboxItem label="User Click Listener" :help="helpText.highlightListener" v-model="engraverParams.highlightListener"></CheckboxItem>
@@ -90,11 +62,7 @@
 
 					<h2>Renderer Params</h2>
 					<v-layout wrap justify-start align-center>
-					<v-text-field
-							class="numeric"
-							v-model="renderParams.startingTune"
-							label="Starting Tune"
-					></v-text-field>
+						<TextInputItem label="Starting Tune" :help="helpText.startingTune" v-model="renderParams.startingTune"></TextInputItem>
 						<CheckboxItem label="viewportVertical" :help="helpText.viewportVertical" v-model="renderParams.viewportVertical"></CheckboxItem>
 						<CheckboxItem label="viewportHorizontal" :help="helpText.viewportHorizontal" v-model="renderParams.viewportHorizontal"></CheckboxItem>
 						<CheckboxItem label="scrollHorizontal" :help="helpText.scrollHorizontal" v-model="renderParams.scrollHorizontal"></CheckboxItem>
@@ -151,9 +119,10 @@
 <script>
 	import {mapGetters} from 'vuex';
 	import CheckboxItem from "../components/CheckboxItem";
+	import TextInputItem from "../components/TextInputItem";
 
 	export default {
-		components: {CheckboxItem},
+		components: {CheckboxItem, TextInputItem},
 		head() {
 			return {
 				title: this.appTitle()
@@ -208,6 +177,14 @@
 					viewportHorizontal: "viewportVertical, viewportHorizontal, and scrollHorizontal change some of the styles of the target element and the SVG element. They also add an extra DIV with the class \"abcjs-inner\" to wrap the SVG. Depending on your layout, one or more combinations of these may help your formatting.",
 					scrollHorizontal: "viewportVertical, viewportHorizontal, and scrollHorizontal change some of the styles of the target element and the SVG element. They also add an extra DIV with the class \"abcjs-inner\" to wrap the SVG. Depending on your layout, one or more combinations of these may help your formatting.",
 					oneSvgPerLine: "Each line of music is rendered in its own SVG. They all appear as children of the original element that the music is drawn to, and each SVG is also wrapped in a DIV. The heading is attached to the first line of music and the footer is attached to the last line of music.",
+					scale: "Sets the size of the music. Full size is \"1\". \"2\" is twice as large. \"0.5\" is half as large. Note that this doesn't change the staff width, so it will change the layout. If you just want to make the SVG bigger, use the css transform() functionality. Experiment with this in conjunction with \"Staff Width\".",
+					staffwidth: "This is the width of the staff line in pixels. This is not the total width, because there are margins.",
+					paddingleft: "The padding numbers are how much padding to put in the SVG around the edges. This differs from CSS padding because it is inside the SVG. Note that the right and bottom padding is ignored if the \"Print\" option is selected.",
+					paddingtop: "",
+					paddingright: "",
+					paddingbottom: "",
+					numberOfTunes: "The input ABC string can have multiple tunes in it, separated by \"X:\" lines. Each tune goes in its own SVG and requires markup. This sample app has 24 DIVs declared in the form &lt;div id=\"paper1\"&gt;, so up to 24 tunes can be displayed. If you don't specify anything here, only the first tune is displayed. To cherry pick a tune, you can either preprocess the ABC string (see the Analyze page for details), or use this in conjunction with the \"Starting Tune\" parameter.",
+					startingTune: "If there are multiple tunes in the input string, then this chooses which tune to display. For control over what is displayed, use with the \"Number of Tunes\" parameter. This is zero-based. If this is greater than the number of tunes in the input string, then nothing is displayed.",
 				}
 			};
 		},
