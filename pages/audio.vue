@@ -24,45 +24,17 @@ import abcjs from 'abcjs/midi;
 				<v-card-text :class="optionsOpen ? 'opened' : 'closed'">
 					<h2>General Params</h2>
 					<v-layout wrap justify-start align-center>
-					<v-text-field
-							class="numeric"
-							v-model="midiParams.qpm"
-							label="Beats Per Minute"
-					></v-text-field>
-					<v-text-field
-							class="numeric"
-							v-model="midiParams.program"
-							label="Instrument number (program)"
-					></v-text-field>
-					<v-text-field
-							class="numeric"
-							v-model="midiParams.transpose"
-							label="Half-steps to transpose"
-					></v-text-field>
-					<v-text-field
-							class="numeric"
-							v-model="renderParams.startingTune"
-							label="Index of the Tune"
-					></v-text-field>
+						<TextInputItem label="Quarter Notes Per Minute" :help="helpText.qpm" v-model="midiParams.qpm"></TextInputItem>
+						<TextInputItem label="Instrument number (program)" :help="helpText.program" v-model="midiParams.program"></TextInputItem>
+						<TextInputItem label="Half-steps to transpose" :help="helpText.transpose" v-model="midiParams.transpose"></TextInputItem>
+						<TextInputItem label="Index of the Tune" :help="helpText.startingTune" v-model="renderParams.startingTune"></TextInputItem>
 					</v-layout>
 					<h2>Download Params</h2>
 					<v-layout wrap justify-start align-center>
 						<CheckboxItem label="Downloadable MIDI?" :help="helpText.generateDownload" v-model="midiParams.generateDownload"></CheckboxItem>
-						<v-text-field
-								class="numeric"
-								v-model="midiParams.downloadLabel"
-								label="Download Link Label (%T=title)"
-						></v-text-field>
-						<v-text-field
-								class="numeric"
-								v-model="midiParams.preTextDownload"
-								label="Pre-Download Text"
-						></v-text-field>
-						<v-text-field
-								class="numeric"
-								v-model="midiParams.postTextDownload"
-								label="Post-Download Text"
-						></v-text-field>
+						<TextInputItem label="Download Link Label (%T=title)" :help="helpText.downloadLabel" v-model="midiParams.downloadLabel"></TextInputItem>
+						<TextInputItem label="Pre-Download Text" :help="helpText.preTextDownload" v-model="midiParams.preTextDownload"></TextInputItem>
+						<TextInputItem label="Post-Download Text" :help="helpText.postTextDownload" v-model="midiParams.postTextDownload"></TextInputItem>
 					</v-layout>
 					<h2>Inline Params</h2>
 					<v-layout wrap justify-start align-center>
@@ -72,71 +44,27 @@ import abcjs from 'abcjs/midi;
 						<CheckboxItem label="Tempo Control?" :help="helpText.tempo" v-model="midiParams.inlineControls.tempo"></CheckboxItem>
 						<CheckboxItem label="Hide?" :help="helpText.hide" v-model="midiParams.inlineControls.hide"></CheckboxItem>
 						<CheckboxItem label="Auto Play?" :help="helpText.startPlaying" v-model="midiParams.inlineControls.startPlaying"></CheckboxItem>
-						<v-text-field
-								class="numeric"
-								v-model="midiParams.preTextInline"
-								label="Pre-Inline Text (%T=title)"
-						></v-text-field>
-						<v-text-field
-								class="numeric"
-								v-model="midiParams.postTextInline"
-								label="Post-Inline Text (%T=title)"
-						></v-text-field>
-						<v-text-field
-								class="numeric"
-								v-model="midiParams.inlineControls.tooltipLoop"
-								label="Loop Tooltip"
-						></v-text-field>
-						<v-text-field
-								class="numeric"
-								v-model="midiParams.inlineControls.tooltipReset"
-								label="Reset Tooltip"
-						></v-text-field>
-						<v-text-field
-								class="numeric"
-								v-model="midiParams.inlineControls.tooltipPlay"
-								label="Play Tooltip"
-						></v-text-field>
-						<v-text-field
-								class="numeric"
-								v-model="midiParams.inlineControls.tooltipProgress"
-								label="Progress Tooltip"
-						></v-text-field>
-						<v-text-field
-								class="numeric"
-								v-model="midiParams.inlineControls.tooltipTempo"
-								label="Tempo Tooltip"
-						></v-text-field>
+						<TextInputItem label="Pre-Inline Text (%T=title)" :help="helpText.preTextInline" v-model="midiParams.preTextInline"></TextInputItem>
+						<TextInputItem label="Post-Inline Text (%T=title)" :help="helpText.postTextInline" v-model="midiParams.postTextInline"></TextInputItem>
+						<TextInputItem label="Loop Tooltip" :help="helpText.tooltipLoop" v-model="midiParams.tooltipLoop"></TextInputItem>
+						<TextInputItem label="Reset Tooltip" :help="helpText.tooltipReset" v-model="midiParams.tooltipReset"></TextInputItem>
+						<TextInputItem label="Play Tooltip" :help="helpText.tooltipPlay" v-model="midiParams.tooltipPlay"></TextInputItem>
+						<TextInputItem label="Progress Tooltip" :help="helpText.tooltipProgress" v-model="midiParams.tooltipProgress"></TextInputItem>
+						<TextInputItem label="Tempo Tooltip" :help="helpText.tooltipTempo" v-model="midiParams.tooltipTempo"></TextInputItem>
 					</v-layout>
 
 					<h2>Callback Params</h2>
 					<v-layout wrap justify-start align-center>
 						<CheckboxItem label="Listener?" :help="helpText.doListener" v-model="midiParams.doListener"></CheckboxItem>
 						<CheckboxItem label="Animate?" :help="helpText.doAnimate" v-model="midiParams.doAnimate"></CheckboxItem>
-						<v-text-field
-								class="numeric"
-								v-model="midiParams.context"
-								label="Callback Context"
-						></v-text-field>
+						<TextInputItem label="Callback Context" :help="helpText.context" v-model="midiParams.context"></TextInputItem>
 					</v-layout>
 
 					<h2>Metronome Params</h2>
 					<v-layout wrap justify-start align-center>
-						<v-text-field
-								class="numeric"
-								v-model="midiParams.drum"
-								label="Drum String"
-						></v-text-field>
-						<v-text-field
-								class="numeric"
-								v-model="midiParams.drumBars"
-								label="Number of Bars"
-						></v-text-field>
-						<v-text-field
-								class="numeric"
-								v-model="midiParams.drumIntro"
-								label="Number Of Intro Bars"
-						></v-text-field>
+						<TextInputItem label="Drum String" :help="helpText.drum" v-model="midiParams.drum"></TextInputItem>
+						<TextInputItem label="Number of Bars" :help="helpText.drumBars" v-model="midiParams.drumBars"></TextInputItem>
+						<TextInputItem label="Number Of Intro Bars" :help="helpText.drumIntro" v-model="midiParams.drumIntro"></TextInputItem>
 					</v-layout>
 				</v-card-text>
 			</v-card>
@@ -160,9 +88,10 @@ import abcjs from 'abcjs/midi;
 <script>
 	import {mapGetters} from 'vuex';
 	import CheckboxItem from "../components/CheckboxItem";
+	import TextInputItem from "../components/TextInputItem";
 
 	export default {
-		components: {CheckboxItem},
+		components: {CheckboxItem, TextInputItem},
 		head() {
 			return {
 				title: this.appTitle()
@@ -238,6 +167,25 @@ import abcjs from 'abcjs/midi;
 			this.colorRange(lastRange, "#000000");
 			this.colorRange(currentRange, "#3D9AFC");
 		},`,
+					program: "This is the standard MIDI program number (i.e. 0=grand piano, etc.). This may be overridden in the ABC string if there are %%MIDI commands.",
+					qpm: "This overrides a Q: line in the ABC string and sets the number of quarter notes per minute. This is always measured in quarter notes, even in time signatures like 6/8.",
+					transpose: "The number of half-steps to transpose. This can be a positive or negative number.",
+					startingTune: "If there are multiple tunes in the input string, then this chooses which tune to display. For control over what is displayed, use with the \"Number of Tunes\" parameter. This is zero-based. If this is greater than the number of tunes in the input string, then nothing is displayed.",
+					downloadLabel: "If the download option is chosen, this specifies The text in the link. You may use the special pattern \"%T\" to indicate that the title of the piece should be used.",
+					preTextDownload: "This is to specify some optional text just before the download link.",
+					postTextDownload: "This is to specify some optional text just after the download link.",
+					preTextInline: "This is to specify some optional text on the left side of the audio control. You may use the special pattern \"%T\" to indicate that the title of the piece should be used.",
+					postTextInline: "This is to specify some optional text on the right side of the audio control. You may use the special pattern \"%T\" to indicate that the title of the piece should be used.",
+					tooltipLoop: "This is the title, or tooltip, that appears over the loop icon when it is hovered with the mouse.",
+					tooltipReset: "This is the title, or tooltip, that appears over the reset icon when it is hovered with the mouse.",
+					tooltipPlay: "This is the title, or tooltip, that appears over the play/pause icon when it is hovered with the mouse.",
+					tooltipProgress: "This is the title, or tooltip, that appears over the sliding bar when it is hovered with the mouse.",
+					tooltipTempo: "This is the title, or tooltip, that appears over the tempo widget icon when it is hovered with the mouse.",
+					context: "This is an arbitrary variable that is passed back in the callback functions. This can be anything and is useful if you have more than one audio control on the page.",
+					drum: "This is the drum pattern as specified in the ABC standard. See that documentation for complete details.",
+					drumBars: "This is how many bars the specified drum pattern is defined for.",
+					drumIntro: "This plays a number of measures of the drum pattern before the music starts.",
+
 				}
 			};
 		},
@@ -441,15 +389,6 @@ ${this.formatElements(range.elements)},
 	// midi.startPlaying(audio element)
 	// midi.stopPlaying()
 
-// 	| `qpm` | 180 | The tempo, if not specified in abcString. |
-// 	| `program` | 0 | The midi program (aka "instrument") to use, if not specified in abcString. |
-// 	| `transpose` | 0 | The number of half-steps to transpose the everything, if not specified in abcString. |
-// 	| `downloadLabel` | "download midi" | The text for the MIDI download. If it contains `%T` then that is replaced with the first title. If this is a function, then the result of that function is called. The function takes two parameters: the parsed tune and the zero-based index of the tune in the tunebook. |
-// 	| `preTextDownload` | "" | Text that appears right before the download link (can contain HTML markup). |
-// 	| `postTextDownload` | "" | Text that appears right after the download link (can contain HTML markup). |
-// 	| `preTextInline` | "" | Text that appears right before the MIDI controls (can contain HTML markup). If it contains `%T` then that is replaced with the first title. |
-// 	| `postTextInline` | "" | Text that appears right after the MIDI controls (can contain HTML markup). If it contains `%T` then that is replaced with the first title. |
-// 	| `context` | null | A string that is passed back to both the listener and animate callbacks. |
 // 	| `drum` | "" | A string formatted like the `%%MIDI drum` specification. Using this parameter also implies `%%MIDI drumon` |
 // 	| `drumBars` | 1 |  How many bars to spread the drum pattern over. |
 // 	| `drumIntro` | 0 | How many bars of drum should precede the music. |
@@ -472,16 +411,6 @@ ${this.formatElements(range.elements)},
 // 	A more complicated example that has the drum pattern fall over two measures of 2/4 time (This is a typical Bulgar pattern):
 // 	```
 // { drum: "d2dd2ddz", drumBars: 2, drumIntro: 2 }
-// ```
-//
-// 	| `inlineControls` | Default | Description |
-// 	| ------------- | ----------- | ----------- |
-// 	| `tooltipSelection` | "Click to toggle play selection/play all." | The text of the tooltip.  **Not yet implemented** |
-// 	| `tooltipLoop` | "Click to toggle play once/repeat." | The text of the tooltip. |
-// 	| `tooltipReset` | "Click to go to beginning." | The text of the tooltip. |
-// 	| `tooltipPlay` | "Click to play/pause." | The text of the tooltip. |
-// 	| `tooltipProgress` | "Click to change the playback position." | The text of the tooltip. |
-// 	| `tooltipTempo` | "Change the playback speed." | The text of the tooltip.  **Not yet implemented** |
 
 </script>
 
