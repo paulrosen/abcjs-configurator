@@ -3,17 +3,6 @@
 		<v-flex xs12 sm12 md12 lg12>
 			<v-card>
 				<v-card-title>
-					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
-						<v-icon>{{javascriptOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
-					</v-btn>
-					JavaScript</v-card-title>
-				<v-card-text :class="javascriptOpen ? 'opened' : 'closed'">
-					<code>import abcjs from 'abcjs';
-{{formatCommand()}}{{formatClassSelection()}}</code>
-				</v-card-text>
-			</v-card>
-			<v-card>
-				<v-card-title>
 					<v-btn flat icon @click="optionsOpen = !optionsOpen">
 						<v-icon>{{optionsOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
 					</v-btn>
@@ -42,6 +31,17 @@
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
 					<div id="paper" class="paper amber lighten-4"></div>
+				</v-card-text>
+			</v-card>
+			<v-card>
+				<v-card-title>
+					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
+						<v-icon>{{javascriptOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
+					</v-btn>
+					JavaScript</v-card-title>
+				<v-card-text :class="javascriptOpen ? 'opened' : 'closed'">
+					<code>import abcjs from 'abcjs';
+{{formatCommand()}}{{formatClassSelection()}}</code>
 				</v-card-text>
 			</v-card>
 		</v-flex>

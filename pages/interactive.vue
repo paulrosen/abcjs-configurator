@@ -3,18 +3,6 @@
 		<v-flex xs12 sm12 md12 lg12>
 			<v-card>
 				<v-card-title>
-					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
-						<v-icon>{{javascriptOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
-					</v-btn>
-					JavaScript</v-card-title>
-				<v-card-text :class="javascriptOpen ? 'opened' : 'closed'">
-					<code class="code-full">{{importStatements}}
-
-{{javascriptString}}</code>
-				</v-card-text>
-			</v-card>
-			<v-card>
-				<v-card-title>
 					<v-btn flat icon @click="optionsOpen = !optionsOpen">
 						<v-icon>{{optionsOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
 					</v-btn>
@@ -96,11 +84,23 @@
 						<div v-if="editorParams.render_options.responsive === 'resize'">
 							<div class="footnote"><span>When using resize, do not place the </span><code class="subtle-code">&lt;div id="paper"&gt;</code><span> as a flex element: the flex functionality will interfere. Just wrap in another </span><code class="subtle-code">&lt;div&gt;</code></div>
 						</div>
-					<div id="warnings-id"></div>
-					<div id="paper" class="paper amber lighten-4"></div>
-					<div id="midi-download"></div>
-					<div id="midi-inline"></div>
+						<div id="warnings-id"></div>
+						<div id="paper" class="paper amber lighten-4"></div>
+						<div id="midi-download"></div>
+						<div id="midi-inline"></div>
 					</div>
+				</v-card-text>
+			</v-card>
+			<v-card>
+				<v-card-title>
+					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
+						<v-icon>{{javascriptOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
+					</v-btn>
+					JavaScript</v-card-title>
+				<v-card-text :class="javascriptOpen ? 'opened' : 'closed'">
+					<code class="code-full">{{importStatements}}
+
+{{javascriptString}}</code>
 				</v-card-text>
 			</v-card>
 		</v-flex>
@@ -184,7 +184,7 @@ C:Paul Rosen
 S:Copyright 2005, Paul Rosen
 M:6/8
 L:1/8
-Q:1/2=112
+Q:3/8=116
 R:Creepy Jig
 K:Em
 |:"Em"EEE E2G|"C7"_B2A G2F|"Em"EEE E2G|"C7"_B2A "B7"=B3|"Em"EEE E2G|

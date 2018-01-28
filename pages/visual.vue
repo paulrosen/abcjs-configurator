@@ -9,25 +9,6 @@
 			</v-card>
 			<v-card>
 				<v-card-title>
-					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
-						<v-icon>{{javascriptOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
-					</v-btn>
-					JavaScript</v-card-title>
-				<v-card-text :class="javascriptOpen ? 'opened' : 'closed'">
-					<code class="code-full">import abcjs from 'abcjs';
-<div v-html="javascriptString"></div></code>
-					<p></p>
-					<div class="footnote">
-						<p>The <span class="subtle-code">tuneObjectArray</span> contains the processed instance for each of the tunes. This is not normally needed,
-							unless you need to pass it to the animation function or the MIDI "bouncing ball". Note that the structure of the individual objects returned are <em class="red--text"><b>not</b></em> guaranteed to be the same from one version of <span class="blue--text text--lighten-1 abcjs-text">abcjs</span> to the next.</p>
-					</div>
-					<div class="footnote">
-						<p>The <span class="subtle-code">abcString</span> is whatever is in the textarea on the <nuxt-link to="/">main page</nuxt-link>.</p>
-					</div>
-				</v-card-text>
-			</v-card>
-			<v-card>
-				<v-card-title>
 					<v-btn flat icon @click="optionsOpen = !optionsOpen">
 						<v-icon>{{optionsOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
 					</v-btn>
@@ -78,37 +59,56 @@
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
 					<div>
-					<div v-if="engraverParams.highlightListener">
-						<div class="footnote">Click on the displayed music to see the output of the callback function.</div>
-						<code class="indented">{{highlightListenerOutput}}</code>
+						<div v-if="engraverParams.highlightListener">
+							<div class="footnote">Click on the displayed music to see the output of the callback function.</div>
+							<code class="indented">{{highlightListenerOutput}}</code>
+						</div>
+						<div v-if="engraverParams.responsive === 'resize'">
+							<div class="footnote"><span>When using resize, do not place the </span><code class="subtle-code">&lt;div id="paper"&gt;</code><span> as a flex element: the flex functionality will interfere. Just wrap in another </span><code class="subtle-code">&lt;div&gt;</code></div>
+						</div>
+						<div id="paper1" class="paper"></div>
+						<div id="paper2" class="paper"></div>
+						<div id="paper3" class="paper"></div>
+						<div id="paper4" class="paper"></div>
+						<div id="paper5" class="paper"></div>
+						<div id="paper6" class="paper"></div>
+						<div id="paper7" class="paper"></div>
+						<div id="paper8" class="paper"></div>
+						<div id="paper9" class="paper"></div>
+						<div id="paper10" class="paper"></div>
+						<div id="paper11" class="paper"></div>
+						<div id="paper12" class="paper"></div>
+						<div id="paper13" class="paper"></div>
+						<div id="paper14" class="paper"></div>
+						<div id="paper15" class="paper"></div>
+						<div id="paper16" class="paper"></div>
+						<div id="paper17" class="paper"></div>
+						<div id="paper18" class="paper"></div>
+						<div id="paper19" class="paper"></div>
+						<div id="paper20" class="paper"></div>
+						<div id="paper21" class="paper"></div>
+						<div id="paper22" class="paper"></div>
+						<div id="paper23" class="paper"></div>
+						<div id="paper24" class="paper"></div>
 					</div>
-					<div v-if="engraverParams.responsive === 'resize'">
-						<div class="footnote"><span>When using resize, do not place the </span><code class="subtle-code">&lt;div id="paper"&gt;</code><span> as a flex element: the flex functionality will interfere. Just wrap in another </span><code class="subtle-code">&lt;div&gt;</code></div>
+				</v-card-text>
+			</v-card>
+			<v-card>
+				<v-card-title>
+					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
+						<v-icon>{{javascriptOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
+					</v-btn>
+					JavaScript</v-card-title>
+				<v-card-text :class="javascriptOpen ? 'opened' : 'closed'">
+					<code class="code-full">import abcjs from 'abcjs';
+<div v-html="javascriptString"></div></code>
+					<p></p>
+					<div class="footnote">
+						<p>The <span class="subtle-code">tuneObjectArray</span> contains the processed instance for each of the tunes. This is not normally needed,
+							unless you need to pass it to the animation function or the MIDI "bouncing ball". Note that the structure of the individual objects returned are <em class="red--text"><b>not</b></em> guaranteed to be the same from one version of <span class="blue--text text--lighten-1 abcjs-text">abcjs</span> to the next.</p>
 					</div>
-					<div id="paper1" class="paper"></div>
-					<div id="paper2" class="paper"></div>
-					<div id="paper3" class="paper"></div>
-					<div id="paper4" class="paper"></div>
-					<div id="paper5" class="paper"></div>
-					<div id="paper6" class="paper"></div>
-					<div id="paper7" class="paper"></div>
-					<div id="paper8" class="paper"></div>
-					<div id="paper9" class="paper"></div>
-					<div id="paper10" class="paper"></div>
-					<div id="paper11" class="paper"></div>
-					<div id="paper12" class="paper"></div>
-					<div id="paper13" class="paper"></div>
-					<div id="paper14" class="paper"></div>
-					<div id="paper15" class="paper"></div>
-					<div id="paper16" class="paper"></div>
-					<div id="paper17" class="paper"></div>
-					<div id="paper18" class="paper"></div>
-					<div id="paper19" class="paper"></div>
-					<div id="paper20" class="paper"></div>
-					<div id="paper21" class="paper"></div>
-					<div id="paper22" class="paper"></div>
-					<div id="paper23" class="paper"></div>
-					<div id="paper24" class="paper"></div>
+					<div class="footnote">
+						<p>The <span class="subtle-code">abcString</span> is whatever is in the textarea on the <nuxt-link to="/">main page</nuxt-link>.</p>
 					</div>
 				</v-card-text>
 			</v-card>

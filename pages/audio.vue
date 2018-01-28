@@ -3,20 +3,6 @@
 		<v-flex xs12 sm12 md12 lg12>
 			<v-card>
 				<v-card-title>
-					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
-						<v-icon>{{javascriptOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
-					</v-btn>
-					JavaScript</v-card-title>
-				<v-card-text :class="javascriptOpen ? 'opened' : 'closed'">
-					<code class="code-full">import 'font-awesome/css/font-awesome.min.css';
-import 'abcjs/abcjs-midi.css';
-import abcjs from 'abcjs/midi;
-
-{{javascriptString}}</code>
-				</v-card-text>
-			</v-card>
-			<v-card>
-				<v-card-title>
 					<v-btn flat icon @click="optionsOpen = !optionsOpen">
 						<v-icon>{{optionsOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
 					</v-btn>
@@ -79,6 +65,20 @@ import abcjs from 'abcjs/midi;
 					<div id="midi-id"></div>
 					<div id="paper" class="paper amber lighten-4"></div>
 					<div v-html="animationOutput" v-if="animationOutput"></div>
+				</v-card-text>
+			</v-card>
+			<v-card>
+				<v-card-title>
+					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
+						<v-icon>{{javascriptOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
+					</v-btn>
+					JavaScript</v-card-title>
+				<v-card-text :class="javascriptOpen ? 'opened' : 'closed'">
+					<code class="code-full">import 'font-awesome/css/font-awesome.min.css';
+import 'abcjs/abcjs-midi.css';
+import abcjs from 'abcjs/midi;
+
+{{javascriptString}}</code>
 				</v-card-text>
 			</v-card>
 		</v-flex>

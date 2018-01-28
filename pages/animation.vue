@@ -9,34 +9,6 @@
 			</v-card>
 			<v-card>
 				<v-card-title>
-					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
-						<v-icon>{{javascriptOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
-					</v-btn>
-					JavaScript</v-card-title>
-				<v-card-text :class="javascriptOpen ? 'opened' : 'closed'">
-					<code>import abcjs from 'abcjs';
-const tunes = abcjs.renderAbc("paper", abcString, { add_classes: true });
-
-abcjs.startAnimation("paper", tunes[0], {
-<div v-if="hideCurrentMeasure">    hideCurrentMeasure: true,</div><div v-if="hideFinishedMeasures">    hideFinishedMeasures: true,</div><div v-if="showCursor">    showCursor: true,</div><div v-if="bpm">    bpm: {{bpm}},</div>});
-
-abcjs.stopAnimation();
-
-abcjs.pauseAnimation(true | false);
-
-<template v-if="showCursor">
-&lt;style&gt;
-    #paper .cursor {
-        background-color: #ffffc0;
-        opacity: 0.5
-    }
-&lt;/style&gt;
-</template>
-</code>
-				</v-card-text>
-			</v-card>
-			<v-card>
-				<v-card-title>
 					<v-btn flat icon @click="optionsOpen = !optionsOpen">
 						<v-icon>{{optionsOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
 					</v-btn>
@@ -68,6 +40,34 @@ abcjs.pauseAnimation(true | false);
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
 					<div id="paper" class="paper amber lighten-4"></div>
+				</v-card-text>
+			</v-card>
+			<v-card>
+				<v-card-title>
+					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
+						<v-icon>{{javascriptOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
+					</v-btn>
+					JavaScript</v-card-title>
+				<v-card-text :class="javascriptOpen ? 'opened' : 'closed'">
+					<code>import abcjs from 'abcjs';
+const tunes = abcjs.renderAbc("paper", abcString, { add_classes: true });
+
+abcjs.startAnimation("paper", tunes[0], {
+<div v-if="hideCurrentMeasure">    hideCurrentMeasure: true,</div><div v-if="hideFinishedMeasures">    hideFinishedMeasures: true,</div><div v-if="showCursor">    showCursor: true,</div><div v-if="bpm">    bpm: {{bpm}},</div>});
+
+abcjs.stopAnimation();
+
+abcjs.pauseAnimation(true | false);
+
+<template v-if="showCursor">
+	&lt;style&gt;
+	#paper .cursor {
+	background-color: #ffffc0;
+	opacity: 0.5
+	}
+	&lt;/style&gt;
+</template>
+</code>
 				</v-card-text>
 			</v-card>
 		</v-flex>
