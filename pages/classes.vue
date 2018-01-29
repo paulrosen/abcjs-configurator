@@ -1,7 +1,8 @@
 <template>
 	<v-layout class="classes-page">
 		<v-flex xs12 sm12 md12 lg12>
-			<v-card>
+			<div class="combine-cards">
+				<v-card class="narrow">
 				<v-card-title>
 					<v-btn flat icon @click="optionsOpen = !optionsOpen">
 						<v-icon>{{optionsOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
@@ -33,6 +34,7 @@
 					<div id="paper" class="paper amber lighten-4"></div>
 				</v-card-text>
 			</v-card>
+			</div>
 			<v-card>
 				<v-card-title>
 					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
@@ -144,4 +146,11 @@ document.getElementById("paper").querySelectorAll("${this.selector}").forEach((e
 	.classes-page .input-group--select {
 		width: 250px;
 	}
+	@media only screen and (min-width: 1800px) {
+		.classes-page .combine-cards .card.narrow {
+			min-width: 605px;
+			max-width: 605px;
+		}
+	}
+
 </style>
