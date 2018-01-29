@@ -45,4 +45,7 @@
 		font-size: 12px;
 		float: left;
 	}
+	.button-row .info-dialog {
+		position: relative;
+	}
 </style>

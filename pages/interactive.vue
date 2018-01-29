@@ -1,7 +1,8 @@
 <template>
 	<v-layout class="interactive-page">
 		<v-flex xs12 sm12 md12 lg12>
-			<v-card>
+			<div class="combine-cards">
+				<v-card class="narrow">
 				<v-card-title>
 					<v-btn flat icon @click="optionsOpen = !optionsOpen">
 						<v-icon>{{optionsOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
@@ -42,17 +43,21 @@
 					<p>See the <nuxt-link to="/audio">audio page</nuxt-link>: all of the same parameters apply. Put the parameters in the property <code class="subtle-code">midi_options</code>.</p>
 
 					<h2>Commands</h2>
-					<div>
+					<div class="button-row">
 						<v-btn outline color="primary" @click="setNotDirty">Set Not Dirty</v-btn>
+						<div><InfoDialog label="test1" help="help1"></InfoDialog></div>
 						<v-btn-toggle v-model="isReadOnly">
 							<v-btn outline color="primary" value="writable" @click="setReadOnly">Set Read Only</v-btn>
 						</v-btn-toggle>
+						<InfoDialog label="test2" help="help2"></InfoDialog>
 						<v-btn-toggle v-model="isPaused">
 							<v-btn outline color="primary" value="running" @click="pause">Pause</v-btn>
 						</v-btn-toggle>
+						<InfoDialog label="test3" help="help3"></InfoDialog>
 						<v-btn-toggle v-model="isMidiPaused">
 							<v-btn outline color="primary" value="running" @click="pauseMidi">Pause MIDI</v-btn>
 						</v-btn-toggle>
+						<InfoDialog label="test4" help="help4"></InfoDialog>
 					</div>
 					<div>
 						<v-text-field
@@ -91,6 +96,7 @@
 					</div>
 				</v-card-text>
 			</v-card>
+			</div>
 			<v-card>
 				<v-card-title>
 					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
@@ -111,11 +117,12 @@
 	import {mapGetters, mapMutations} from 'vuex';
 	import CheckboxItem from "../components/CheckboxItem";
 	import TextInputItem from "../components/TextInputItem";
+	import InfoDialog from "../components/InfoDialog";
 
 	const abcjs = process.browser ? require('abcjs/midi.js') : null; // This requires document and window, so can't be used on the server side.
 
 	export default {
-		components: {CheckboxItem, TextInputItem},
+		components: {CheckboxItem, TextInputItem, InfoDialog},
 		head() {
 			return {
 				title: this.appTitle()
@@ -417,6 +424,27 @@ import abcjs from 'abcjs/midi;` : "import abcjs from 'abcjs;";
 	.interactive-page #warnings-id:empty {
 		display: none;
 	}
+	.interactive-page .button-row {
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.interactive-page .button-row > button {
+		min-width: 110px;
+	}
+	.interactive-page .button-row button {
+		margin-right: 2px;
+	}
+	.interactive-page .button-row button:first-child {
+		margin-left: 0;
+	}
+	.interactive-page .button-row .btn-toggle {
+		margin-right: 0;
+		margin-left: 15px;
+	}
+	.interactive-page .btn-toggle {
+		margin-top: 6px;
+	}
+
 	.abc_textarea_readonly {
 		background: linear-gradient(to right, rgba(230,150,150,0) 0%,rgba(230,150,150,1) 100%);
 	}
