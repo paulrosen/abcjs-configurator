@@ -197,6 +197,9 @@ V:1 nm="abcjs"
 </script>
 
 <style>
+  .content .container {
+    max-width: inherit;
+  }
   .card {
     margin-bottom: 10px;
   }
@@ -297,4 +300,24 @@ V:1 nm="abcjs"
 	  margin-bottom: 10px;
   }
 
+  .input-group__details {
+	  height: 0;
+	  overflow: hidden;
+	  min-height: 0;
+  }
+  @media only screen and (min-width: 1264px) {
+	  .combine-cards {
+		  display: flex;
+	  }
+	  .combine-cards .card.narrow {
+		  min-width: 270px;
+		  max-width: 270px;
+	  }
+  }
+  @media only screen and (min-width: 1800px) {
+	  .combine-cards .card.narrow {
+		  min-width: 560px;
+		  max-width: 560px;
+	  }
+  }
 </style>

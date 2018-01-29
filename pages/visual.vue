@@ -5,16 +5,17 @@
 				<v-card-title>Standard Notation</v-card-title>
 				<v-card-text>
 					<p>The primary mission of <span class="blue--text text--lighten-1">abcjs</span> is to display standard sheet music. This page demonstrates all of the options available for doing that. This uses only the functionality in the basic library (the one without MIDI).</p>
+					<p>All of these options have a default value, so they are all optional.</p>
 				</v-card-text>
 			</v-card>
-			<v-card>
+			<div class="combine-cards">
+			<v-card class="narrow">
 				<v-card-title>
 					<v-btn flat icon @click="optionsOpen = !optionsOpen">
 						<v-icon>{{optionsOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
 					</v-btn>
 					Options</v-card-title>
 				<v-card-text :class="optionsOpen ? 'opened' : 'closed'">
-					<p>All of these options have a default value, so they are all optional.</p>
 					<h2>Elements</h2>
 					<TextInputItem label="Number of Tunes To Show" :help="helpText.numberOfTunes" v-model="numberOfTunes"></TextInputItem>
 
@@ -59,10 +60,6 @@
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
 					<div>
-						<div v-if="engraverParams.highlightListener">
-							<div class="footnote">Click on the displayed music to see the output of the callback function.</div>
-							<code class="indented">{{highlightListenerOutput}}</code>
-						</div>
 						<div v-if="engraverParams.responsive === 'resize'">
 							<div class="footnote"><span>When using resize, do not place the </span><code class="subtle-code">&lt;div id="paper"&gt;</code><span> as a flex element: the flex functionality will interfere. Just wrap in another </span><code class="subtle-code">&lt;div&gt;</code></div>
 						</div>
@@ -90,9 +87,14 @@
 						<div id="paper22" class="paper"></div>
 						<div id="paper23" class="paper"></div>
 						<div id="paper24" class="paper"></div>
+						<div v-if="engraverParams.highlightListener">
+							<div class="footnote">Click on the displayed music to see the output of the callback function.</div>
+							<code class="indented">{{highlightListenerOutput}}</code>
+						</div>
 					</div>
 				</v-card-text>
 			</v-card>
+			</div>
 			<v-card>
 				<v-card-title>
 					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
