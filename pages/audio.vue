@@ -1,7 +1,8 @@
 <template>
 	<v-layout class="audio-page">
 		<v-flex xs12 sm12 md12 lg12>
-			<v-card>
+			<div class="combine-cards">
+			<v-card class="narrow">
 				<v-card-title>
 					<v-btn flat icon @click="optionsOpen = !optionsOpen">
 						<v-icon>{{optionsOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
@@ -30,13 +31,13 @@
 						<CheckboxItem label="Tempo Control?" :help="helpText.tempo" v-model="midiParams.inlineControls.tempo"></CheckboxItem>
 						<CheckboxItem label="Hide?" :help="helpText.hide" v-model="midiParams.inlineControls.hide"></CheckboxItem>
 						<CheckboxItem label="Auto Play?" :help="helpText.startPlaying" v-model="midiParams.inlineControls.startPlaying"></CheckboxItem>
-						<TextInputItem label="Pre-Inline Text (%T=title)" :help="helpText.preTextInline" v-model="midiParams.preTextInline"></TextInputItem>
-						<TextInputItem label="Post-Inline Text (%T=title)" :help="helpText.postTextInline" v-model="midiParams.postTextInline"></TextInputItem>
-						<TextInputItem label="Loop Tooltip" :help="helpText.tooltipLoop" v-model="midiParams.tooltipLoop"></TextInputItem>
-						<TextInputItem label="Reset Tooltip" :help="helpText.tooltipReset" v-model="midiParams.tooltipReset"></TextInputItem>
-						<TextInputItem label="Play Tooltip" :help="helpText.tooltipPlay" v-model="midiParams.tooltipPlay"></TextInputItem>
-						<TextInputItem label="Progress Tooltip" :help="helpText.tooltipProgress" v-model="midiParams.tooltipProgress"></TextInputItem>
-						<TextInputItem label="Tempo Tooltip" :help="helpText.tooltipTempo" v-model="midiParams.tooltipTempo"></TextInputItem>
+						<TextInputItem label="Pre-Inline Text (%T=title)" :help="helpText.preTextInline" v-model="midiParams.inlineControls.preTextInline"></TextInputItem>
+						<TextInputItem label="Post-Inline Text (%T=title)" :help="helpText.postTextInline" v-model="midiParams.inlineControls.postTextInline"></TextInputItem>
+						<TextInputItem label="Loop Tooltip" :help="helpText.tooltipLoop" v-model="midiParams.inlineControls.tooltipLoop"></TextInputItem>
+						<TextInputItem label="Reset Tooltip" :help="helpText.tooltipReset" v-model="midiParams.inlineControls.tooltipReset"></TextInputItem>
+						<TextInputItem label="Play Tooltip" :help="helpText.tooltipPlay" v-model="midiParams.inlineControls.tooltipPlay"></TextInputItem>
+						<TextInputItem label="Progress Tooltip" :help="helpText.tooltipProgress" v-model="midiParams.inlineControls.tooltipProgress"></TextInputItem>
+						<TextInputItem label="Tempo Tooltip" :help="helpText.tooltipTempo" v-model="midiParams.inlineControls.tooltipTempo"></TextInputItem>
 					</v-layout>
 
 					<h2>Callback Params</h2>
@@ -52,6 +53,12 @@
 						<TextInputItem label="Number of Bars" :help="helpText.drumBars" v-model="midiParams.drumBars"></TextInputItem>
 						<TextInputItem label="Number Of Intro Bars" :help="helpText.drumIntro" v-model="midiParams.drumIntro"></TextInputItem>
 					</v-layout>
+
+					<h2>Commands</h2>
+					<div class="button-row">
+						<v-btn outline color="primary" @click="doPlay">Play/Pause</v-btn>
+						<v-btn outline color="primary" @click="doStop">Stop</v-btn>
+					</div>
 				</v-card-text>
 			</v-card>
 			<v-card class="section-card">
@@ -61,12 +68,13 @@
 					</v-btn>
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
-					<div v-html="listenerOutput" v-if="listenerOutput"></div>
 					<div id="midi-id"></div>
 					<div id="paper" class="paper amber lighten-4"></div>
+					<div v-html="listenerOutput" v-if="listenerOutput"></div>
 					<div v-html="animationOutput" v-if="animationOutput"></div>
 				</v-card-text>
 			</v-card>
+			</div>
 			<v-card>
 				<v-card-title>
 					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
@@ -89,6 +97,7 @@ import abcjs from 'abcjs/midi;
 	import {mapGetters} from 'vuex';
 	import CheckboxItem from "../components/CheckboxItem";
 	import TextInputItem from "../components/TextInputItem";
+	const abcjs = process.browser ? require('abcjs/midi.js') : null; // This requires document and window, so can't be used on the server side.
 
 	export default {
 		components: {CheckboxItem, TextInputItem},
@@ -211,6 +220,12 @@ import abcjs from 'abcjs/midi;
 
 		methods: {
 			...mapGetters(['appTitle', 'renderAbc', 'renderMidi', 'inputAbc']),
+			doPlay() {
+				abcjs.midi.startPlaying(document.querySelector(".audio-page .abcjs-inline-midi"));
+			},
+			doStop() {
+				abcjs.midi.stopPlaying();
+			},
 			constructMidiParams() {
 				this.midiParams.listener = this.midiParams.doListener ? this.listenerCallback : undefined;
 				this.midiParams.animate = this.midiParams.doAnimate ?
