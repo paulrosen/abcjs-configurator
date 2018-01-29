@@ -7,20 +7,17 @@
 					There are two types of animation available. The type that is demonstrated here does not require the MIDI option, so it can be used with the smaller, basic library. To see the type of animation that can be synced up with the sound, go to the <nuxt-link to="/audio">Audio page</nuxt-link>. There are three effects that can be achieved here: a cursor, the measures disappearing after they've been played, and the measures disappearing just before they're to be played. The effects can be combined.
 				</v-card-text>
 			</v-card>
-			<v-card>
+			<div class="combine-cards">
+				<v-card class="narrow">
 				<v-card-title>
 					<v-btn flat icon @click="optionsOpen = !optionsOpen">
 						<v-icon>{{optionsOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}}</v-icon>
 					</v-btn>
 					Options</v-card-title>
 				<v-card-text :class="optionsOpen ? 'opened' : 'closed'">
-					<p>You must check at least one of these checkboxes to see the animation. If you leave the Beats Per Minute blank, then the the tempo found in the ABC input string is used. If you put a number in, then that overrides the tempo in the ABC string.</p>
+					<p>You must check at least one of these checkboxes to see the animation.</p>
 					<v-layout wrap justify-start align-center>
-					<v-text-field
-							class="bpm-input"
-							v-model="bpm"
-							label="Beats Per Minute"
-					></v-text-field>
+						<TextInputItem label="Beats Per Minute" :help="helpText.bpm" v-model="bpm"></TextInputItem>
 						<CheckboxItem label="Hide Finished Measures" :help="helpText.hideFinishedMeasures" v-model="hideFinishedMeasures"></CheckboxItem>
 						<CheckboxItem label="Hide Current Measure" :help="helpText.hideCurrentMeasure" v-model="hideCurrentMeasure"></CheckboxItem>
 						<CheckboxItem label="Show Cursor" :help="helpText.showCursor" v-model="showCursor"></CheckboxItem>
@@ -42,6 +39,7 @@
 					<div id="paper" class="paper amber lighten-4"></div>
 				</v-card-text>
 			</v-card>
+			</div>
 			<v-card>
 				<v-card-title>
 					<v-btn flat icon @click="javascriptOpen = !javascriptOpen">
@@ -77,9 +75,10 @@ abcjs.pauseAnimation(true | false);
 <script>
 	import {mapGetters} from 'vuex';
 	import CheckboxItem from "../components/CheckboxItem";
+	import TextInputItem from "../components/TextInputItem";
 
 	export default {
-		components: {CheckboxItem},
+		components: {CheckboxItem,TextInputItem},
 		head() {
 			return {
 				title: this.appTitle()
@@ -100,6 +99,7 @@ abcjs.pauseAnimation(true | false);
 					hideFinishedMeasures: "As soon as a measure has been passed in the animation, then it is hidden. This is useful if you are trying to keep the user focused on the upcoming music and not look back at previously played measures.",
 					hideCurrentMeasure: "As soon as a measure is about to be played, it is hidden. This is useful if you are trying to get the user to read ahead and memorize each measure as it happens.",
 					showCursor: "When animating, move an element along in time. This element has the selector \"#paper .cursor\" and needs to have some CSS applied to it to be visible. A possible styling is shown.",
+					bpm: "This is the tempo that the animation should be. If you leave it blank, then the the tempo found in the ABC input string is used. If you put a number in, then that overrides the tempo in the ABC string.",
 				}
 			};
 		},
@@ -139,9 +139,5 @@ abcjs.pauseAnimation(true | false);
 	}
 	#paper .cursor {
 		border-left: 1px solid #3D9AFC;
-	}
-	.bpm-input {
-		width: 150px;
-		margin-top: -25px;
 	}
 </style>
