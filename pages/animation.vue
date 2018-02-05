@@ -22,11 +22,17 @@
 						<CheckboxItem label="Hide Current Measure" :help="helpText.hideCurrentMeasure" v-model="hideCurrentMeasure"></CheckboxItem>
 						<CheckboxItem label="Show Cursor" :help="helpText.showCursor" v-model="showCursor"></CheckboxItem>
 					</v-layout>
+					<h2>Commands</h2>
+					<div class="button-row">
 					<v-btn round color="primary" @click="start">Start</v-btn>
+						<div><InfoDialog label="Start" :help="helpText.start"></InfoDialog></div>
 					<v-btn outline color="primary" @click="stop">Stop</v-btn>
+						<div><InfoDialog label="Stop" :help="helpText.stop"></InfoDialog></div>
 					<v-btn-toggle v-model="isPaused">
 					<v-btn outline color="primary" @click="pause">Pause</v-btn>
 					</v-btn-toggle>
+						<div><InfoDialog label="Pause" :help="helpText.pause"></InfoDialog></div>
+					</div>
 				</v-card-text>
 			</v-card>
 			<v-card>
@@ -55,7 +61,7 @@ abcjs.startAnimation("paper", tunes[0], {
 
 abcjs.stopAnimation();
 
-abcjs.pauseAnimation(true | false);
+abcjs.pauseAnimation(true || false);
 
 <template v-if="showCursor">
 	&lt;style&gt;
@@ -76,9 +82,10 @@ abcjs.pauseAnimation(true | false);
 	import {mapGetters} from 'vuex';
 	import CheckboxItem from "../components/CheckboxItem";
 	import TextInputItem from "../components/TextInputItem";
+	import InfoDialog from "../components/InfoDialog";
 
 	export default {
-		components: {CheckboxItem,TextInputItem},
+		components: {CheckboxItem,TextInputItem, InfoDialog},
 		head() {
 			return {
 				title: this.appTitle()
@@ -100,6 +107,9 @@ abcjs.pauseAnimation(true | false);
 					hideCurrentMeasure: "As soon as a measure is about to be played, it is hidden. This is useful if you are trying to get the user to read ahead and memorize each measure as it happens.",
 					showCursor: "When animating, move an element along in time. This element has the selector \"#paper .cursor\" and needs to have some CSS applied to it to be visible. A possible styling is shown.",
 					bpm: "This is the tempo that the animation should be. If you leave it blank, then the the tempo found in the ABC input string is used. If you put a number in, then that overrides the tempo in the ABC string.",
+					start: "This begins the animation if it has not started, and it re-starts the animation if it has. If the pause command had been sent, then the pause is canceled.",
+					stop: "This stops the animation and removes the cursor.",
+					pause: "This pauses/resumes the animation. The cursor remains on the page when in paused state.",
 				}
 			};
 		},
@@ -139,5 +149,25 @@ abcjs.pauseAnimation(true | false);
 	}
 	#paper .cursor {
 		border-left: 1px solid #3D9AFC;
+	}
+	.animation-page .button-row {
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.animation-page .button-row > button {
+		min-width: 110px;
+	}
+	.animation-page .button-row button {
+		margin-right: 2px;
+	}
+	.animation-page .button-row button:first-child {
+		margin-left: 0;
+	}
+	.animation-page .button-row .btn-toggle {
+		margin-right: 0;
+		margin-left: 15px;
+	}
+	.animation-page .btn-toggle {
+		margin-top: 6px;
 	}
 </style>

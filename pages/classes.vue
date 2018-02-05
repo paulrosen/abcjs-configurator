@@ -17,7 +17,7 @@
 							clearable
 					></v-select>
 					<p>Check the various classes to see how they are applied to the music. (They are AND'd together.)</p>
-					<v-flex>
+					<v-flex class="class-checks">
 						<div v-for="c,i in classNames" :key="i" class="classes">
 							<v-checkbox :label="c" v-model="checkedClasses" :value="c"></v-checkbox>
 						</div>
@@ -151,6 +151,10 @@ document.getElementById("paper").querySelectorAll("${this.selector}").forEach((e
 			min-width: 605px;
 			max-width: 605px;
 		}
+	}
+	.class-checks {
+		max-height: 400px;
+		overflow: auto;
 	}
 
 </style>

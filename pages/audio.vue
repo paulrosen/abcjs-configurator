@@ -57,7 +57,9 @@
 					<h2>Commands</h2>
 					<div class="button-row">
 						<v-btn outline color="primary" @click="doPlay">Play/Pause</v-btn>
+						<div><InfoDialog label="Play/Pause" :help="helpText.play"></InfoDialog></div>
 						<v-btn outline color="primary" @click="doStop">Stop</v-btn>
+						<div><InfoDialog label="Stop" :help="helpText.stop"></InfoDialog></div>
 					</div>
 				</v-card-text>
 			</v-card>
@@ -97,10 +99,11 @@ import abcjs from 'abcjs/midi;
 	import {mapGetters} from 'vuex';
 	import CheckboxItem from "../components/CheckboxItem";
 	import TextInputItem from "../components/TextInputItem";
+	import InfoDialog from "../components/InfoDialog";
 	const abcjs = process.browser ? require('abcjs/midi.js') : null; // This requires document and window, so can't be used on the server side.
 
 	export default {
-		components: {CheckboxItem, TextInputItem},
+		components: {CheckboxItem, TextInputItem, InfoDialog},
 		head() {
 			return {
 				title: this.appTitle()
@@ -194,7 +197,8 @@ import abcjs from 'abcjs/midi;
 					drum: "This is the drum pattern as specified in the ABC standard. See that documentation for complete details.",
 					drumBars: "This is how many bars the specified drum pattern is defined for.",
 					drumIntro: "This plays a number of measures of the drum pattern before the music starts.",
-
+					play: "This has the same effect as clicking the play button on the audio control. If you wish to supply your own mechanism for playing audio, then you can hide the standard audio control, and start the playback with this.",
+					stop: "This has the same effect as clicking stop button on the audio control. If you wish to supply your own mechanism for playing audio, then you can hide the standard audio control, and start the playback with this.",
 				}
 			};
 		},
@@ -391,7 +395,11 @@ ${this.formatElements(range.elements)},
     abcString,
     { },
     ${midiParams},
-    ${renderParams});`;
+    ${renderParams});
+
+abcjs.midi.startPlaying(document.querySelector(".abcjs-inline-midi"));
+
+abcjs.midi.stopPlaying();`;
 
     			this.tunes = this.renderAbc()("paper", this.inputAbc(), {}, {}, this.renderParams);
 				this.renderMidi()("midi-id", this.inputAbc(), {}, this.constructMidiParams(), this.renderParams);

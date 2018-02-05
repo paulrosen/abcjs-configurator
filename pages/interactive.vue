@@ -45,19 +45,19 @@
 					<h2>Commands</h2>
 					<div class="button-row">
 						<v-btn outline color="primary" @click="setNotDirty">Set Not Dirty</v-btn>
-						<div><InfoDialog label="test1" help="help1"></InfoDialog></div>
+						<div><InfoDialog label="Set Not Dirty" :help="helpText.setNotDirty"></InfoDialog></div>
 						<v-btn-toggle v-model="isReadOnly">
 							<v-btn outline color="primary" value="writable" @click="setReadOnly">Set Read Only</v-btn>
 						</v-btn-toggle>
-						<InfoDialog label="test2" help="help2"></InfoDialog>
+						<InfoDialog label="Set Read Only" :help="helpText.setReadOnly"></InfoDialog>
 						<v-btn-toggle v-model="isPaused">
-							<v-btn outline color="primary" value="running" @click="pause">Pause</v-btn>
+							<v-btn outline color="primary" value="running" @click="pause">Pause Drawing</v-btn>
 						</v-btn-toggle>
-						<InfoDialog label="test3" help="help3"></InfoDialog>
+						<InfoDialog label="Pause Drawing" :help="helpText.pauseDrawing"></InfoDialog>
 						<v-btn-toggle v-model="isMidiPaused">
 							<v-btn outline color="primary" value="running" @click="pauseMidi">Pause MIDI</v-btn>
 						</v-btn-toggle>
-						<InfoDialog label="test4" help="help4"></InfoDialog>
+						<InfoDialog label="Pause MIDI" :help="helpText.pauseMidi"></InfoDialog>
 					</div>
 					<div>
 						<v-text-field
@@ -178,6 +178,10 @@
 					paddingtop: "",
 					paddingright: "",
 					paddingbottom: "",
+					setNotDirty: "If the user saves their work, you can tell the textarea that there is no unsaved data. The class \"abc_textarea_dirty\" is removed from the textarea, and will not be put back on until the textarea changes. This only has an effect if the flag \"indicate_changed\" is set.",
+					setReadOnly: "This sets the control to be read only and adds the class \"abc_textarea_readonly\".",
+					pauseDrawing: "If the drawing is hogging the system's resources, you can call this to stop the instantaneous redrawing of the sheet music. If you call this a second time, the visual sheet music will catch up.",
+					pauseMidi: "If creating the audio is hogging the system's resources, you can call this to stop the instantaneous recreating of the audio. If you call this a second time, the audio will catch up.",
 				},
 
 				theEditor: null,
@@ -332,7 +336,15 @@ K:Em
 				const editorParams = this.formatEditorParams();
 				this.javascriptString = `const abcEditor = new abcjs.Editor(
     "textarea-id",
-    ${editorParams});`;
+    ${editorParams});
+
+abcEditor.setNotDirty();
+
+abcEditor.setReadOnly(true || false);
+
+abcEditor.pause(true || false);
+
+abcEditor.pauseMidi(true || false);`;
 				this.importStatements = this.editorParams.specifyInlineMidiId || this.editorParams.specifyDownloadMidiId ? `import 'font-awesome/css/font-awesome.min.css';
 import 'abcjs/abcjs-midi.css';
 import abcjs from 'abcjs/midi;` : "import abcjs from 'abcjs;";
@@ -423,26 +435,6 @@ import abcjs from 'abcjs/midi;` : "import abcjs from 'abcjs;";
 	}
 	.interactive-page #warnings-id:empty {
 		display: none;
-	}
-	.interactive-page .button-row {
-		display: flex;
-		flex-wrap: wrap;
-	}
-	.interactive-page .button-row > button {
-		min-width: 110px;
-	}
-	.interactive-page .button-row button {
-		margin-right: 2px;
-	}
-	.interactive-page .button-row button:first-child {
-		margin-left: 0;
-	}
-	.interactive-page .button-row .btn-toggle {
-		margin-right: 0;
-		margin-left: 15px;
-	}
-	.interactive-page .btn-toggle {
-		margin-top: 6px;
 	}
 
 	.abc_textarea_readonly {

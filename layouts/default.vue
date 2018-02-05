@@ -239,8 +239,27 @@ V:1 nm="abcjs"
 	}
   .btn-toggle {
     margin-right: 10px;
+	  margin-top: 6px;
   }
-	#abcjs-logo .staff, #abcjs-logo .staff-extra, #abcjs-logo .symbol, #abcjs-logo .bar {
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .button-row > button {
+    min-width: 110px;
+  }
+  .button-row button {
+    margin-right: 2px;
+  }
+  .button-row button:first-child {
+    margin-left: 0;
+  }
+  .button-row .btn-toggle {
+    margin-right: 0;
+    margin-left: 15px;
+  }
+
+  #abcjs-logo .staff, #abcjs-logo .staff-extra, #abcjs-logo .symbol, #abcjs-logo .bar {
 		fill: #b3b38b !important;
 	}
   #abcjs-logo .staff-extra.clef {
