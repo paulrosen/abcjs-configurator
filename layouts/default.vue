@@ -354,4 +354,16 @@ V:1 nm="abcjs"
 		  max-width: 830px;
 	  }
   }
+  @media only screen and (min-width: 2150px) {
+	  .combine-cards .card.narrow {
+		  min-width: 1072px;
+		  max-width: 1072px;
+	  }
+  }
+  @media only screen and (min-width: 2410px) {
+	  .combine-cards .card.narrow {
+		  min-width: 1332px;
+		  max-width: 1332px;
+	  }
+  }
 </style>
