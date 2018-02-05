@@ -1,6 +1,7 @@
 <template>
   <v-app light>
     <v-navigation-drawer
+			width="200"
       :mini-variant="miniVariant"
       :clipped="clipped"
       v-model="drawer"
@@ -183,13 +184,18 @@ K:Bb
 V:1 nm="abcjs"
 |:GBcd-d4|zcdc dc3|
 `;
-	      this.renderAbc()("abcjs-logo", logoMusic, {}, {responsive: "resize"});
+	      this.renderAbc()("abcjs-logo", logoMusic, {}, {
+	      	paddingtop: 0,
+		      paddingbottom: 0,
+		      paddingright: 0,
+		      paddingleft: 0,
+			  responsive: "resize"});
 	      const titleEl = document.querySelector('#abcjs-logo text');
-	      titleEl.setAttribute("x", "58");
-	      titleEl.setAttribute("y", "50");
+	      titleEl.setAttribute("x", "38");
+	      titleEl.setAttribute("y", "35");
 	      titleEl.setAttribute("font-family", '"Lucida Console", Monaco, monospace');
 	      titleEl.parentElement.appendChild(titleEl);
-	      document.querySelector('#abcjs-logo svg').setAttribute("viewBox", "57 0 420 100");
+	      document.querySelector('#abcjs-logo svg').setAttribute("viewBox", "34 0 370 96");
 	      const staffExtra = document.querySelectorAll('#abcjs-logo svg .staff-extra');
 	      staffExtra[0].classList.add("clef");
       }
@@ -324,7 +330,7 @@ V:1 nm="abcjs"
 	  overflow: hidden;
 	  min-height: 0;
   }
-  @media only screen and (min-width: 1264px) {
+  @media only screen and (min-width: 1310px) {
 	  .combine-cards {
 		  display: flex;
 	  }
@@ -333,10 +339,16 @@ V:1 nm="abcjs"
 		  max-width: 270px;
 	  }
   }
-  @media only screen and (min-width: 1800px) {
+  @media only screen and (min-width: 1600px) {
 	  .combine-cards .card.narrow {
 		  min-width: 560px;
 		  max-width: 560px;
+	  }
+  }
+  @media only screen and (min-width: 1890px) {
+	  .combine-cards .card.narrow {
+		  min-width: 830px;
+		  max-width: 830px;
 	  }
   }
 </style>
