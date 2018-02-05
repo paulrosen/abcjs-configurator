@@ -15,6 +15,7 @@
 						<TextInputItem label="Instrument number (program)" :help="helpText.program" v-model="midiParams.program"></TextInputItem>
 						<TextInputItem label="Half-steps to transpose" :help="helpText.transpose" v-model="midiParams.transpose"></TextInputItem>
 						<TextInputItem label="Index of the Tune" :help="helpText.startingTune" v-model="renderParams.startingTune"></TextInputItem>
+						<TextInputItem label="Sound Font Location" :help="helpText.soundFontUrl" v-model="soundFontUrl"></TextInputItem>
 					</v-layout>
 					<h2>Download Params</h2>
 					<v-layout wrap justify-start align-center>
@@ -145,6 +146,7 @@ import abcjs from 'abcjs/midi;
 					startingTune: "0",
 				},
 
+				soundFontUrl: "",
 				javascriptString: "",
 				javascriptOpen: true,
 				optionsOpen: true,
@@ -199,6 +201,7 @@ import abcjs from 'abcjs/midi;
 					drumIntro: "This plays a number of measures of the drum pattern before the music starts.",
 					play: "This has the same effect as clicking the play button on the audio control. If you wish to supply your own mechanism for playing audio, then you can hide the standard audio control, and start the playback with this.",
 					stop: "This has the same effect as clicking stop button on the audio control. If you wish to supply your own mechanism for playing audio, then you can hide the standard audio control, and start the playback with this.",
+					soundFontUrl: "This is the public URL for the sound font files. By default, the sound fonts are here: https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/ and you probably won't need to modify this, but if you want to host them on your own server, or you want different sounding instruments, you can override it here.\n\nImportant!\n<b>This is only used before the first call to the audio is made, so set this before you start playing a tune!</b>",
 				}
 			};
 		},
@@ -210,6 +213,12 @@ import abcjs from 'abcjs/midi;
 				deep: true
 			},
 			'renderParams': {
+				handler: function () {
+					this.redraw();
+				},
+				deep: true
+			},
+			'soundFontUrl': {
 				handler: function () {
 					this.redraw();
 				},
@@ -316,6 +325,10 @@ import abcjs from 'abcjs/midi;
     }`;
 				return params;
 			},
+			formatSoundFontCall() {
+				const comment = this.soundFontUrl === "" ? "//" : "";
+				return `${comment}abcjs.midi.setSoundFont("${this.soundFontUrl}");`;
+			},
 			listenerCallback(abcjsElement, currentEvent, context) {
 				setTimeout(() => {
 					this.listenerOutput = `<code class="indented">listenerCallback(abcjsElement, currentEvent, context) {
@@ -399,8 +412,12 @@ ${this.formatElements(range.elements)},
 
 abcjs.midi.startPlaying(document.querySelector(".abcjs-inline-midi"));
 
-abcjs.midi.stopPlaying();`;
+abcjs.midi.stopPlaying();
 
+${this.formatSoundFontCall()}`;
+
+    			const soundFontUrl = this.soundFontUrl === "" ? "https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/" : this.soundFontUrl;
+    			abcjs.midi.setSoundFont(soundFontUrl);
     			this.tunes = this.renderAbc()("paper", this.inputAbc(), {}, {}, this.renderParams);
 				this.renderMidi()("midi-id", this.inputAbc(), {}, this.constructMidiParams(), this.renderParams);
 			},
@@ -408,9 +425,6 @@ abcjs.midi.stopPlaying();`;
 	}
 
 // soundfontUrl
-
-	// midi.startPlaying(audio element)
-	// midi.stopPlaying()
 
 // 	| `drum` | "" | A string formatted like the `%%MIDI drum` specification. Using this parameter also implies `%%MIDI drumon` |
 // 	| `drumBars` | 1 |  How many bars to spread the drum pattern over. |
