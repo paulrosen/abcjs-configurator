@@ -50,7 +50,7 @@
 
 					<h2>Metronome Params</h2>
 					<v-layout wrap justify-start align-center>
-						<TextInputItem label="Drum String" :help="helpText.drum" v-model="midiParams.drum"></TextInputItem>
+						<TextInputItem label="Drum String" :help="helpText.drum" v-model="midiParams.drum" dlgWidth="500"></TextInputItem>
 						<TextInputItem label="Number of Bars" :help="helpText.drumBars" v-model="midiParams.drumBars"></TextInputItem>
 						<TextInputItem label="Number Of Intro Bars" :help="helpText.drumIntro" v-model="midiParams.drumIntro"></TextInputItem>
 					</v-layout>
@@ -196,7 +196,10 @@ import abcjs from 'abcjs/midi;
 					tooltipProgress: "This is the title, or tooltip, that appears over the sliding bar when it is hovered with the mouse.",
 					tooltipTempo: "This is the title, or tooltip, that appears over the tempo widget icon when it is hovered with the mouse.",
 					context: "This is an arbitrary variable that is passed back in the callback functions. This can be anything and is useful if you have more than one audio control on the page.",
-					drum: "This is the drum pattern as specified in the ABC standard. See that documentation for complete details.",
+					drum: `This is the drum pattern as specified in the ABC standard. See that documentation for complete details.
+The following table shows some reasonable values for different time signatures.
+
+${this.formatDrumTable()}`,
 					drumBars: "This is how many bars the specified drum pattern is defined for.",
 					drumIntro: "This plays a number of measures of the drum pattern before the music starts.",
 					play: "This has the same effect as clicking the play button on the audio control. If you wish to supply your own mechanism for playing audio, then you can hide the standard audio control, and start the playback with this.",
@@ -245,6 +248,20 @@ import abcjs from 'abcjs/midi;
 					{ listener: this.animateCallback, target: this.tunes[0] }
 					: undefined;
 				return this.midiParams;
+			},
+			formatDrumTable() {
+				return `<table class="datatable table drum-examples"><tr><th>Time Sig</th><th>Drum String</th><th>Num Bars</th><th>Bars of Intro</th></tr>
+<tr><td>2/4</td><td>dd 92 90 60 30</td><td>1</td><td>2</td></tr>
+<tr><td>3/4</td><td>ddd 92 90 90 60 30 30</td><td>1</td><td>1</td></tr>
+<tr><td>4/4</td><td>dddd 92 90 90 90 60 30 30 30</td><td>1</td><td>1</td></tr>
+<tr><td>5/4</td><td>ddddd 92 90 90 92 90 60 30 30 60 30</td><td>1</td><td>1</td></tr>
+<tr><td>Cut Time</td><td>dd 92 90 60 30</td><td>1</td><td>2</td></tr>
+<tr><td>6/8</td><td>dd 92 90 60 30</td><td>1</td><td>2</td></tr>
+<tr><td>9/8</td><td>ddd 92 90 90 60 30 30</td><td>1</td><td>1</td></tr>
+<tr><td>9/8</td><td>dddd 92 90 90 90 60 30 30 30</td><td>1</td><td>1</td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td>4/4</td><td>d2dd2ddz 92 90 92 90 90 60 30 60 30 30</td><td>2</td><td>4</td></tr>
+</table>`.replace(/\n/g,"");
 			},
 			formatInlineControls() {
 				let params = "";
@@ -424,31 +441,6 @@ ${this.formatSoundFontCall()}`;
 		}
 	}
 
-// soundfontUrl
-
-// 	| `drum` | "" | A string formatted like the `%%MIDI drum` specification. Using this parameter also implies `%%MIDI drumon` |
-// 	| `drumBars` | 1 |  How many bars to spread the drum pattern over. |
-// 	| `drumIntro` | 0 | How many bars of drum should precede the music. |
-//
-// 	**Note on the drum parameter:**
-// 	See the ABC documentation for the correct way to format the string that is passed as the drum parameter. Here is a table that provides a fairly reasonable default for drum, drumIntro, and drumBars when used as a metronome:
-// 		```
-// const drumBeats = {
-// // the array is [0]=drum [1]=drumIntro
-// "2/4": ["dd 92 90 60 30", 2],
-// "3/4": ["ddd 92 90 90 60 30 30", 1],
-// "4/4": ["dddd 92 90 90 90 60 30 30 30", 1],
-// "5/4": ["ddddd 92 90 90 92 90 60 30 30 60 30", 1],
-// "Cut Time": ["dd 92 90 60 30", 2],
-// "6/8": ["dd 92 90 60 30", 2],
-// "9/8": ["ddd 92 90 90 60 30 30", 1],
-// "12/8": ["dddd 92 90 90 90 60 30 30 30", 1]
-// };
-// ```
-// 	A more complicated example that has the drum pattern fall over two measures of 2/4 time (This is a typical Bulgar pattern):
-// 	```
-// { drum: "d2dd2ddz", drumBars: 2, drumIntro: 2 }
-
 </script>
 
 <style>
@@ -460,5 +452,17 @@ ${this.formatSoundFontCall()}`;
 	.audio-page 	#midi-id {
 		margin-bottom: 15px;
 		max-width: 770px;
+	}
+	.drum-examples td:nth-child(2) {
+		white-space: nowrap;
+	}
+	table.table.drum-examples tbody th {
+		padding: 0;
+		text-align: left;
+	}
+	table.table.drum-examples tbody td {
+		padding: 0;
+		text-align: left;
+		height: 24px;
 	}
 </style>

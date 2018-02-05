@@ -3,7 +3,7 @@
 		<v-btn flat icon @click.stop="openDialog = true" class="help-button blue-gray" v-if="help" title="Click for more info.">
 			<v-icon>info_outline</v-icon>
 		</v-btn>
-		<v-dialog v-model="openDialog" max-width="400px" v-if="help">
+		<v-dialog v-model="openDialog" :max-width="getWidth()" v-if="help">
 			<v-card>
 				<v-card-title>
 					Explanation of "{{label}}"
@@ -25,7 +25,7 @@
 				openDialog: false,
 			};
 		},
-		props: ['label', 'help'],
+		props: ['label', 'help', 'width'],
 		mounted() {
 			if (this.help) {
 				const helpButton = this.$children[0].$el;
@@ -33,6 +33,11 @@
 				helpButton.classList.remove("btn--flat");
 				helpButton.classList.remove("btn--icon");
 			}
+		},
+		methods: {
+			getWidth() {
+				return this.width ? this.width + "px" : "400px";
+			},
 		},
 	};
 </script>

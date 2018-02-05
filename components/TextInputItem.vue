@@ -5,7 +5,7 @@
 				v-model="textValue"
 				:label="label"
 		></v-text-field>
-		<InfoDialog :label="label" :help="help"></InfoDialog>
+		<InfoDialog :label="label" :help="help" :width="dlgWidth"></InfoDialog>
 	</div>
 </template>
 
@@ -24,7 +24,7 @@
 				this.$emit('input', this.textValue);
 			},
 		},
-		props: ['label', 'value', 'help'],
+		props: ['label', 'value', 'help', 'dlgWidth'],
 		mounted() {
 			this.textValue = this.value;
 			if (this.help) {
