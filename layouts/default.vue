@@ -206,6 +206,9 @@ V:1 nm="abcjs"
   .content .container {
     max-width: inherit;
   }
+  footer {
+	  padding-left: 15px;
+  }
   .card {
     margin-bottom: 10px;
   }

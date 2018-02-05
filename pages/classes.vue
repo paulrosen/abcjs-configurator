@@ -22,6 +22,22 @@
 							<v-checkbox :label="c" v-model="checkedClasses" :value="c"></v-checkbox>
 						</div>
 					</v-flex>
+					<div class="footnote">
+						<div>
+						<p>The classes are interpreted like this:</p>
+							<v-data-table
+									v-bind:headers="[{text: 'Class', align: 'left', sortable: false, value: 'class'},{text: 'Meaning', align: 'left', sortable: false, value: 'meaning'}]"
+									:items="legend"
+									hide-actions
+									class="class-legend"
+							>
+								<template slot="items" slot-scope="props">
+									<td>{{ props.item.class }}</td>
+									<td>{{ props.item.meaning }}</td>
+								</template>
+							</v-data-table>
+						</div>
+					</div>
 				</v-card-text>
 			</v-card>
 			<v-card>
@@ -68,6 +84,14 @@
 				javascriptOpen: true,
 				optionsOpen: true,
 				outputOpen: true,
+				legend: [
+					{	class: 'd0-25', meaning: "the duration (replace dash with period)" },
+					{	class: 'l0', meaning: "the line number (zero-based)" },
+					{	class: 'm0', meaning: "the measure number from start of line (zero-based)" },
+					{	class: 'n0', meaning: "the note number from start of measure (zero-based)" },
+					{	class: 'p0', meaning: "the y-position (pitch) (middle C = zero)" },
+					{	class: 'v0', meaning: "the voice number (zero-based)" },
+					],
 			}
 		},
 		watch: {
@@ -153,8 +177,16 @@ document.getElementById("paper").querySelectorAll("${this.selector}").forEach((e
 		}
 	}
 	.class-checks {
-		max-height: 400px;
+		max-height: 410px;
 		overflow: auto;
+		box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, .2), 0px 1px 1px 0px rgba(0, 0, 0, .14), 0px 1px 3px 0px rgba(0, 0, 0, .12);
+		margin-bottom: 10px;
+	}
+	.class-legend table.table tr {
+		height: 20px;
+	}
+	.class-legend table.table td {
+		height: 20px;
 	}
 
 </style>
