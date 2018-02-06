@@ -51,6 +51,12 @@ const createStore = () => {
 			else
 				return {};
 			},
+			tuneByPosition: (state) => (position) => {
+				if (state.tuneBook)
+					return state.tuneBook.tunes[position];
+				else
+					return {};
+			},
 			renderAbc() {
 				if (abcjs)
 					return abcjs.renderAbc;

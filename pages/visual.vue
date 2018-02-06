@@ -220,7 +220,7 @@
 		},
 
 		methods: {
-			...mapGetters(['appTitle', 'renderAbc', 'inputAbc']),
+			...mapGetters(['appTitle', 'renderAbc', 'inputAbc', 'tuneByPosition']),
 			constructOutput() {
 				if (this.numberOfTunes === "1")
 					return "paper1";
@@ -318,7 +318,12 @@
 				return params;
 			},
 			highlightListenerCallback(abcElem,tuneNumber) {
-				this.highlightListenerOutput = `highlightListenerCallback(abcElem,tuneNumber)\n\nabcElem:\n`;
+				const tune = this.tuneByPosition()(tuneNumber).abc;
+				this.highlightListenerOutput = `highlightListenerCallback(abcElem,tuneNumber)\n\n`;
+				if (abcElem.startChar && abcElem.endChar) {
+					this.highlightListenerOutput += `abcString.slice(abcElem.startChar, abcElem.endChar) = ${tune.slice(abcElem.startChar, abcElem.endChar)}`;
+				}
+				this.highlightListenerOutput += `\n\nabcElem:\n`;
 				Object.keys(abcElem).forEach((key) => {
 					if (key === "abselem")
 						this.highlightListenerOutput += "    abselem: [object]\n";
