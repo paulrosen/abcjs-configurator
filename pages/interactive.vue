@@ -309,8 +309,12 @@ K:Em
         }`;
 				return params;
 			},
-			highlightListenerCallback(abcElem,tuneNumber) {
-				this.highlightListenerOutput = `highlightListenerCallback(abcElem,tuneNumber)\n\nabcElem:\n`;
+			highlightListenerCallback(abcElem,tuneNumber,classes) {
+				this.highlightListenerOutput = `highlightListenerCallback(abcElem,tuneNumber,classes)\n\n`;
+				if (abcElem.startChar && abcElem.endChar) {
+					this.highlightListenerOutput += `abcString.slice(abcElem.startChar, abcElem.endChar) = ${this.abcInput.slice(abcElem.startChar, abcElem.endChar)}`;
+				}
+				this.highlightListenerOutput += `\n\nabcElem:\n`;
 				Object.keys(abcElem).forEach((key) => {
 					if (key === "abselem")
 						this.highlightListenerOutput += "    abselem: [object]\n";
@@ -320,6 +324,7 @@ K:Em
 					}
 				});
 				this.highlightListenerOutput += `tuneNumber: ${tuneNumber}\n`;
+				this.highlightListenerOutput += `classes:\n    ${classes.join("\n    ")}\n`;
 			},
 			modelChangedListenerCallback(abcElem) {
 				console.log(abcElem);

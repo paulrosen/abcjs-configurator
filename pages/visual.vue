@@ -317,9 +317,9 @@
     }`;
 				return params;
 			},
-			highlightListenerCallback(abcElem,tuneNumber) {
+			highlightListenerCallback(abcElem,tuneNumber,classes) {
 				const tune = this.tuneByPosition()(tuneNumber).abc;
-				this.highlightListenerOutput = `highlightListenerCallback(abcElem,tuneNumber)\n\n`;
+				this.highlightListenerOutput = `highlightListenerCallback(abcElem,tuneNumber,classes)\n\n`;
 				if (abcElem.startChar && abcElem.endChar) {
 					this.highlightListenerOutput += `abcString.slice(abcElem.startChar, abcElem.endChar) = ${tune.slice(abcElem.startChar, abcElem.endChar)}`;
 				}
@@ -333,6 +333,7 @@
 					}
 				});
 				this.highlightListenerOutput += `tuneNumber: ${tuneNumber}\n`;
+				this.highlightListenerOutput += `classes:\n    ${classes.join("\n    ")}\n`;
 			},
 			modelChangedListenerCallback(abcElem) {
 				console.log(abcElem);
