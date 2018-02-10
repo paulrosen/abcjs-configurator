@@ -285,7 +285,7 @@
 				if (this.engraverParams.highlightListener || this.engraverParams.modelChangedListener) {
 					params += "\n        listener: { ";
 					if (this.engraverParams.highlightListener)
-						params += "highlight: function(abcElem) { console.log(abcElem, tuneNumber); }, ";
+						params += "highlight: function(abcElem) { console.log(abcElem, tuneNumber, classes); }, ";
 					if (this.engraverParams.modelChangedListener)
 						params += "modelChanged: function(abcElem) { console.log(abcElem); }, ";
 					params += "},";
