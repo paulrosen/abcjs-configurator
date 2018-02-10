@@ -268,6 +268,9 @@ V:1 nm="abcjs"
     margin-left: 15px;
   }
 
+  #abcjs-logo {
+    height: 40px;
+  }
   #abcjs-logo .staff, #abcjs-logo .staff-extra, #abcjs-logo .symbol, #abcjs-logo .bar {
 		fill: #b3b38b !important;
 	}
