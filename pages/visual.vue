@@ -21,6 +21,7 @@
 
 					<h2>Parser Parameters</h2>
 					<v-layout wrap justify-start align-center>
+						<TextInputItem label="Transpose" :help="helpText.transpose" v-model="parserParams.transpose"></TextInputItem>
 						<CheckboxItem label="Format For Printing" :help="helpText.print" v-model="parserParams.print"></CheckboxItem>
 						<CheckboxItem label="Parse Header Only" :help="helpText.header_only" v-model="parserParams.header_only"></CheckboxItem>
 						<CheckboxItem label="Stop Parsing on Warning" :help="helpText.stop_on_warning" v-model="parserParams.stop_on_warning"></CheckboxItem>
@@ -138,6 +139,7 @@
 					header_only: false,
 					stop_on_warning: false,
 					hint_measures: false,
+					transpose: "",
 				},
 				engraverParams: {
 					scale: "1",
@@ -166,6 +168,7 @@
 				highlightListenerOutput: "",
 
 				helpText: {
+					transpose: "Transpose the input by this number of half-steps. The number can be negative to transpose down in pitch.",
 					print: "Make the size of the SVG appropriate for a letter-sized area.",
 					editable: "Warning: This feature is currently broken and has no effect!\n\nThis enables drag and drop on the SVG elements. It can be paired with \"gui\" to modify the textarea automatically, or \"modelChangedListener\" to trigger a callback when the user has finished a change.\n\nWarning: This feature is currently broken and has no effect!",
 					add_classes: "This adds many classes to the elements in the SVG. That allows the various parts of the music to be found and manipulated after being drawn.",
@@ -239,6 +242,8 @@
 
 			formatParserParams() {
 				let params = "";
+				if (this.parserParams.transpose)
+					params += `\n        transpose: ${this.parserParams.transpose},`;
 				if (this.parserParams.print)
 					params += "\n        print: true,";
 				if (this.parserParams.header_only)
