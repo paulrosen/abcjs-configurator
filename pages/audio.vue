@@ -23,6 +23,7 @@
 						<TextInputItem label="Download Link Label (%T=title)" :help="helpText.downloadLabel" v-model="midiParams.downloadLabel"></TextInputItem>
 						<TextInputItem label="Pre-Download Text" :help="helpText.preTextDownload" v-model="midiParams.preTextDownload"></TextInputItem>
 						<TextInputItem label="Post-Download Text" :help="helpText.postTextDownload" v-model="midiParams.postTextDownload"></TextInputItem>
+						<TextInputItem label="Download Class" :help="helpText.downloadClass" v-model="midiParams.downloadClass"></TextInputItem>
 					</v-layout>
 					<h2>Inline Params</h2>
 					<v-layout wrap justify-start align-center>
@@ -119,6 +120,7 @@ import abcjs from 'abcjs/midi;
 					generateDownload: false,
 					generateInline: true,
 					downloadLabel: "download midi",
+					downloadClass: "",
 					preTextDownload: "",
 					postTextDownload: "",
 					preTextInline: "",
@@ -185,6 +187,7 @@ import abcjs from 'abcjs/midi;
 					qpm: "This overrides a Q: line in the ABC string and sets the number of quarter notes per minute. This is always measured in quarter notes, even in time signatures like 6/8.",
 					transpose: "The number of half-steps to transpose. This can be a positive or negative number.",
 					startingTune: "If there are multiple tunes in the input string, then this chooses which tune to display. For control over what is displayed, use with the \"Number of Tunes\" parameter. This is zero-based. If this is greater than the number of tunes in the input string, then nothing is displayed.",
+					downloadClass: "This adds the specified classes to the download link. (To see a visual change in this demo, use the class \"colorful\").",
 					downloadLabel: "If the download option is chosen, this specifies The text in the link. You may use the special pattern \"%T\" to indicate that the title of the piece should be used.",
 					preTextDownload: "This is to specify some optional text just before the download link.",
 					postTextDownload: "This is to specify some optional text just after the download link.",
@@ -299,6 +302,8 @@ ${this.formatDrumTable()}`,
 					params += "\n        generateDownload: true,";
 				if (!this.midiParams.generateInline)
 					params += "\n        generateInline: false,";
+				if (this.midiParams.downloadClass !== "")
+					params += `\n        downloadClass: "${this.midiParams.downloadClass}",`;
 				if (this.midiParams.preTextDownload !== "")
 					params += `\n        preTextDownload: "${this.midiParams.preTextDownload}",`;
 				if (this.midiParams.postTextDownload !== "")
@@ -433,7 +438,7 @@ abcjs.midi.stopPlaying();
 
 ${this.formatSoundFontCall()}`;
 
-    			const soundFontUrl = this.soundFontUrl === "" ? "https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/" : this.soundFontUrl;
+    			const soundFontUrl = this.soundFontUrl === "" ? "https://paulrosen.github.io/midi-js-soundfonts/FluidR3_GM/" : this.soundFontUrl;
     			abcjs.midi.setSoundFont(soundFontUrl);
     			this.tunes = this.renderAbc()("paper", this.inputAbc(), {}, {}, this.renderParams);
 				this.renderMidi()("midi-id", this.inputAbc(), {}, this.constructMidiParams(), this.renderParams);
@@ -464,5 +469,16 @@ ${this.formatSoundFontCall()}`;
 		padding: 0;
 		text-align: left;
 		height: 24px;
+	}
+	.colorful {
+		padding: 10px;
+		background: #5743dc;
+		display: inline-block;
+		border-radius: 3px;
+		margin-top: 5px;
+		border: 3px dotted #e0d43f;
+	}
+	.colorful a {
+		color: #9af3bf;
 	}
 </style>
