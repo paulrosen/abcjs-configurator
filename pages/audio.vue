@@ -405,6 +405,9 @@ ${this.formatElements(range.elements)},
         left: ${range.left},
         width: ${range.width},
         height: ${range.height},
+        startChar: ${range.startChar},
+        endChar: ${range.endChar}
+        [ abcString.substring(startChar,endChar) = ${ this.inputAbc().substring(range.startChar, range.endChar)} ]
     }
 `;
 			},
