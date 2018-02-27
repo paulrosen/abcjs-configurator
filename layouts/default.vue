@@ -174,7 +174,62 @@ K:Ab
 [V:A] G | A2 (A/ E/) | E2 (D/ C/) | F2 D | C2 (C/ D/) | C2 (E/ A/) | G2 G | E2 |
 [V:T] E | C2 (C/ A,/) | C2 A, | A,2 A, | A,2 A, | A,2 (A,/ C/) | E2 D | HC2 |
 [V:B] E, | A,2 A, | A,2 A, | D,2 D, | A,,2 A, | F,2 E, | E,2 E, | A,,2 |
-`);
+
+X:1
+T:Drum Kit
+%%map drummap D    print=D heads=x_head   % pedal hi-hat
+%%map drummap E    print=E                % bass drum 1
+%%map drummap F    print=F                % acoustic bass drum
+%%map drummap G    print=G                % low floor tom-tom
+%%map drummap A    print=A                % high floor tom-tom
+%%map drummap B    print=B                % low tom-tom
+%%map drummap ^B   print=B heads=triangle % tambourine
+%%map drummap c    print=c                % acoustic snare
+%%map drummap _c   print=c                % electric snare
+%%map drummap ^c   print=c heads=triangle % low wood block
+%%map drummap =c   print=c                % side stick
+%%map drummap d    print=d                % low-mid tom tom
+%%map drummap ^d   print=d heads=triangle % high wood block
+%%map drummap e    print=e                % high-mid tom tom
+%%map drummap ^e   print=e heads=triangle % cowbell
+%%map drummap f    print=f                % high tom tom
+%%map drummap ^f   print=f heads=x_head   % ride cymbal 1
+%%map drummap g    print=g heads=x_head   % closed hi-hat
+%%map drummap ^g   print=g heads=diamond  % open hi-hat
+%%map drummap a    print=a heads=x_head   % crash cymbal 1
+%%map drummap ^a   print=a heads=triangle % open triangle
+%%MIDI drummap D   44 % pedal hi-hat
+%%MIDI drummap E   36 % bass drum 1
+%%MIDI drummap F   35 % acoustic bass drum
+%%MIDI drummap G   41 % low floor tom-tom
+%%MIDI drummap A   43 % high floor tom-tom
+%%MIDI drummap B   45 % low tom-tom
+%%MIDI drummap ^B  54 % tambourine
+%%MIDI drummap c   38 % acoustic snare
+%%MIDI drummap _c  40 % electric snare
+%%MIDI drummap ^c  77 % low wood block
+%%MIDI drummap =c  37 % side stick
+%%MIDI drummap d   47 % low-mid tom tom
+%%MIDI drummap ^d  76 % high wood block
+%%MIDI drummap e   48 % high-mid tom tom
+%%MIDI drummap ^e  56 % cowbell
+%%MIDI drummap f   50 % high tom tom
+%%MIDI drummap ^f  51 % ride cymbal 1
+%%MIDI drummap g   42 % closed hi-hat
+%%MIDI drummap ^g  46 % open hi-hat
+%%MIDI drummap a   49 % crash cymbal 1
+%%MIDI drummap ^a  81 % open triangle
+%%score (1 2)
+Q:1/4=120
+M:4/4
+L:1/4
+K:C perc
+V:1
+z4| g/^f/g/^f/ g/^f/g/^f/| c/^f/g/^f/ A/^f/g/^f/| c/^f/g/^f/ A/^f/g/^f/|
+c/c/g/^f/ A/A/g/^f/| c/^f/c/^f/ A/^f/A/^f/|(3B/B/B/ (3f/f/f/ (3e/e/e/ (3d/d/d/ | a4|
+V:2
+E D E/E/ D|E D E/E/ D|E D E/E/ D|E D E/E/ D|
+E D E/E/ D|E D E/E/ D|E D E/E/ D|E D E/E/ D|`);
 	      const logoMusic = `X:1
 %%staffwidth 300
 %%voicefont  Arial-Bold 26
