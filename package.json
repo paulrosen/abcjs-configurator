@@ -16,7 +16,7 @@
   "dependencies": {},
   "devDependencies": {
     "@nuxtjs/axios": "^5.0.1",
-    "abcjs": "^3.3.3",
+    "abcjs": "^3.3.4",
     "babel-eslint": "^8.2.2",
     "babel-polyfill": "^6.26.0",
     "cross-env": "^5.1.3",
