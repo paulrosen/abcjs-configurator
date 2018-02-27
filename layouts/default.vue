@@ -395,12 +395,18 @@ V:1 nm="abcjs"
 	  .combine-cards {
 		  display: flex;
 	  }
+	  .layout.wrap {
+		  display: block;
+	  }
 	  .combine-cards .card.narrow {
 		  min-width: 270px;
 		  max-width: 270px;
 	  }
   }
   @media only screen and (min-width: 1600px) {
+	  .layout.wrap {
+		  display: flex;
+	  }
 	  .combine-cards .card.narrow {
 		  min-width: 560px;
 		  max-width: 560px;
