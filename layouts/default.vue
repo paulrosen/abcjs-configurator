@@ -251,7 +251,7 @@ V:1 nm="abcjs"
 	      titleEl.setAttribute("font-family", '"Lucida Console", Monaco, monospace');
 	      titleEl.parentElement.appendChild(titleEl);
 	      document.querySelector('#abcjs-logo svg').setAttribute("viewBox", "34 0 370 96");
-	      const staffExtra = document.querySelectorAll('#abcjs-logo svg .staff-extra');
+	      const staffExtra = document.querySelectorAll('#abcjs-logo svg .abcjs-staff-extra');
 	      staffExtra[0].classList.add("clef");
       }
   }
