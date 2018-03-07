@@ -252,7 +252,7 @@ V:1 nm="abcjs"
 	      titleEl.parentElement.appendChild(titleEl);
 	      document.querySelector('#abcjs-logo svg').setAttribute("viewBox", "34 0 370 96");
 	      const staffExtra = document.querySelectorAll('#abcjs-logo svg .abcjs-staff-extra');
-	      staffExtra[0].classList.add("clef");
+	      staffExtra[0].classList.add("abcjs-clef");
       }
   }
 </script>
@@ -326,13 +326,13 @@ V:1 nm="abcjs"
   #abcjs-logo {
     height: 40px;
   }
-  #abcjs-logo .staff, #abcjs-logo .staff-extra, #abcjs-logo .symbol, #abcjs-logo .bar {
+  #abcjs-logo .abcjs-staff, #abcjs-logo .abcjs-staff-extra, #abcjs-logo .abcjs-symbol, #abcjs-logo .abcjs-bar {
 		fill: #b3b38b !important;
 	}
-  #abcjs-logo .staff-extra.clef {
+  #abcjs-logo .abcjs-staff-extra.abcjs-clef {
 	  fill-opacity: 0.3;
   }
-  #abcjs-logo .voice-name, #abcjs-logo .note, #abcjs-logo .beam-elem {
+  #abcjs-logo .abcjs-voice-name, #abcjs-logo .abcjs-note, #abcjs-logo .abcjs-beam-elem {
 	  fill: #42A5F5 !important;
   }
 	.list__tile--active {
