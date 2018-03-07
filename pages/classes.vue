@@ -100,7 +100,10 @@
 				const svg = paper.querySelector("svg");
 				const elements = svg.querySelectorAll('[fill]');
 				elements.forEach((el) => {
-					el.setAttribute("fill", "#000000");
+					if (el.getAttribute("fill") !== "none")
+						el.setAttribute("fill", "#000000");
+					if (el.getAttribute("stroke") !== "none")
+						el.setAttribute("stroke", "#000000");
 				});
 
 				this.selector = (val.length > 0) ? "." + val.join(".") : "";
@@ -135,7 +138,10 @@
 			highlightSelectedClasses() {
 				if (this.selector.length > 0) {
 					document.getElementById('paper').querySelectorAll(this.selector).forEach((el) => {
-						el.setAttribute("fill", "#3D9AFC");
+						if (el.getAttribute("fill") !== "none")
+							el.setAttribute("fill", "#3D9AFC");
+						if (el.getAttribute("stroke") !== "none")
+							el.setAttribute("stroke", "#3D9AFC");
 					});
 				}
 			},
@@ -151,7 +157,10 @@ abcjs.renderAbc("paper", tune.abc, { add_classes: true });`;
 				return `
 
 document.getElementById("paper").querySelectorAll("${this.selector}").forEach((el) => {
-    el.setAttribute("fill", "#3D9AFC");
+    if (el.getAttribute("fill"))
+        el.setAttribute("fill", "#3D9AFC");
+    if (el.getAttribute("stroke"))
+        el.setAttribute("stroke", "#3D9AFC");
 });`;
 			},
 		},
