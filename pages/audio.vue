@@ -11,49 +11,49 @@
 				<v-card-text :class="optionsOpen ? 'opened' : 'closed'">
 					<h2>General Params</h2>
 					<v-layout wrap justify-start align-center>
-						<TextInputItem label="Quarter Notes Per Minute" :help="helpText.qpm" v-model="midiParams.qpm"></TextInputItem>
-						<TextInputItem label="Instrument number (program)" :help="helpText.program" v-model="midiParams.program"></TextInputItem>
-						<TextInputItem label="Half-steps to transpose" :help="helpText.transpose" v-model="midiParams.transpose"></TextInputItem>
-						<TextInputItem label="Index of the Tune" :help="helpText.startingTune" v-model="renderParams.startingTune"></TextInputItem>
+						<TextInputItem label="Quarter Notes Per Minute" :help="helpText.qpm" v-model="abcjsParams.qpm"></TextInputItem>
+						<TextInputItem label="Instrument number (program)" :help="helpText.program" v-model="abcjsParams.program"></TextInputItem>
+						<TextInputItem label="Half-steps to transpose" :help="helpText.transpose" v-model="abcjsParams.transpose"></TextInputItem>
+						<TextInputItem label="Index of the Tune" :help="helpText.startingTune" v-model="abcjsParams.startingTune"></TextInputItem>
 						<TextInputItem label="Sound Font Location" :help="helpText.soundFontUrl" v-model="soundFontUrl"></TextInputItem>
 					</v-layout>
 					<h2>Download Params</h2>
 					<v-layout wrap justify-start align-center>
-						<CheckboxItem label="Downloadable MIDI?" :help="helpText.generateDownload" v-model="midiParams.generateDownload"></CheckboxItem>
-						<TextInputItem label="Download Link Label (%T=title)" :help="helpText.downloadLabel" v-model="midiParams.downloadLabel"></TextInputItem>
-						<TextInputItem label="Pre-Download Text" :help="helpText.preTextDownload" v-model="midiParams.preTextDownload"></TextInputItem>
-						<TextInputItem label="Post-Download Text" :help="helpText.postTextDownload" v-model="midiParams.postTextDownload"></TextInputItem>
-						<TextInputItem label="Download Class" :help="helpText.downloadClass" v-model="midiParams.downloadClass"></TextInputItem>
+						<CheckboxItem label="Downloadable MIDI?" :help="helpText.generateDownload" v-model="abcjsParams.generateDownload"></CheckboxItem>
+						<TextInputItem label="Download Link Label (%T=title)" :help="helpText.downloadLabel" v-model="abcjsParams.downloadLabel"></TextInputItem>
+						<TextInputItem label="Pre-Download Text" :help="helpText.preTextDownload" v-model="abcjsParams.preTextDownload"></TextInputItem>
+						<TextInputItem label="Post-Download Text" :help="helpText.postTextDownload" v-model="abcjsParams.postTextDownload"></TextInputItem>
+						<TextInputItem label="Download Class" :help="helpText.downloadClass" v-model="abcjsParams.downloadClass"></TextInputItem>
 					</v-layout>
 					<h2>Inline Params</h2>
 					<v-layout wrap justify-start align-center>
-						<CheckboxItem label="Inline MIDI?" :help="helpText.generateInline" v-model="midiParams.generateInline"></CheckboxItem>
-						<CheckboxItem label="Show Loop Toggle?" :help="helpText.loopToggle" v-model="midiParams.inlineControls.loopToggle"></CheckboxItem>
-						<CheckboxItem label="Standard Controls?" :help="helpText.standard" v-model="midiParams.inlineControls.standard"></CheckboxItem>
-						<CheckboxItem label="Tempo Control?" :help="helpText.tempo" v-model="midiParams.inlineControls.tempo"></CheckboxItem>
-						<CheckboxItem label="Hide?" :help="helpText.hide" v-model="midiParams.inlineControls.hide"></CheckboxItem>
-						<CheckboxItem label="Auto Play?" :help="helpText.startPlaying" v-model="midiParams.inlineControls.startPlaying"></CheckboxItem>
-						<TextInputItem label="Pre-Inline Text (%T=title)" :help="helpText.preTextInline" v-model="midiParams.inlineControls.preTextInline"></TextInputItem>
-						<TextInputItem label="Post-Inline Text (%T=title)" :help="helpText.postTextInline" v-model="midiParams.inlineControls.postTextInline"></TextInputItem>
-						<TextInputItem label="Loop Tooltip" :help="helpText.tooltipLoop" v-model="midiParams.inlineControls.tooltipLoop"></TextInputItem>
-						<TextInputItem label="Reset Tooltip" :help="helpText.tooltipReset" v-model="midiParams.inlineControls.tooltipReset"></TextInputItem>
-						<TextInputItem label="Play Tooltip" :help="helpText.tooltipPlay" v-model="midiParams.inlineControls.tooltipPlay"></TextInputItem>
-						<TextInputItem label="Progress Tooltip" :help="helpText.tooltipProgress" v-model="midiParams.inlineControls.tooltipProgress"></TextInputItem>
-						<TextInputItem label="Tempo Tooltip" :help="helpText.tooltipTempo" v-model="midiParams.inlineControls.tooltipTempo"></TextInputItem>
+						<CheckboxItem label="Inline MIDI?" :help="helpText.generateInline" v-model="abcjsParams.generateInline"></CheckboxItem>
+						<CheckboxItem label="Show Loop Toggle?" :help="helpText.loopToggle" v-model="abcjsParams.inlineControls.loopToggle"></CheckboxItem>
+						<CheckboxItem label="Standard Controls?" :help="helpText.standard" v-model="abcjsParams.inlineControls.standard"></CheckboxItem>
+						<CheckboxItem label="Tempo Control?" :help="helpText.tempo" v-model="abcjsParams.inlineControls.tempo"></CheckboxItem>
+						<CheckboxItem label="Hide?" :help="helpText.hide" v-model="abcjsParams.inlineControls.hide"></CheckboxItem>
+						<CheckboxItem label="Auto Play?" :help="helpText.startPlaying" v-model="abcjsParams.inlineControls.startPlaying"></CheckboxItem>
+						<TextInputItem label="Pre-Inline Text (%T=title)" :help="helpText.preTextInline" v-model="abcjsParams.inlineControls.preTextInline"></TextInputItem>
+						<TextInputItem label="Post-Inline Text (%T=title)" :help="helpText.postTextInline" v-model="abcjsParams.inlineControls.postTextInline"></TextInputItem>
+						<TextInputItem label="Loop Tooltip" :help="helpText.tooltipLoop" v-model="abcjsParams.inlineControls.tooltipLoop"></TextInputItem>
+						<TextInputItem label="Reset Tooltip" :help="helpText.tooltipReset" v-model="abcjsParams.inlineControls.tooltipReset"></TextInputItem>
+						<TextInputItem label="Play Tooltip" :help="helpText.tooltipPlay" v-model="abcjsParams.inlineControls.tooltipPlay"></TextInputItem>
+						<TextInputItem label="Progress Tooltip" :help="helpText.tooltipProgress" v-model="abcjsParams.inlineControls.tooltipProgress"></TextInputItem>
+						<TextInputItem label="Tempo Tooltip" :help="helpText.tooltipTempo" v-model="abcjsParams.inlineControls.tooltipTempo"></TextInputItem>
 					</v-layout>
 
 					<h2>Callback Params</h2>
 					<v-layout wrap justify-start align-center>
-						<CheckboxItem label="Listener?" :help="helpText.doListener" v-model="midiParams.doListener"></CheckboxItem>
-						<CheckboxItem label="Animate?" :help="helpText.doAnimate" v-model="midiParams.doAnimate"></CheckboxItem>
-						<TextInputItem label="Callback Context" :help="helpText.context" v-model="midiParams.context"></TextInputItem>
+						<CheckboxItem label="Listener?" :help="helpText.doListener" v-model="abcjsParams.doListener"></CheckboxItem>
+						<CheckboxItem label="Animate?" :help="helpText.doAnimate" v-model="abcjsParams.doAnimate"></CheckboxItem>
+						<TextInputItem label="Callback Context" :help="helpText.context" v-model="abcjsParams.context"></TextInputItem>
 					</v-layout>
 
 					<h2>Metronome Params</h2>
 					<v-layout wrap justify-start align-center>
-						<TextInputItem label="Drum String" :help="helpText.drum" v-model="midiParams.drum" dlgWidth="500"></TextInputItem>
-						<TextInputItem label="Number of Bars" :help="helpText.drumBars" v-model="midiParams.drumBars"></TextInputItem>
-						<TextInputItem label="Number Of Intro Bars" :help="helpText.drumIntro" v-model="midiParams.drumIntro"></TextInputItem>
+						<TextInputItem label="Drum String" :help="helpText.drum" v-model="abcjsParams.drum" dlgWidth="500"></TextInputItem>
+						<TextInputItem label="Number of Bars" :help="helpText.drumBars" v-model="abcjsParams.drumBars"></TextInputItem>
+						<TextInputItem label="Number Of Intro Bars" :help="helpText.drumIntro" v-model="abcjsParams.drumIntro"></TextInputItem>
 					</v-layout>
 
 					<h2>Commands</h2>
@@ -113,7 +113,7 @@ import abcjs from 'abcjs/midi;
 		},
 		data() {
 			return {
-				midiParams: {
+				abcjsParams: {
 					qpm: "",
 					program: "",
 					transpose: "",
@@ -143,8 +143,7 @@ import abcjs from 'abcjs/midi;
 					drum: "",
 					drumBars: "1",
 					drumIntro: "0",
-				},
-				renderParams: {
+
 					startingTune: "0",
 				},
 
@@ -212,13 +211,7 @@ ${this.formatDrumTable()}`,
 			};
 		},
 		watch: {
-			'midiParams': {
-				handler: function () {
-					this.redraw();
-				},
-				deep: true
-			},
-			'renderParams': {
+			'abcjsParams': {
 				handler: function () {
 					this.redraw();
 				},
@@ -246,11 +239,11 @@ ${this.formatDrumTable()}`,
 				abcjs.midi.stopPlaying();
 			},
 			constructMidiParams() {
-				this.midiParams.listener = this.midiParams.doListener ? this.listenerCallback : undefined;
-				this.midiParams.animate = this.midiParams.doAnimate ?
+				this.abcjsParams.listener = this.abcjsParams.doListener ? this.listenerCallback : undefined;
+				this.abcjsParams.animate = this.abcjsParams.doAnimate ?
 					{ listener: this.animateCallback, target: this.tunes[0] }
 					: undefined;
-				return this.midiParams;
+				return this.abcjsParams;
 			},
 			formatDrumTable() {
 				return `<table class="datatable table drum-examples"><tr><th>Time Sig</th><th>Drum String</th><th>Num Bars</th><th>Bars of Intro</th></tr>
@@ -268,67 +261,70 @@ ${this.formatDrumTable()}`,
 			},
 			formatInlineControls() {
 				let params = "";
-				if (!this.midiParams.inlineControls.standard)
+				if (!this.abcjsParams.inlineControls.standard)
 					params += "\n            standard: false,";
-				if (this.midiParams.inlineControls.loopToggle)
+				if (this.abcjsParams.inlineControls.loopToggle)
 					params += "\n            loopToggle: true,";
-				if (this.midiParams.inlineControls.hide)
+				if (this.abcjsParams.inlineControls.hide)
 					params += "\n            hide: true,";
-				if (this.midiParams.inlineControls.startPlaying)
+				if (this.abcjsParams.inlineControls.startPlaying)
 					params += "\n            startPlaying: true,";
-				if (this.midiParams.inlineControls.tempo)
+				if (this.abcjsParams.inlineControls.tempo)
 					params += "\n            tempo: true,";
-				if (this.midiParams.inlineControls.tooltipLoop !== "Click to toggle play once/repeat.")
-					params += `\n            tooltipLoop: "${this.midiParams.inlineControls.tooltipLoop}",`;
-				if (this.midiParams.inlineControls.tooltipReset !== "Click to go to beginning.")
-					params += `\n            tooltipReset: "${this.midiParams.inlineControls.tooltipReset}",`;
-				if (this.midiParams.inlineControls.tooltipPlay !== "Click to play/pause.")
-					params += `\n            tooltipPlay: "${this.midiParams.inlineControls.tooltipPlay}",`;
-				if (this.midiParams.inlineControls.tooltipProgress !== "Click to change the playback position.")
-					params += `\n            tooltipProgress: "${this.midiParams.inlineControls.tooltipProgress}",`;
-				if (this.midiParams.inlineControls.tooltipTempo !== "Change the playback speed.")
-					params += `\n            tooltipTempo: "${this.midiParams.inlineControls.tooltipTempo}",`;
+				if (this.abcjsParams.inlineControls.tooltipLoop !== "Click to toggle play once/repeat.")
+					params += `\n            tooltipLoop: "${this.abcjsParams.inlineControls.tooltipLoop}",`;
+				if (this.abcjsParams.inlineControls.tooltipReset !== "Click to go to beginning.")
+					params += `\n            tooltipReset: "${this.abcjsParams.inlineControls.tooltipReset}",`;
+				if (this.abcjsParams.inlineControls.tooltipPlay !== "Click to play/pause.")
+					params += `\n            tooltipPlay: "${this.abcjsParams.inlineControls.tooltipPlay}",`;
+				if (this.abcjsParams.inlineControls.tooltipProgress !== "Click to change the playback position.")
+					params += `\n            tooltipProgress: "${this.abcjsParams.inlineControls.tooltipProgress}",`;
+				if (this.abcjsParams.inlineControls.tooltipTempo !== "Change the playback speed.")
+					params += `\n            tooltipTempo: "${this.abcjsParams.inlineControls.tooltipTempo}",`;
 				return params;
 			},
 			formatMidiParams() {
 				let params = "";
-				if (this.midiParams.qpm !== "")
-					params += `\n        qpm: ${this.midiParams.qpm},`;
-				if (this.midiParams.program !== "")
-					params += `\n        program: ${this.midiParams.program},`;
-				if (this.midiParams.transpose !== "")
-					params += `\n        transpose: ${this.midiParams.transpose},`;
-				if (this.midiParams.generateDownload)
+				if (this.abcjsParams.qpm !== "")
+					params += `\n        qpm: ${this.abcjsParams.qpm},`;
+				if (this.abcjsParams.program !== "")
+					params += `\n        program: ${this.abcjsParams.program},`;
+				if (this.abcjsParams.transpose !== "")
+					params += `\n        transpose: ${this.abcjsParams.transpose},`;
+				if (this.abcjsParams.generateDownload)
 					params += "\n        generateDownload: true,";
-				if (!this.midiParams.generateInline)
+				if (!this.abcjsParams.generateInline)
 					params += "\n        generateInline: false,";
-				if (this.midiParams.downloadClass !== "")
-					params += `\n        downloadClass: "${this.midiParams.downloadClass}",`;
-				if (this.midiParams.preTextDownload !== "")
-					params += `\n        preTextDownload: "${this.midiParams.preTextDownload}",`;
-				if (this.midiParams.postTextDownload !== "")
-					params += `\n        postTextDownload: "${this.midiParams.postTextDownload}",`;
-				if (this.midiParams.preTextInline !== "")
-					params += `\n        preTextInline: "${this.midiParams.preTextInline}",`;
-				if (this.midiParams.postTextInline !== "")
-					params += `\n        postTextInline: "${this.midiParams.postTextInline}",`;
-				if (this.midiParams.drum !== "")
-					params += `\n        drum: ${this.midiParams.drum},`;
-				if (this.midiParams.drumBars !== "1")
-					params += `\n        drumBars: ${this.midiParams.drumBars},`;
-				if (this.midiParams.drumIntro !== "0")
-					params += `\n        drumIntro: ${this.midiParams.drumIntro},`;
-				if (this.midiParams.doListener)
+				if (this.abcjsParams.downloadClass !== "")
+					params += `\n        downloadClass: "${this.abcjsParams.downloadClass}",`;
+				if (this.abcjsParams.preTextDownload !== "")
+					params += `\n        preTextDownload: "${this.abcjsParams.preTextDownload}",`;
+				if (this.abcjsParams.postTextDownload !== "")
+					params += `\n        postTextDownload: "${this.abcjsParams.postTextDownload}",`;
+				if (this.abcjsParams.preTextInline !== "")
+					params += `\n        preTextInline: "${this.abcjsParams.preTextInline}",`;
+				if (this.abcjsParams.postTextInline !== "")
+					params += `\n        postTextInline: "${this.abcjsParams.postTextInline}",`;
+				if (this.abcjsParams.drum !== "")
+					params += `\n        drum: ${this.abcjsParams.drum},`;
+				if (this.abcjsParams.drumBars !== "1")
+					params += `\n        drumBars: ${this.abcjsParams.drumBars},`;
+				if (this.abcjsParams.drumIntro !== "0")
+					params += `\n        drumIntro: ${this.abcjsParams.drumIntro},`;
+				if (this.abcjsParams.doListener)
 					params += `\n        listener: function(abcjsElement, currentEvent, context) {},`;
-				if (this.midiParams.doAnimate)
+				if (this.abcjsParams.doAnimate)
 					params += `\n        animate: { listener: function(abcjsElement, currentEvent, context) {}, target: tunes[0], qpm: 120 },`;
-				if (this.midiParams.context)
-					params += `\n        context: ${this.midiParams.context},`;
+				if (this.abcjsParams.context)
+					params += `\n        context: ${this.abcjsParams.context},`;
 
 				const inlineControls = this.formatInlineControls();
 				if (inlineControls !== '')
 					params += `\n        inlineControls: {${inlineControls}\n        },`;
 
+				if (this.abcjsParams.startingTune !== "1")
+					params += `\n        startingTune: ${this.abcjsParams.startingTune},`;
+
 				if (params === "")
 					params = "{ }";
 				else
@@ -336,17 +332,7 @@ ${this.formatDrumTable()}`,
     }`;
 				return params;
 			},
-			formatRenderParams() {
-				let params = "";
-				if (this.renderParams.startingTune !== "1")
-					params += `\n        startingTune: ${this.renderParams.startingTune},`;
-				if (params === "")
-					params = "{ }";
-				else
-					params = `{${params}
-    }`;
-				return params;
-			},
+
 			formatSoundFontCall() {
 				const comment = this.soundFontUrl === "" ? "//" : "";
 				return `${comment}abcjs.midi.setSoundFont("${this.soundFontUrl}");`;
@@ -426,14 +412,11 @@ ${this.formatElements(range.elements)},
 			redraw() {
 				this.listenerOutput = null;
 				this.animationOutput = null;
-				const midiParams = this.formatMidiParams();
-				const renderParams = this.formatRenderParams();
+				const abcjsParams = this.formatMidiParams();
     			this.javascriptString = `abcjs.renderMidi(
     "midi-id",
     abcString,
-    { },
-    ${midiParams},
-    ${renderParams});
+    ${abcjsParams});
 
 abcjs.midi.startPlaying(document.querySelector(".abcjs-inline-midi"));
 
@@ -443,8 +426,8 @@ ${this.formatSoundFontCall()}`;
 
     			const soundFontUrl = this.soundFontUrl === "" ? "https://paulrosen.github.io/midi-js-soundfonts/FluidR3_GM/" : this.soundFontUrl;
     			abcjs.midi.setSoundFont(soundFontUrl);
-    			this.tunes = this.renderAbc()("paper", this.inputAbc(), {}, {}, this.renderParams);
-				this.renderMidi()("midi-id", this.inputAbc(), {}, this.constructMidiParams(), this.renderParams);
+    			this.tunes = this.renderAbc()("paper", this.inputAbc(), this.abcjsParams);
+				this.renderMidi()("midi-id", this.inputAbc(), this.constructMidiParams());
 			},
 		}
 	}
