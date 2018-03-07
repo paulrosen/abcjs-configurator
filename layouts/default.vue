@@ -39,7 +39,7 @@
       </v-container>
     </v-content>
     <v-footer :fixed="fixed" app>
-      <span>&copy; 2018 <a href="https://paulrosen.net">Paul Rosen</a>, companion app to <a href="https://abcjs.net">abcjs</a>.</span>
+      <span>&copy; 2018 <a href="https://paulrosen.net">Paul Rosen</a>, Configurator is a companion app to <a href="https://abcjs.net">abcjs</a>.</span>
     </v-footer>
   </v-app>
 </template>
