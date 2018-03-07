@@ -21,35 +21,35 @@
 
 					<h2>Parser Parameters</h2>
 					<v-layout wrap justify-start align-center>
-						<TextInputItem label="Transpose" :help="helpText.visualTranspose" v-model="parserParams.visualTranspose"></TextInputItem>
-						<CheckboxItem label="Format For Printing" :help="helpText.print" v-model="parserParams.print"></CheckboxItem>
-						<CheckboxItem label="Parse Header Only" :help="helpText.header_only" v-model="parserParams.header_only"></CheckboxItem>
-						<CheckboxItem label="Stop Parsing on Warning" :help="helpText.stop_on_warning" v-model="parserParams.stop_on_warning"></CheckboxItem>
-						<CheckboxItem label="Insert Hint Measures" :help="helpText.hint_measures" v-model="parserParams.hint_measures"></CheckboxItem>
+						<TextInputItem label="Transpose" :help="helpText.visualTranspose" v-model="abcjsParams.visualTranspose"></TextInputItem>
+						<CheckboxItem label="Format For Printing" :help="helpText.print" v-model="abcjsParams.print"></CheckboxItem>
+						<CheckboxItem label="Parse Header Only" :help="helpText.header_only" v-model="abcjsParams.header_only"></CheckboxItem>
+						<CheckboxItem label="Stop Parsing on Warning" :help="helpText.stop_on_warning" v-model="abcjsParams.stop_on_warning"></CheckboxItem>
+						<CheckboxItem label="Insert Hint Measures" :help="helpText.hint_measures" v-model="abcjsParams.hint_measures"></CheckboxItem>
 					</v-layout>
 
 					<h2>Engraver Parameters</h2>
 					<v-layout wrap justify-start align-center>
-						<TextInputItem label="Scale" :help="helpText.scale" v-model="engraverParams.scale"></TextInputItem>
-						<TextInputItem label="Staff Width" :help="helpText.staffwidth" v-model="engraverParams.staffwidth"></TextInputItem>
-						<TextInputItem label="Padding Left" :help="helpText.paddingleft" v-model="engraverParams.paddingleft"></TextInputItem>
-						<TextInputItem label="Padding Top" :help="helpText.paddingtop" v-model="engraverParams.paddingtop"></TextInputItem>
-						<TextInputItem label="Padding Right" :help="helpText.paddingright" v-model="engraverParams.paddingright"></TextInputItem>
-						<TextInputItem label="Padding Bottom" :help="helpText.paddingbottom" v-model="engraverParams.paddingbottom"></TextInputItem>
-						<CheckboxItem label="Responsive Sizing" :help="helpText.responsiveResize" v-model="engraverParams.responsiveResize"></CheckboxItem>
-						<CheckboxItem label="Add Classes" :help="helpText.add_classes" v-model="engraverParams.add_classes"></CheckboxItem>
-						<CheckboxItem label="User Click Listener" :help="helpText.highlightListener" v-model="engraverParams.highlightListener"></CheckboxItem>
-						<CheckboxItem label="Music Changed Listener" :help="helpText.modelChangedListener" v-model="engraverParams.modelChangedListener"></CheckboxItem>
-						<CheckboxItem label="Editable" :help="helpText.editable" v-model="engraverParams.editable"></CheckboxItem>
+						<TextInputItem label="Scale" :help="helpText.scale" v-model="abcjsParams.scale"></TextInputItem>
+						<TextInputItem label="Staff Width" :help="helpText.staffwidth" v-model="abcjsParams.staffwidth"></TextInputItem>
+						<TextInputItem label="Padding Left" :help="helpText.paddingleft" v-model="abcjsParams.paddingleft"></TextInputItem>
+						<TextInputItem label="Padding Top" :help="helpText.paddingtop" v-model="abcjsParams.paddingtop"></TextInputItem>
+						<TextInputItem label="Padding Right" :help="helpText.paddingright" v-model="abcjsParams.paddingright"></TextInputItem>
+						<TextInputItem label="Padding Bottom" :help="helpText.paddingbottom" v-model="abcjsParams.paddingbottom"></TextInputItem>
+						<CheckboxItem label="Responsive Sizing" :help="helpText.responsiveResize" v-model="abcjsParams.responsiveResize"></CheckboxItem>
+						<CheckboxItem label="Add Classes" :help="helpText.add_classes" v-model="abcjsParams.add_classes"></CheckboxItem>
+						<CheckboxItem label="User Click Listener" :help="helpText.highlightListener" v-model="abcjsParams.highlightListener"></CheckboxItem>
+						<CheckboxItem label="Music Changed Listener" :help="helpText.modelChangedListener" v-model="abcjsParams.modelChangedListener"></CheckboxItem>
+						<CheckboxItem label="Editable" :help="helpText.editable" v-model="abcjsParams.editable"></CheckboxItem>
 					</v-layout>
 
 					<h2>Renderer Params</h2>
 					<v-layout wrap justify-start align-center>
-						<TextInputItem label="Starting Tune" :help="helpText.startingTune" v-model="renderParams.startingTune"></TextInputItem>
-						<CheckboxItem label="viewportVertical" :help="helpText.viewportVertical" v-model="renderParams.viewportVertical"></CheckboxItem>
-						<CheckboxItem label="viewportHorizontal" :help="helpText.viewportHorizontal" v-model="renderParams.viewportHorizontal"></CheckboxItem>
-						<CheckboxItem label="scrollHorizontal" :help="helpText.scrollHorizontal" v-model="renderParams.scrollHorizontal"></CheckboxItem>
-						<CheckboxItem label="Separate SVG Per Line" :help="helpText.oneSvgPerLine" v-model="renderParams.oneSvgPerLine"></CheckboxItem>
+						<TextInputItem label="Starting Tune" :help="helpText.startingTune" v-model="abcjsParams.startingTune"></TextInputItem>
+						<CheckboxItem label="viewportVertical" :help="helpText.viewportVertical" v-model="abcjsParams.viewportVertical"></CheckboxItem>
+						<CheckboxItem label="viewportHorizontal" :help="helpText.viewportHorizontal" v-model="abcjsParams.viewportHorizontal"></CheckboxItem>
+						<CheckboxItem label="scrollHorizontal" :help="helpText.scrollHorizontal" v-model="abcjsParams.scrollHorizontal"></CheckboxItem>
+						<CheckboxItem label="Separate SVG Per Line" :help="helpText.oneSvgPerLine" v-model="abcjsParams.oneSvgPerLine"></CheckboxItem>
 					</v-layout>
 				</v-card-text>
 			</v-card>
@@ -61,7 +61,7 @@
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
 					<div>
-						<div v-if="engraverParams.responsive === 'resize'">
+						<div v-if="abcjsParams.responsive === 'resize'">
 							<div class="footnote"><span>When using resize, do not place the </span><code class="subtle-code">&lt;div id="paper"&gt;</code><span> as a flex element: the flex functionality will interfere. Just wrap in another </span><code class="subtle-code">&lt;div&gt;</code></div>
 						</div>
 						<div id="paper1" class="paper"></div>
@@ -88,7 +88,7 @@
 						<div id="paper22" class="paper"></div>
 						<div id="paper23" class="paper"></div>
 						<div id="paper24" class="paper"></div>
-						<div v-if="engraverParams.highlightListener">
+						<div v-if="abcjsParams.highlightListener">
 							<div class="footnote">Click on the displayed music to see the output of the callback function.</div>
 							<code class="indented">{{highlightListenerOutput}}</code>
 						</div>
@@ -134,14 +134,12 @@
 		data() {
 			return {
 				numberOfTunes: "1",
-				parserParams: {
+				abcjsParams: {
 					print: false,
 					header_only: false,
 					stop_on_warning: false,
 					hint_measures: false,
 					visualTranspose: "",
-				},
-				engraverParams: {
 					scale: "1",
 					staffwidth: "740",
 					paddingtop: "15",
@@ -153,8 +151,6 @@
 					highlightListener: false,
 					modelChangedListener: false,
 					responsiveResize: false,
-				},
-				renderParams: {
 					startingTune: "0",
 					viewportHorizontal: false,
 					viewportVertical: false,
@@ -197,19 +193,7 @@
 			'numberOfTunes': function() {
 				this.redraw();
 			},
-			'parserParams': {
-				handler: function () {
-					this.redraw();
-				},
-				deep: true
-			},
-			'engraverParams': {
-				handler: function () {
-					this.redraw();
-				},
-				deep: true
-			},
-			'renderParams': {
+			'abcjsParams': {
 				handler: function () {
 					this.redraw();
 				},
@@ -240,63 +224,64 @@
 				return '[ "' + papers.join('", "') + '" ]';
 			},
 
-			formatParserParams() {
-				let params = "";
-				if (this.parserParams.visualTranspose)
-					params += `\n        visualTranspose: ${this.parserParams.visualTranspose},`;
-				if (this.parserParams.print)
-					params += "\n        print: true,";
-				if (this.parserParams.header_only)
-					params += "\n        header_only: true,";
-				if (this.parserParams.stop_on_warning)
-					params += "\n        stop_on_warning: true,";
-				if (this.parserParams.hint_measures)
-					params += "\n        hint_measures: true,";
-				if (params === "")
-					params = "{ }";
-				else
-					params = `{${params}
-    }`;
-				return params;
-			},
-
 			constructEngraverParams() {
-				this.engraverParams.listener = {};
-				if (this.engraverParams.highlightListener)
-					this.engraverParams.listener.highlight = this.highlightListenerCallback;
-				if (this.engraverParams.modelChangedListener)
-					this.engraverParams.listener.modelChanged = this.modelChangedListenerCallback;
-				this.engraverParams.responsive = this.engraverParams.responsiveResize ? "resize" : undefined;
-				return this.engraverParams;
+				this.abcjsParams.listener = {};
+				if (this.abcjsParams.highlightListener)
+					this.abcjsParams.listener.highlight = this.highlightListenerCallback;
+				if (this.abcjsParams.modelChangedListener)
+					this.abcjsParams.listener.modelChanged = this.modelChangedListenerCallback;
+				this.abcjsParams.responsive = this.abcjsParams.responsiveResize ? "resize" : undefined;
+				return this.abcjsParams;
 			},
 			formatEngraverParams() {
 				let params = "";
-				if (this.engraverParams.scale !== "1")
-					params += `\n        scale: ${this.engraverParams.scale},`;
-				if (this.engraverParams.staffwidth !== "740")
-					params += `\n        staffwidth: ${this.engraverParams.staffwidth},`;
-				if (this.engraverParams.paddingtop !== "15")
-					params += `\n        paddingtop: ${this.engraverParams.paddingtop},`;
-				if (this.engraverParams.paddingbottom !== "30")
-					params += `\n        paddingbottom: ${this.engraverParams.paddingbottom},`;
-				if (this.engraverParams.paddingright !== "50")
-					params += `\n        paddingright: ${this.engraverParams.paddingright},`;
-				if (this.engraverParams.paddingleft !== "15")
-					params += `\n        paddingleft: ${this.engraverParams.paddingleft},`;
-				if (this.engraverParams.editable)
+				if (this.abcjsParams.visualTranspose)
+					params += `\n        visualTranspose: ${this.abcjsParams.visualTranspose},`;
+				if (this.abcjsParams.print)
+					params += "\n        print: true,";
+				if (this.abcjsParams.header_only)
+					params += "\n        header_only: true,";
+				if (this.abcjsParams.stop_on_warning)
+					params += "\n        stop_on_warning: true,";
+				if (this.abcjsParams.hint_measures)
+					params += "\n        hint_measures: true,";
+
+				if (this.abcjsParams.scale !== "1")
+					params += `\n        scale: ${this.abcjsParams.scale},`;
+				if (this.abcjsParams.staffwidth !== "740")
+					params += `\n        staffwidth: ${this.abcjsParams.staffwidth},`;
+				if (this.abcjsParams.paddingtop !== "15")
+					params += `\n        paddingtop: ${this.abcjsParams.paddingtop},`;
+				if (this.abcjsParams.paddingbottom !== "30")
+					params += `\n        paddingbottom: ${this.abcjsParams.paddingbottom},`;
+				if (this.abcjsParams.paddingright !== "50")
+					params += `\n        paddingright: ${this.abcjsParams.paddingright},`;
+				if (this.abcjsParams.paddingleft !== "15")
+					params += `\n        paddingleft: ${this.abcjsParams.paddingleft},`;
+				if (this.abcjsParams.editable)
 					params += "\n        editable: true,";
-				if (this.engraverParams.add_classes)
+				if (this.abcjsParams.add_classes)
 					params += "\n        add_classes: true,";
-				if (this.engraverParams.highlightListener || this.engraverParams.modelChangedListener) {
+				if (this.abcjsParams.highlightListener || this.abcjsParams.modelChangedListener) {
 					params += "\n        listener: { ";
-					if (this.engraverParams.highlightListener)
+					if (this.abcjsParams.highlightListener)
 						params += "highlight: function(abcElem) { console.log(abcElem, tuneNumber, classes); }, ";
-					if (this.engraverParams.modelChangedListener)
+					if (this.abcjsParams.modelChangedListener)
 						params += "modelChanged: function(abcElem) { console.log(abcElem); }, ";
 					params += "},";
 				}
-				if (this.engraverParams.responsiveResize)
+				if (this.abcjsParams.responsiveResize)
 					params += "\n        responsive: \"resize\",";
+
+				if (this.abcjsParams.startingTune !== "0")
+					params += `\n        startingTune: ${this.abcjsParams.startingTune},`;
+				if (this.abcjsParams.viewportHorizontal)
+					params += "\n        viewportHorizontal: true,";
+				if (this.abcjsParams.scrollHorizontal)
+					params += "\n        scrollHorizontal: true,";
+				if (this.abcjsParams.oneSvgPerLine)
+					params += "\n        oneSvgPerLine: true,";
+
 				if (params === "")
 					params = "{ }";
 				else
@@ -305,23 +290,6 @@
 				return params;
 			},
 
-			formatRenderParams() {
-				let params = "";
-				if (this.renderParams.startingTune !== "0")
-					params += `\n        startingTune: ${this.renderParams.startingTune},`;
-				if (this.renderParams.viewportHorizontal)
-					params += "\n        viewportHorizontal: true,";
-				if (this.renderParams.scrollHorizontal)
-					params += "\n        scrollHorizontal: true,";
-				if (this.renderParams.oneSvgPerLine)
-					params += "\n        oneSvgPerLine: true,";
-				if (params === "")
-					params = "{ }";
-				else
-					params = `{${params}
-    }`;
-				return params;
-			},
 			highlightListenerCallback(abcElem,tuneNumber,classes) {
 				const tune = this.tuneByPosition()(tuneNumber).abc;
 				this.highlightListenerOutput = `highlightListenerCallback(abcElem,tuneNumber,classes)\n\n`;
@@ -345,17 +313,13 @@
 			},
 			redraw() {
 				const output = this.formatOutput();
-				const parserParams = this.formatParserParams();
-				const engraverParams = this.formatEngraverParams();
-				const renderParams = this.formatRenderParams();
+				const abcjsParams = this.formatEngraverParams();
 
 				this.javascriptString = `const tuneObjectArray<span class="red--text">*</span> = ABCJS.renderAbc(
     ${output},
     abcString<span class="red--text">*</span>,
-    ${parserParams},
-    ${engraverParams},
-    ${renderParams});`;
-				if (this.parserParams.hint_measures) {
+    ${abcjsParams});`;
+				if (this.abcjsParams.hint_measures) {
 					this.javascriptString += `
 
 <style>
@@ -370,7 +334,7 @@
 					paper.innerText = "";
 					paper.setAttribute("style", "");
 				}
-				this.renderAbc()(this.constructOutput(), this.inputAbc(), this.parserParams, this.constructEngraverParams(), this.renderParams);
+				this.renderAbc()(this.constructOutput(), this.inputAbc(), this.constructEngraverParams());
 },
 		},
 	}
