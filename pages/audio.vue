@@ -239,7 +239,7 @@ ${this.formatDrumTable()}`,
 				abcjs.midi.stopPlaying();
 			},
 			constructMidiParams() {
-				this.abcjsParams.listener = this.abcjsParams.doListener ? this.listenerCallback : undefined;
+				this.abcjsParams.midiListener = this.abcjsParams.doListener ? this.listenerCallback : undefined;
 				this.abcjsParams.animate = this.abcjsParams.doAnimate ?
 					{ listener: this.animateCallback, target: this.tunes[0] }
 					: undefined;
@@ -312,7 +312,7 @@ ${this.formatDrumTable()}`,
 				if (this.abcjsParams.drumIntro !== "0")
 					params += `\n        drumIntro: ${this.abcjsParams.drumIntro},`;
 				if (this.abcjsParams.doListener)
-					params += `\n        listener: function(abcjsElement, currentEvent, context) {},`;
+					params += `\n        midiListener: function(abcjsElement, currentEvent, context) {},`;
 				if (this.abcjsParams.doAnimate)
 					params += `\n        animate: { listener: function(abcjsElement, currentEvent, context) {}, target: tunes[0], qpm: 120 },`;
 				if (this.abcjsParams.context)

@@ -239,7 +239,7 @@ K:Bb
 V:1 nm="abcjs"
 |:GBcd-d4|zcdc dc3|
 `;
-	      this.renderAbc()("abcjs-logo", logoMusic, {}, {
+	      this.renderAbc()("abcjs-logo", logoMusic, { add_classes: true }, {
 	      	paddingtop: 0,
 		      paddingbottom: 0,
 		      paddingright: 0,

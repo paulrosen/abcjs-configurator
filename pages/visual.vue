@@ -39,8 +39,8 @@
 						<CheckboxItem label="Responsive Sizing" :help="helpText.responsiveResize" v-model="abcjsParams.responsiveResize"></CheckboxItem>
 						<CheckboxItem label="Add Classes" :help="helpText.add_classes" v-model="abcjsParams.add_classes"></CheckboxItem>
 						<CheckboxItem label="User Click Listener" :help="helpText.highlightListener" v-model="abcjsParams.highlightListener"></CheckboxItem>
-						<CheckboxItem label="Music Changed Listener" :help="helpText.modelChangedListener" v-model="abcjsParams.modelChangedListener"></CheckboxItem>
-						<CheckboxItem label="Editable" :help="helpText.editable" v-model="abcjsParams.editable"></CheckboxItem>
+						<!--<CheckboxItem label="Music Changed Listener" :help="helpText.modelChangedListener" v-model="abcjsParams.modelChangedListener"></CheckboxItem>-->
+						<!--<CheckboxItem label="Editable" :help="helpText.editable" v-model="abcjsParams.editable"></CheckboxItem>-->
 					</v-layout>
 
 					<h2>Renderer Params</h2>
@@ -149,7 +149,7 @@
 					editable: false,
 					add_classes: false,
 					highlightListener: false,
-					modelChangedListener: false,
+					// modelChangedListener: false,
 					responsiveResize: false,
 					startingTune: "0",
 					viewportHorizontal: false,
@@ -225,11 +225,10 @@
 			},
 
 			constructEngraverParams() {
-				this.abcjsParams.listener = {};
 				if (this.abcjsParams.highlightListener)
-					this.abcjsParams.listener.highlight = this.highlightListenerCallback;
-				if (this.abcjsParams.modelChangedListener)
-					this.abcjsParams.listener.modelChanged = this.modelChangedListenerCallback;
+					this.abcjsParams.clickListener = this.highlightListenerCallback;
+				// if (this.abcjsParams.modelChangedListener)
+				// 	this.abcjsParams.listener.modelChanged = this.modelChangedListenerCallback;
 				this.abcjsParams.responsive = this.abcjsParams.responsiveResize ? "resize" : undefined;
 				return this.abcjsParams;
 			},
@@ -262,14 +261,8 @@
 					params += "\n        editable: true,";
 				if (this.abcjsParams.add_classes)
 					params += "\n        add_classes: true,";
-				if (this.abcjsParams.highlightListener || this.abcjsParams.modelChangedListener) {
-					params += "\n        listener: { ";
-					if (this.abcjsParams.highlightListener)
-						params += "highlight: function(abcElem) { console.log(abcElem, tuneNumber, classes); }, ";
-					if (this.abcjsParams.modelChangedListener)
-						params += "modelChanged: function(abcElem) { console.log(abcElem); }, ";
-					params += "},";
-				}
+				if (this.abcjsParams.highlightListener)
+						params += "\n        clickListener: function(abcElem) { console.log(abcElem, tuneNumber, classes); },";
 				if (this.abcjsParams.responsiveResize)
 					params += "\n        responsive: \"resize\",";
 
@@ -308,9 +301,9 @@
 				this.highlightListenerOutput += `tuneNumber: ${tuneNumber}\n`;
 				this.highlightListenerOutput += `classes:\n    ${classes.join("\n    ")}\n`;
 			},
-			modelChangedListenerCallback(abcElem) {
-				console.log(abcElem);
-			},
+			// modelChangedListenerCallback(abcElem) {
+			// 	console.log(abcElem);
+			// },
 			redraw() {
 				const output = this.formatOutput();
 				const abcjsParams = this.formatEngraverParams();

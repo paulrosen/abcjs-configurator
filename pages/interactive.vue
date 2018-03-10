@@ -15,32 +15,32 @@
 						<CheckboxItem label="Download MIDI" :help="helpText.specifyDownloadMidiId" v-model="editorParams.specifyDownloadMidiId"></CheckboxItem>
 						<CheckboxItem label="Show Warnings" :help="helpText.specifyWarningsId" v-model="editorParams.specifyWarningsId"></CheckboxItem>
 						<CheckboxItem label="Callback On Change" :help="helpText.callbackOnChange" v-model="editorParams.callbackOnChange"></CheckboxItem>
-						<CheckboxItem label="GUI Mode" :help="helpText.gui" v-model="editorParams.gui"></CheckboxItem>
+						<!--<CheckboxItem label="GUI Mode" :help="helpText.gui" v-model="editorParams.gui"></CheckboxItem>-->
 						<CheckboxItem label="Use Dirty Flag" :help="helpText.indicate_changed" v-model="editorParams.indicate_changed"></CheckboxItem>
 					</v-layout>
 
 					<h2>Parser Parameters</h2>
 					<v-layout wrap justify-start align-center>
-						<CheckboxItem label="Format For Printing" :help="helpText.print" v-model="editorParams.parser_options.print"></CheckboxItem>
+						<CheckboxItem label="Format For Printing" :help="helpText.print" v-model="editorParams.abcjsParams.print"></CheckboxItem>
 					</v-layout>
 
 					<h2>Engraver Parameters</h2>
 					<v-layout wrap justify-start align-center>
-						<TextInputItem label="Scale" :help="helpText.scale" v-model="editorParams.render_options.scale"></TextInputItem>
-						<TextInputItem label="Staff Width" :help="helpText.staffwidth" v-model="editorParams.render_options.staffwidth"></TextInputItem>
-						<TextInputItem label="Padding Left" :help="helpText.paddingleft" v-model="editorParams.render_options.paddingleft"></TextInputItem>
-						<TextInputItem label="Padding Top" :help="helpText.paddingtop" v-model="editorParams.render_options.paddingtop"></TextInputItem>
-						<TextInputItem label="Padding Right" :help="helpText.paddingright" v-model="editorParams.render_options.paddingright"></TextInputItem>
-						<TextInputItem label="Padding Bottom" :help="helpText.paddingbottom" v-model="editorParams.render_options.paddingbottom"></TextInputItem>
-						<CheckboxItem label="Responsive Sizing" :help="helpText.responsiveResize" v-model="editorParams.render_options.responsiveResize"></CheckboxItem>
-						<CheckboxItem label="Add Classes" :help="helpText.add_classes" v-model="editorParams.render_options.add_classes"></CheckboxItem>
-						<CheckboxItem label="User Click Listener" :help="helpText.highlightListener" v-model="editorParams.render_options.highlightListener"></CheckboxItem>
-						<CheckboxItem label="Music Changed Listener" :help="helpText.modelChangedListener" v-model="editorParams.render_options.modelChangedListener"></CheckboxItem>
-						<CheckboxItem label="Editable" :help="helpText.editable" v-model="editorParams.render_options.editable"></CheckboxItem>
+						<TextInputItem label="Scale" :help="helpText.scale" v-model="editorParams.abcjsParams.scale"></TextInputItem>
+						<TextInputItem label="Staff Width" :help="helpText.staffwidth" v-model="editorParams.abcjsParams.staffwidth"></TextInputItem>
+						<TextInputItem label="Padding Left" :help="helpText.paddingleft" v-model="editorParams.abcjsParams.paddingleft"></TextInputItem>
+						<TextInputItem label="Padding Top" :help="helpText.paddingtop" v-model="editorParams.abcjsParams.paddingtop"></TextInputItem>
+						<TextInputItem label="Padding Right" :help="helpText.paddingright" v-model="editorParams.abcjsParams.paddingright"></TextInputItem>
+						<TextInputItem label="Padding Bottom" :help="helpText.paddingbottom" v-model="editorParams.abcjsParams.paddingbottom"></TextInputItem>
+						<CheckboxItem label="Responsive Sizing" :help="helpText.responsiveResize" v-model="editorParams.abcjsParams.responsiveResize"></CheckboxItem>
+						<CheckboxItem label="Add Classes" :help="helpText.add_classes" v-model="editorParams.abcjsParams.add_classes"></CheckboxItem>
+						<CheckboxItem label="User Click Listener" :help="helpText.highlightListener" v-model="editorParams.abcjsParams.highlightListener"></CheckboxItem>
+						<!--<CheckboxItem label="Music Changed Listener" :help="helpText.modelChangedListener" v-model="editorParams.abcjsParams.modelChangedListener"></CheckboxItem>-->
+						<!--<CheckboxItem label="Editable" :help="helpText.editable" v-model="editorParams.abcjsParams.editable"></CheckboxItem>-->
 					</v-layout>
 
 					<h2>MIDI Parameters</h2>
-					<p>See the <nuxt-link to="/audio">audio page</nuxt-link>: all of the same parameters apply. Put the parameters in the property <code class="subtle-code">midi_options</code>.</p>
+					<p>See the <nuxt-link to="/audio">audio page</nuxt-link>: all of the same parameters apply. Put the parameters in the property <code class="subtle-code">abcjsParams</code>.</p>
 
 					<h2>Commands</h2>
 					<div class="button-row">
@@ -78,15 +78,21 @@
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
 					<div>
+						<div v-if="editorParams.specifyWarningsId">
+							<div class="footnote">Type something nonsensical in the abcString to see warnings.</div>
+						</div>
+						<div v-if="editorParams.indicate_changed">
+							<div class="footnote">Type something in the abcString and notice that the style of the editor changes. You can reset the dirty flag with the "Set Not Dirty" button, or by undoing your changes until it matches the original string.</div>
+						</div>
 						<div v-if="editorParams.callbackOnChange">
 							<div class="footnote">Type in the textarea to see the output of the callback function.</div>
 							<code class="indented">{{onChangeOutput}}</code>
 						</div>
-						<div v-if="editorParams.render_options.highlightListener">
+						<div v-if="editorParams.abcjsParams.highlightListener">
 							<div class="footnote">Click on the displayed music to see the output of the callback function.</div>
 							<code class="indented">{{highlightListenerOutput}}</code>
 						</div>
-						<div v-if="editorParams.render_options.responsive === 'resize'">
+						<div v-if="editorParams.abcjsParams.responsive === 'resize'">
 							<div class="footnote"><span>When using resize, do not place the </span><code class="subtle-code">&lt;div id="paper"&gt;</code><span> as a flex element: the flex functionality will interfere. Just wrap in another </span><code class="subtle-code">&lt;div&gt;</code></div>
 						</div>
 						<div id="warnings-id"></div>
@@ -138,10 +144,8 @@
 					callbackOnChange: false,
 					gui: false,
 					indicate_changed: false,
-					parser_options: {
-						print: false
-					},
-					render_options: {
+					abcjsParams: {
+						print: false,
 						scale: "1",
 						staffwidth: "740",
 						paddingtop: "15",
@@ -153,8 +157,6 @@
 						highlightListener: false,
 						modelChangedListener: false,
 						responsiveResize: false,
-					},
-					midi_options: {
 						midi_download_id: null,
 						midi_id: null,
 					}
@@ -239,25 +241,20 @@ K:Em
 					params += "\n        indicate_changed: true,";
 				if (this.editorParams.callbackOnChange)
 					params += "\n        onchange: function(editorInstance) {},";
-				if (this.editorParams.parser_options.print) {
-					params += "\n        parser_options: {\n            print: true\n        },";
-				}
-				params += "\n        render_options: " + this.formatEngraverParams() + ",";
 				if (this.editorParams.specifyDownloadMidiId || this.editorParams.specifyInlineMidiId) {
 					params += "\n        generate_midi: true,";
-					params += "\n        midi_options: {";
 					if (this.editorParams.specifyDownloadMidiId) {
-						params += "\n            generateDownload: true,";
-						params += "\n            midi_download_id: \"midi-download\",";
+						params += "\n        generateDownload: true,";
+						params += "\n        midi_download_id: \"midi-download\",";
 					}
 					if (this.editorParams.specifyInlineMidiId) {
-						params += "\n            midi_id: \"midi-inline\",";
+						params += "\n        midi_id: \"midi-inline\",";
 					} else {
-						params += "\n            generateInline: false,";
+						params += "\n        generateInline: false,";
 					}
-					params += "\n            // Add any other MIDI options from \"Audio\" page.";
-					params += "\n        },";
 				}
+				params += "\n        abcjsParams: " + this.formatAbcjsParams() + ",";
+
 				if (params === "")
 					params = "{ }";
 				else
@@ -266,46 +263,43 @@ K:Em
 				return params;
 			},
 			constructEngraverParams() {
-				this.editorParams.render_options.listener = {};
-				if (this.editorParams.render_options.highlightListener)
-					this.editorParams.render_options.listener.highlight = this.highlightListenerCallback;
-				if (this.editorParams.render_options.modelChangedListener)
-					this.editorParams.render_options.listener.modelChanged = this.modelChangedListenerCallback;
-				this.editorParams.render_options.responsive = this.editorParams.render_options.responsiveResize ? "resize" : undefined;
-				return this.editorParams.render_options;
+				if (this.editorParams.abcjsParams.highlightListener)
+					this.editorParams.abcjsParams.clickListener = this.highlightListenerCallback;
+				// if (this.editorParams.abcjsParams.modelChangedListener)
+				// 	this.editorParams.abcjsParams.listener.modelChanged = this.modelChangedListenerCallback;
+				this.editorParams.abcjsParams.responsive = this.editorParams.abcjsParams.responsiveResize ? "resize" : undefined;
+				return this.editorParams.abcjsParams;
 			},
-			formatEngraverParams() {
-				let params = "";
-				if (this.editorParams.render_options.scale !== "1")
-					params += `\n            scale: ${this.editorParams.render_options.scale},`;
-				if (this.editorParams.render_options.staffwidth !== "740")
-					params += `\n            staffwidth: ${this.editorParams.render_options.staffwidth},`;
-				if (this.editorParams.render_options.paddingtop !== "15")
-					params += `\n            paddingtop: ${this.editorParams.render_options.paddingtop},`;
-				if (this.editorParams.render_options.paddingbottom !== "30")
-					params += `\n            paddingbottom: ${this.editorParams.render_options.paddingbottom},`;
-				if (this.editorParams.render_options.paddingright !== "50")
-					params += `\n            paddingright: ${this.editorParams.render_options.paddingright},`;
-				if (this.editorParams.render_options.paddingleft !== "15")
-					params += `\n            paddingleft: ${this.editorParams.render_options.paddingleft},`;
-				if (this.editorParams.render_options.editable)
-					params += "\n            editable: true,";
-				if (this.editorParams.render_options.add_classes)
-					params += "\n            add_classes: true,";
-				if (this.editorParams.render_options.highlightListener || this.editorParams.render_options.modelChangedListener) {
-					params += "\n            listener: { ";
-					if (this.editorParams.render_options.highlightListener)
-						params += "highlight: function(abcElem) { console.log(abcElem, tuneNumber); }, ";
-					if (this.editorParams.render_options.modelChangedListener)
-						params += "modelChanged: function(abcElem) { console.log(abcElem); }, ";
-					params += "},";
-				}
-				if (this.editorParams.render_options.responsiveResize)
-					params += "\n            responsive: \"resize\",";
-				if (params === "")
+			formatAbcjsParams() {
+				let params = [];
+				if (this.editorParams.specifyDownloadMidiId || this.editorParams.specifyInlineMidiId)
+					params.push("// Add any other MIDI options from \"Audio\" page.");
+				if (this.editorParams.abcjsParams.print)
+					params.push("print: true,");
+				if (this.editorParams.abcjsParams.scale !== "1")
+					params.push(`scale: ${this.editorParams.abcjsParams.scale},`);
+				if (this.editorParams.abcjsParams.staffwidth !== "740")
+					params.push(`staffwidth: ${this.editorParams.abcjsParams.staffwidth},`);
+				if (this.editorParams.abcjsParams.paddingtop !== "15")
+					params.push(`paddingtop: ${this.editorParams.abcjsParams.paddingtop},`);
+				if (this.editorParams.abcjsParams.paddingbottom !== "30")
+					params.push(`paddingbottom: ${this.editorParams.abcjsParams.paddingbottom},`);
+				if (this.editorParams.abcjsParams.paddingright !== "50")
+					params.push(`paddingright: ${this.editorParams.abcjsParams.paddingright},`);
+				if (this.editorParams.abcjsParams.paddingleft !== "15")
+					params.push(`paddingleft: ${this.editorParams.abcjsParams.paddingleft},`);
+				if (this.editorParams.abcjsParams.editable)
+					params.push("editable: true,");
+				if (this.editorParams.abcjsParams.add_classes)
+					params.push("add_classes: true,");
+				if (this.editorParams.abcjsParams.highlightListener)
+					params.push("clickListener: function(abcElem) { console.log(abcElem, tuneNumber); },");
+				if (this.editorParams.abcjsParams.responsiveResize)
+					params.push("responsive: \"resize\",");
+				if (params.length === 0)
 					params = "{ }";
 				else
-					params = `{${params}
+					params = `{\n            ${params.join("\n            ")}
         }`;
 				return params;
 			},
@@ -326,9 +320,9 @@ K:Em
 				this.highlightListenerOutput += `tuneNumber: ${tuneNumber}\n`;
 				this.highlightListenerOutput += `classes:\n    ${classes.join("\n    ")}\n`;
 			},
-			modelChangedListenerCallback(abcElem) {
-				console.log(abcElem);
-			},
+			// modelChangedListenerCallback(abcElem) {
+			// 	console.log(abcElem);
+			// },
 			onChangeCallback(editorInstance) {
 				this.onChangeOutput = `onChangeCallback(editorInstance)\n\neditorInstance.isDirty() returns ${editorInstance.isDirty()}\n`;
 			},
@@ -361,10 +355,10 @@ import abcjs from 'abcjs/midi;` : "import abcjs from 'abcjs;";
 				this.editorParams.midi_download_id = this.editorParams.specifyDownloadMidiId ? "midi-download" : undefined;
 				this.editorParams.midi_id = this.editorParams.specifyInlineMidiId ? "midi-inline" : undefined;
 				this.editorParams.generate_midi = (this.editorParams.specifyDownloadMidiId || this.editorParams.specifyInlineMidiId);
-				this.editorParams.midi_options.midi_id = this.editorParams.specifyInlineMidiId ? "midi-inline" : undefined;
-				this.editorParams.midi_options.generateInline = this.editorParams.specifyInlineMidiId;
-				this.editorParams.midi_options.generateDownload = this.editorParams.specifyDownloadMidiId;
-				this.editorParams.midi_options.midi_download_id = this.editorParams.specifyDownloadMidiId ? "midi-download" : undefined;
+				this.editorParams.abcjsParams.midi_id = this.editorParams.specifyInlineMidiId ? "midi-inline" : undefined;
+				this.editorParams.abcjsParams.generateInline = this.editorParams.specifyInlineMidiId;
+				this.editorParams.abcjsParams.generateDownload = this.editorParams.specifyDownloadMidiId;
+				this.editorParams.abcjsParams.midi_download_id = this.editorParams.specifyDownloadMidiId ? "midi-download" : undefined;
 
 				this.constructEngraverParams();
 
@@ -394,16 +388,10 @@ import abcjs from 'abcjs/midi;` : "import abcjs from 'abcjs;";
 					this.theEditor.pauseMidi(this.isMidiPaused !== 'running');
 				}
 			},
-	// 	| `setReadOnly(bool)` |adds or removes the class abc_textarea_readonly, and adds or removes the attribute readonly=yes |
-	// 	| `setNotDirty()` | Called by the client app to reset the dirty flag |
-	// | `isDirty()` | Returns true or false, whether the textarea contains the same text that it started with. |
-	// | `pause(bool)` | Stops the automatic rendering when the user is typing. |
-	// | `pauseMidi(shouldPause)` | Stops the automatic re-rendering of the MIDI. |
 		}
 	}
 	// | Editor entry points | Description |
 	// | ------------- | ----------- |
-	// | `setReadOnly(bool)` |adds or removes the class abc_textarea_readonly, and adds or removes the attribute readonly=yes |
 	// 	| `setDirtyStyle(bool)` | adds or removes the class abc_textarea_dirty |
 	// | `renderTune(abc, parserParams, domElement)` | Immediately renders the tune. (Useful for creating the SVG output behind the scenes, if div is hidden) |
 	// | `modelChanged()` | Called when the model has been changed to trigger re-rendering |
@@ -415,8 +403,6 @@ import abcjs from 'abcjs/midi;` : "import abcjs from 'abcjs;";
 	// | `setNotDirty()` | Called by the client app to reset the dirty flag |
 	// | `isDirty()` | Returns true or false, whether the textarea contains the same text that it started with. |
 	// | `highlight(abcelem)` | Called by the engraver_controller to highlight an area. |
-	// | `pause(bool)` | Stops the automatic rendering when the user is typing. |
-	// | `pauseMidi(shouldPause)` | Stops the automatic re-rendering of the MIDI. |
 
 </script>
 
