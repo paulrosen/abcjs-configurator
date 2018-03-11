@@ -33,8 +33,8 @@
 						<CheckboxItem label="Tempo Control?" :help="helpText.tempo" v-model="abcjsParams.inlineControls.tempo"></CheckboxItem>
 						<CheckboxItem label="Hide?" :help="helpText.hide" v-model="abcjsParams.inlineControls.hide"></CheckboxItem>
 						<CheckboxItem label="Auto Play?" :help="helpText.startPlaying" v-model="abcjsParams.inlineControls.startPlaying"></CheckboxItem>
-						<TextInputItem label="Pre-Inline Text (%T=title)" :help="helpText.preTextInline" v-model="abcjsParams.inlineControls.preTextInline"></TextInputItem>
-						<TextInputItem label="Post-Inline Text (%T=title)" :help="helpText.postTextInline" v-model="abcjsParams.inlineControls.postTextInline"></TextInputItem>
+						<TextInputItem label="Pre-Inline Text (%T=title)" :help="helpText.preTextInline" v-model="abcjsParams.preTextInline"></TextInputItem>
+						<TextInputItem label="Post-Inline Text (%T=title)" :help="helpText.postTextInline" v-model="abcjsParams.postTextInline"></TextInputItem>
 						<TextInputItem label="Loop Tooltip" :help="helpText.tooltipLoop" v-model="abcjsParams.inlineControls.tooltipLoop"></TextInputItem>
 						<TextInputItem label="Reset Tooltip" :help="helpText.tooltipReset" v-model="abcjsParams.inlineControls.tooltipReset"></TextInputItem>
 						<TextInputItem label="Play Tooltip" :help="helpText.tooltipPlay" v-model="abcjsParams.inlineControls.tooltipPlay"></TextInputItem>
@@ -295,6 +295,8 @@ ${this.formatDrumTable()}`,
 					params += "\n        generateDownload: true,";
 				if (!this.abcjsParams.generateInline)
 					params += "\n        generateInline: false,";
+				if (this.abcjsParams.downloadLabel !== "download midi")
+					params += `\n        downloadLabel: "${this.abcjsParams.downloadLabel}",`;
 				if (this.abcjsParams.downloadClass !== "")
 					params += `\n        downloadClass: "${this.abcjsParams.downloadClass}",`;
 				if (this.abcjsParams.preTextDownload !== "")

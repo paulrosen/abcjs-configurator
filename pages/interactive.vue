@@ -92,6 +92,10 @@
 							<div class="footnote">Click on the displayed music to see the output of the callback function.</div>
 							<code class="indented">{{highlightListenerOutput}}</code>
 						</div>
+						<div v-if="editorParams.abcjsParams.add_classes">
+							<div class="footnote"><span>You can see the added classes by inspecting the generated SVG using the browser's development tools. For a visual look at the classes, go to the <nuxt-link to="/classes">Classes</nuxt-link> page.</span></div>
+							<code class="indented">{{highlightListenerOutput}}</code>
+						</div>
 						<div v-if="editorParams.abcjsParams.responsive === 'resize'">
 							<div class="footnote"><span>When using resize, do not place the </span><code class="subtle-code">&lt;div id="paper"&gt;</code><span> as a flex element: the flex functionality will interfere. Just wrap in another </span><code class="subtle-code">&lt;div&gt;</code></div>
 						</div>
@@ -244,7 +248,6 @@ K:Em
 				if (this.editorParams.specifyDownloadMidiId || this.editorParams.specifyInlineMidiId) {
 					params += "\n        generate_midi: true,";
 					if (this.editorParams.specifyDownloadMidiId) {
-						params += "\n        generateDownload: true,";
 						params += "\n        midi_download_id: \"midi-download\",";
 					}
 					if (this.editorParams.specifyInlineMidiId) {
@@ -296,6 +299,8 @@ K:Em
 					params.push("clickListener: function(abcElem) { console.log(abcElem, tuneNumber); },");
 				if (this.editorParams.abcjsParams.responsiveResize)
 					params.push("responsive: \"resize\",");
+				if (this.editorParams.specifyDownloadMidiId)
+					params.push("generateDownload: true,");
 				if (params.length === 0)
 					params = "{ }";
 				else
