@@ -27,6 +27,7 @@
 					</v-layout>
 					<h2>Inline Params</h2>
 					<v-layout wrap justify-start align-center>
+						<CheckboxItem label="Large Audio Control?" :help="helpText.largeAudioControl" v-model="largeAudioControl"></CheckboxItem>
 						<CheckboxItem label="Inline MIDI?" :help="helpText.generateInline" v-model="abcjsParams.generateInline"></CheckboxItem>
 						<CheckboxItem label="Show Loop Toggle?" :help="helpText.loopToggle" v-model="abcjsParams.inlineControls.loopToggle"></CheckboxItem>
 						<CheckboxItem label="Standard Controls?" :help="helpText.standard" v-model="abcjsParams.inlineControls.standard"></CheckboxItem>
@@ -72,7 +73,10 @@
 					</v-btn>
 					Output</v-card-title>
 				<v-card-text :class="outputOpen ? 'opened' : 'closed'">
-					<div id="midi-id"></div>
+					<div v-if="largeAudioControl">
+						<div class="footnote">Add the class "abcjs-large" to the div that will contain the midi control.</div>
+					</div>
+					<div id="midi-id" :class="largeAudioControl ? 'abcjs-large' : ''"></div>
 					<div id="paper" class="paper amber lighten-4"></div>
 					<div v-html="listenerOutput" v-if="listenerOutput"></div>
 					<div v-html="animationOutput" v-if="animationOutput"></div>
@@ -147,6 +151,7 @@ import abcjs from 'abcjs/midi;
 					startingTune: "0",
 				},
 
+				largeAudioControl: false,
 				soundFontUrl: "",
 				javascriptString: "",
 				javascriptOpen: true,
@@ -157,6 +162,7 @@ import abcjs from 'abcjs/midi;
 				animationOutput: null,
 
 				helpText: {
+					largeAudioControl: "Double the size of the audio control so that it is easier to use on a touch device.",
 					generateDownload: "Do you want to generate a MIDI file? The user can click on a generated link to download that file.",
 					generateInline: "Do you want to create an audio control so the user can interact with the audio in a familiar way? (Note that if you want to programmatically interact with the audio but not let the user have control, you should choose this option, but then hide the generated control.) The control has the class \"abcjs-inline-midi\".",
 
