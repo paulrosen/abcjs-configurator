@@ -13,7 +13,7 @@
 					<v-layout wrap justify-start align-center>
 						<TextInputItem label="Quarter Notes Per Minute" :help="helpText.qpm" v-model="abcjsParams.qpm"></TextInputItem>
 						<TextInputItem label="Instrument number (program)" :help="helpText.program" v-model="abcjsParams.program"></TextInputItem>
-						<TextInputItem label="Half-steps to transpose" :help="helpText.transpose" v-model="abcjsParams.transpose"></TextInputItem>
+						<TextInputItem label="Half-steps to transpose" :help="helpText.midiTranspose" v-model="abcjsParams.midiTranspose"></TextInputItem>
 						<TextInputItem label="Index of the Tune" :help="helpText.startingTune" v-model="abcjsParams.startingTune"></TextInputItem>
 						<TextInputItem label="Sound Font Location" :help="helpText.soundFontUrl" v-model="soundFontUrl"></TextInputItem>
 					</v-layout>
@@ -120,7 +120,7 @@ import abcjs from 'abcjs/midi;
 				abcjsParams: {
 					qpm: "",
 					program: "",
-					transpose: "",
+					midiTranspose: "",
 					generateDownload: false,
 					generateInline: true,
 					downloadLabel: "download midi",
@@ -190,7 +190,7 @@ import abcjs from 'abcjs/midi;
 		},`,
 					program: "This is the standard MIDI program number (i.e. 0=grand piano, etc.). This may be overridden in the ABC string if there are %%MIDI commands.",
 					qpm: "This overrides a Q: line in the ABC string and sets the number of quarter notes per minute. This is always measured in quarter notes, even in time signatures like 6/8.",
-					transpose: "The number of half-steps to transpose. This can be a positive or negative number.",
+					midiTranspose: "The number of half-steps to transpose. This can be a positive or negative number.",
 					startingTune: "If there are multiple tunes in the input string, then this chooses which tune to display. For control over what is displayed, use with the \"Number of Tunes\" parameter. This is zero-based. If this is greater than the number of tunes in the input string, then nothing is displayed.",
 					downloadClass: "This adds the specified classes to the download link. (To see a visual change in this demo, use the class \"colorful\").",
 					downloadLabel: "If the download option is chosen, this specifies The text in the link. You may use the special pattern \"%T\" to indicate that the title of the piece should be used.",
@@ -253,16 +253,16 @@ ${this.formatDrumTable()}`,
 			},
 			formatDrumTable() {
 				return `<table class="datatable table drum-examples"><tr><th>Time Sig</th><th>Drum String</th><th>Num Bars</th><th>Bars of Intro</th></tr>
-<tr><td>2/4</td><td>dd 92 90 60 30</td><td>1</td><td>2</td></tr>
-<tr><td>3/4</td><td>ddd 92 90 90 60 30 30</td><td>1</td><td>1</td></tr>
-<tr><td>4/4</td><td>dddd 92 90 90 90 60 30 30 30</td><td>1</td><td>1</td></tr>
-<tr><td>5/4</td><td>ddddd 92 90 90 92 90 60 30 30 60 30</td><td>1</td><td>1</td></tr>
-<tr><td>Cut Time</td><td>dd 92 90 60 30</td><td>1</td><td>2</td></tr>
-<tr><td>6/8</td><td>dd 92 90 60 30</td><td>1</td><td>2</td></tr>
-<tr><td>9/8</td><td>ddd 92 90 90 60 30 30</td><td>1</td><td>1</td></tr>
-<tr><td>9/8</td><td>dddd 92 90 90 90 60 30 30 30</td><td>1</td><td>1</td></tr>
+<tr><td>2/4</td><td>dd 76 77 60 30</td><td>1</td><td>2</td></tr>
+<tr><td>3/4</td><td>ddd 76 77 77 60 30 30</td><td>1</td><td>1</td></tr>
+<tr><td>4/4</td><td>dddd 76 77 77 77 60 30 30 30</td><td>1</td><td>1</td></tr>
+<tr><td>5/4</td><td>ddddd 76 77 77 76 77 60 30 30 60 30</td><td>1</td><td>1</td></tr>
+<tr><td>Cut Time</td><td>dd 76 77 60 30</td><td>1</td><td>2</td></tr>
+<tr><td>6/8</td><td>dd 76 77 60 30</td><td>1</td><td>2</td></tr>
+<tr><td>9/8</td><td>ddd 76 77 77 60 30 30</td><td>1</td><td>1</td></tr>
+<tr><td>9/8</td><td>dddd 76 77 77 77 60 30 30 30</td><td>1</td><td>1</td></tr>
 <tr><td></td><td></td><td></td><td></td></tr>
-<tr><td>4/4</td><td>d2dd2ddz 92 90 92 90 90 60 30 60 30 30</td><td>2</td><td>4</td></tr>
+<tr><td>4/4</td><td>d2dd2ddz 76 77 76 77 77 60 30 60 30 30</td><td>2</td><td>4</td></tr>
 </table>`.replace(/\n/g,"");
 			},
 			formatInlineControls() {
@@ -295,8 +295,8 @@ ${this.formatDrumTable()}`,
 					params += `\n        qpm: ${this.abcjsParams.qpm},`;
 				if (this.abcjsParams.program !== "")
 					params += `\n        program: ${this.abcjsParams.program},`;
-				if (this.abcjsParams.transpose !== "")
-					params += `\n        transpose: ${this.abcjsParams.transpose},`;
+				if (this.abcjsParams.midiTranspose !== "")
+					params += `\n        midiTranspose: ${this.abcjsParams.midiTranspose},`;
 				if (this.abcjsParams.generateDownload)
 					params += "\n        generateDownload: true,";
 				if (!this.abcjsParams.generateInline)
