@@ -330,7 +330,7 @@ ${this.formatDrumTable()}`,
 				if (inlineControls !== '')
 					params += `\n        inlineControls: {${inlineControls}\n        },`;
 
-				if (this.abcjsParams.startingTune !== "1")
+				if (this.abcjsParams.startingTune !== "0")
 					params += `\n        startingTune: ${this.abcjsParams.startingTune},`;
 
 				if (params === "")
