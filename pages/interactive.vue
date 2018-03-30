@@ -296,7 +296,7 @@ K:Em
 				if (this.editorParams.abcjsParams.add_classes)
 					params.push("add_classes: true,");
 				if (this.editorParams.abcjsParams.highlightListener)
-					params.push("clickListener: function(abcElem) { console.log(abcElem, tuneNumber); },");
+					params.push("clickListener: function(abcElem, tuneNumber, classes) { console.log(abcElem, tuneNumber, classes); },");
 				if (this.editorParams.abcjsParams.responsiveResize)
 					params.push("responsive: \"resize\",");
 				if (this.editorParams.specifyDownloadMidiId)
