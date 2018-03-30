@@ -23,23 +23,23 @@
 
 						<h2>Formatting Parameters</h2>
 						<v-layout wrap justify-start align-center>
-							<TextInputItem label="titlefont" :help="helpText.titlefont" v-model="abcjsParams.formatting.titlefont"></TextInputItem>
-							<TextInputItem label="composerfont" :help="helpText.composerfont" v-model="abcjsParams.formatting.composerfont"></TextInputItem>
-							<TextInputItem label="gchordfont" :help="helpText.gchordfont" v-model="abcjsParams.formatting.gchordfont"></TextInputItem>
-							<TextInputItem label="partsfont" :help="helpText.partsfont" v-model="abcjsParams.formatting.partsfont"></TextInputItem>
-							<TextInputItem label="annotationfont" :help="helpText.annotationfont" v-model="abcjsParams.formatting.annotationfont"></TextInputItem>
-							<TextInputItem label="footerfont" :help="helpText.footerfont" v-model="abcjsParams.formatting.footerfont"></TextInputItem>
-							<TextInputItem label="headerfont" :help="helpText.headerfont" v-model="abcjsParams.formatting.headerfont"></TextInputItem>
-							<TextInputItem label="historyfont" :help="helpText.historyfont" v-model="abcjsParams.formatting.historyfont"></TextInputItem>
-							<TextInputItem label="infofont" :help="helpText.infofont" v-model="abcjsParams.formatting.infofont"></TextInputItem>
-							<TextInputItem label="measurefont" :help="helpText.measurefont" v-model="abcjsParams.formatting.measurefont"></TextInputItem>
-							<TextInputItem label="repeatfont" :help="helpText.repeatfont" v-model="abcjsParams.formatting.repeatfont"></TextInputItem>
-							<TextInputItem label="subtitlefont" :help="helpText.subtitlefont" v-model="abcjsParams.formatting.subtitlefont"></TextInputItem>
-							<TextInputItem label="tempofont" :help="helpText.tempofont" v-model="abcjsParams.formatting.tempofont"></TextInputItem>
-							<TextInputItem label="textfont" :help="helpText.textfont" v-model="abcjsParams.formatting.textfont"></TextInputItem>
-							<TextInputItem label="voicefont" :help="helpText.voicefont" v-model="abcjsParams.formatting.voicefont"></TextInputItem>
-							<TextInputItem label="vocalfont" :help="helpText.vocalfont" v-model="abcjsParams.formatting.vocalfont"></TextInputItem>
-							<TextInputItem label="wordsfont" :help="helpText.wordsfont" v-model="abcjsParams.formatting.wordsfont"></TextInputItem>
+							<TextInputItem label="titlefont" :help="helpText.titlefont" v-model="abcjsParams.format.titlefont"></TextInputItem>
+							<TextInputItem label="composerfont" :help="helpText.composerfont" v-model="abcjsParams.format.composerfont"></TextInputItem>
+							<TextInputItem label="gchordfont" :help="helpText.gchordfont" v-model="abcjsParams.format.gchordfont"></TextInputItem>
+							<TextInputItem label="partsfont" :help="helpText.partsfont" v-model="abcjsParams.format.partsfont"></TextInputItem>
+							<TextInputItem label="annotationfont" :help="helpText.annotationfont" v-model="abcjsParams.format.annotationfont"></TextInputItem>
+							<TextInputItem label="footerfont" :help="helpText.footerfont" v-model="abcjsParams.format.footerfont"></TextInputItem>
+							<TextInputItem label="headerfont" :help="helpText.headerfont" v-model="abcjsParams.format.headerfont"></TextInputItem>
+							<TextInputItem label="historyfont" :help="helpText.historyfont" v-model="abcjsParams.format.historyfont"></TextInputItem>
+							<TextInputItem label="infofont" :help="helpText.infofont" v-model="abcjsParams.format.infofont"></TextInputItem>
+							<TextInputItem label="measurefont" :help="helpText.measurefont" v-model="abcjsParams.format.measurefont"></TextInputItem>
+							<TextInputItem label="repeatfont" :help="helpText.repeatfont" v-model="abcjsParams.format.repeatfont"></TextInputItem>
+							<TextInputItem label="subtitlefont" :help="helpText.subtitlefont" v-model="abcjsParams.format.subtitlefont"></TextInputItem>
+							<TextInputItem label="tempofont" :help="helpText.tempofont" v-model="abcjsParams.format.tempofont"></TextInputItem>
+							<TextInputItem label="textfont" :help="helpText.textfont" v-model="abcjsParams.format.textfont"></TextInputItem>
+							<TextInputItem label="voicefont" :help="helpText.voicefont" v-model="abcjsParams.format.voicefont"></TextInputItem>
+							<TextInputItem label="vocalfont" :help="helpText.vocalfont" v-model="abcjsParams.format.vocalfont"></TextInputItem>
+							<TextInputItem label="wordsfont" :help="helpText.wordsfont" v-model="abcjsParams.format.wordsfont"></TextInputItem>
 						</v-layout>
 					</v-card-text>
 				</v-card>
@@ -113,7 +113,7 @@
 				abcjsParams: {
 					startingTune: "0",
 					scale: "1",
-					formatting: {
+					format: {
 						gchordfont: "",
 						annotationfont: "",
 						composerfont: "",
@@ -205,12 +205,12 @@
 					params += `\n        scale: ${this.abcjsParams.scale},`;
 
 				let format = [];
-				Object.keys(this.abcjsParams.formatting).forEach(key  => {
-					if (this.abcjsParams.formatting[key])
-						format.push(`\n            ${key}: "${this.abcjsParams.formatting[key]}",`);
+				Object.keys(this.abcjsParams.format).forEach(key  => {
+					if (this.abcjsParams.format[key])
+						format.push(`\n            ${key}: "${this.abcjsParams.format[key]}",`);
 				});
 				if (format.length > 0) {
-					params += `\n        formatting: {`;
+					params += `\n        format: {`;
 					params += format.join("");
 					params += "\n        }";
 				}
