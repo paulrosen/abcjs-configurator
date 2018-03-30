@@ -60,6 +60,7 @@
           { icon: 'edit', title: 'Interactive', to: '/interactive' },
 	        { icon: 'directions_run', title: 'Animation', to: '/animation' },
 	        { icon: 'style', title: 'Classes', to: '/classes' },
+	        { icon: 'adjust', title: 'Formatting', to: '/formatting' },
           { icon: 'pie_chart', title: 'Analysis', to: '/analyze' },
         ],
         miniVariant: false,
