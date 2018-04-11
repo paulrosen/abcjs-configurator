@@ -34,6 +34,7 @@
 						<CheckboxItem label="Tempo Control?" :help="helpText.tempo" v-model="abcjsParams.inlineControls.tempo"></CheckboxItem>
 						<CheckboxItem label="Hide?" :help="helpText.hide" v-model="abcjsParams.inlineControls.hide"></CheckboxItem>
 						<CheckboxItem label="Auto Play?" :help="helpText.startPlaying" v-model="abcjsParams.inlineControls.startPlaying"></CheckboxItem>
+						<CheckboxItem label="No Melody?" :help="helpText.voicesOff" v-model="abcjsParams.voicesOff"></CheckboxItem>
 						<TextInputItem label="Pre-Inline Text (%T=title)" :help="helpText.preTextInline" v-model="abcjsParams.preTextInline"></TextInputItem>
 						<TextInputItem label="Post-Inline Text (%T=title)" :help="helpText.postTextInline" v-model="abcjsParams.postTextInline"></TextInputItem>
 						<TextInputItem label="Loop Tooltip" :help="helpText.tooltipLoop" v-model="abcjsParams.inlineControls.tooltipLoop"></TextInputItem>
@@ -131,6 +132,7 @@ import abcjs from 'abcjs/midi;
 					postTextInline: "",
 					doListener: false,
 					doAnimate: false,
+					voicesOff: false,
 					context: "",
 					inlineControls: {
 						loopToggle: false,
@@ -171,6 +173,7 @@ import abcjs from 'abcjs/midi;
 					tempo: "Should the audio control contain an element that allows the user to change the speed of the playback?",
 					hide: "Should the audio control be hidden from the page? It can still be interacted with programmatically with the abcjs.midi.startPlaying() and abcjs.midi.stopPlaying() functions.",
 					startPlaying: "Should the music auto play as soon as it is ready? Combining this with \"hide\" and \"animate\" is a nice effect.",
+					voicesOff: "When playing audio, play the metronome track and the accompaniment track, but don't play the melody. The animation over the melody line works normally. This is useful to create a \"music-minus-one\" effect.",
 
 					doListener: "Pass a callback function here to receive a notification at regular intervals when time has passed. (That is, whether a note has started or stopped.) The function receives three parameters: the audio control element, a status object containing the fields: { currentTime, duration, newBeat, progress }, and whatever value is in the \"context\" parameter. The purpose of the \"context\" is to differentiate between multiple audio controls on a page. WARNING: Do not do any long processing in this function. It needs to return before the next MIDI event happens.",
 					doAnimate: `Pass a callback function here to receive a notification whenever a MIDI event has passed. (That is, whether a note has started or stopped.) The function receives three parameters: lastRange, currentRange, and whatever value is in the \"context\" parameter. The purpose of the \"context\" is to differentiate between multiple audio controls on a page. The ranges are arrays of elements that can be manipulated however you like. WARNING: Do not do any long processing in this function. It needs to return before the next MIDI event happens. The following is an example where the currently played notes are colored blue:
@@ -297,6 +300,8 @@ ${this.formatDrumTable()}`,
 					params += `\n        program: ${this.abcjsParams.program},`;
 				if (this.abcjsParams.midiTranspose !== "")
 					params += `\n        midiTranspose: ${this.abcjsParams.midiTranspose},`;
+				if (this.abcjsParams.voicesOff)
+					params += "\n            voicesOff: true,";
 				if (this.abcjsParams.generateDownload)
 					params += "\n        generateDownload: true,";
 				if (!this.abcjsParams.generateInline)
@@ -314,7 +319,7 @@ ${this.formatDrumTable()}`,
 				if (this.abcjsParams.postTextInline !== "")
 					params += `\n        postTextInline: "${this.abcjsParams.postTextInline}",`;
 				if (this.abcjsParams.drum !== "")
-					params += `\n        drum: ${this.abcjsParams.drum},`;
+					params += `\n        drum: \"${this.abcjsParams.drum}\",`;
 				if (this.abcjsParams.drumBars !== "1")
 					params += `\n        drumBars: ${this.abcjsParams.drumBars},`;
 				if (this.abcjsParams.drumIntro !== "0")
