@@ -369,7 +369,7 @@ ${this.formatDrumTable()}`,
 				if (range && range.elements) {
 					range.elements.forEach(function (set) {
 						set.forEach(function (item) {
-							item.attr({fill: color});
+							item.setAttribute("fill", color);
 						});
 					});
 				}
@@ -381,7 +381,7 @@ ${this.formatDrumTable()}`,
 					elements.forEach((el) => {
 						let classes = [];
 						el.forEach((item) => {
-							classes.push(item.attrs.class);
+							classes.push(item.className);
 						});
 						arr.push(`            ${classes.join(" | ")}`);
 					});

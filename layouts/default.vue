@@ -82,7 +82,7 @@
 T:Money Lost
 M:3/4
 L:1/8
-Q:3/4=40
+Q:1/4=100
 C:Paul Rosen
 S:Copyright 2007, Paul Rosen
 R:Klezmer
