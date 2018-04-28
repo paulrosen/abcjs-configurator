@@ -240,20 +240,20 @@ K:Bb
 V:1 nm="abcjs"
 |:GBcd-d4|zcdc dc3|
 `;
-	      this.renderAbc()("abcjs-logo", logoMusic, { add_classes: true }, {
-	      	paddingtop: 0,
-		      paddingbottom: 0,
-		      paddingright: 0,
-		      paddingleft: 0,
-			  responsive: "resize"});
-	      const titleEl = document.querySelector('#abcjs-logo text');
-	      titleEl.setAttribute("x", "38");
-	      titleEl.setAttribute("y", "35");
-	      titleEl.setAttribute("font-family", '"Lucida Console", Monaco, monospace');
-	      titleEl.parentElement.appendChild(titleEl);
-	      document.querySelector('#abcjs-logo svg').setAttribute("viewBox", "34 0 370 96");
-	      const staffExtra = document.querySelectorAll('#abcjs-logo svg .abcjs-staff-extra');
-	      staffExtra[0].classList.add("abcjs-clef");
+	      // this.renderAbc()("abcjs-logo", logoMusic, { add_classes: true }, {
+	      // 	paddingtop: 0,
+		   //    paddingbottom: 0,
+		   //    paddingright: 0,
+		   //    paddingleft: 0,
+			//   responsive: "resize"});
+	      // const titleEl = document.querySelector('#abcjs-logo text');
+	      // titleEl.setAttribute("x", "38");
+	      // titleEl.setAttribute("y", "35");
+	      // titleEl.setAttribute("font-family", '"Lucida Console", Monaco, monospace');
+	      // titleEl.parentElement.appendChild(titleEl);
+	      // document.querySelector('#abcjs-logo svg').setAttribute("viewBox", "34 0 370 96");
+	      // const staffExtra = document.querySelectorAll('#abcjs-logo svg .abcjs-staff-extra');
+	      // staffExtra[0].classList.add("abcjs-clef");
       }
   }
 </script>
@@ -325,17 +325,21 @@ V:1 nm="abcjs"
   }
 
   #abcjs-logo {
+    background-image: url(/_nuxt/img/abcjs_comp_extended_08.b1e7db9.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
     height: 40px;
   }
-  #abcjs-logo .abcjs-staff, #abcjs-logo .abcjs-staff-extra, #abcjs-logo .abcjs-symbol, #abcjs-logo .abcjs-bar {
-		fill: #b3b38b !important;
-	}
-  #abcjs-logo .abcjs-staff-extra.abcjs-clef {
-	  fill-opacity: 0.3;
-  }
-  #abcjs-logo .abcjs-voice-name, #abcjs-logo .abcjs-note, #abcjs-logo .abcjs-beam-elem {
-	  fill: #42A5F5 !important;
-  }
+  /*#abcjs-logo .abcjs-staff, #abcjs-logo .abcjs-staff-extra, #abcjs-logo .abcjs-symbol, #abcjs-logo .abcjs-bar {*/
+		/*fill: #b3b38b !important;*/
+	/*}*/
+  /*#abcjs-logo .abcjs-staff-extra.abcjs-clef {*/
+	  /*fill-opacity: 0.3;*/
+  /*}*/
+  /*#abcjs-logo .abcjs-voice-name, #abcjs-logo .abcjs-note, #abcjs-logo .abcjs-beam-elem {*/
+	  /*fill: #42A5F5 !important;*/
+  /*}*/
 	.list__tile--active {
 		background-color: #DFDBC3;
 	}
