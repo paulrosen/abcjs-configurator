@@ -64,6 +64,13 @@
 						<div><InfoDialog label="Play/Pause" :help="helpText.play"></InfoDialog></div>
 						<v-btn outline color="primary" @click="doStop">Stop</v-btn>
 						<div><InfoDialog label="Stop" :help="helpText.stop"></InfoDialog></div>
+						<v-btn outline color="primary" @click="doRestart">Restart</v-btn>
+						<div><InfoDialog label="Restart" :help="helpText.restart"></InfoDialog></div>
+						<v-btn outline color="primary" @click="doLoop">Loop</v-btn>
+						<div><InfoDialog label="Loop" :help="helpText.loop"></InfoDialog></div>
+						<v-btn outline color="primary" @click="doOneThird">Move To 1/3</v-btn>
+						<v-btn outline color="primary" @click="doTwoThirds">Move To 2/3</v-btn>
+						<div><InfoDialog label="Random" :help="helpText.random"></InfoDialog></div>
 					</div>
 				</v-card-text>
 			</v-card>
@@ -162,6 +169,7 @@ import abcjs from 'abcjs/midi;
 				tunes: null,
 				listenerOutput: null,
 				animationOutput: null,
+				loopOn: false,
 
 				helpText: {
 					largeAudioControl: "Double the size of the audio control so that it is easier to use on a touch device.",
@@ -215,6 +223,9 @@ ${this.formatDrumTable()}`,
 					drumIntro: "This plays a number of measures of the drum pattern before the music starts.",
 					play: "This has the same effect as clicking the play button on the audio control. If you wish to supply your own mechanism for playing audio, then you can hide the standard audio control, and start the playback with this.",
 					stop: "This has the same effect as clicking stop button on the audio control. If you wish to supply your own mechanism for playing audio, then you can hide the standard audio control, and start the playback with this.",
+					restart: "This has the same effect as clicking the restart button on the audio control. If you wish to supply your own mechanism for playing audio, then you can hide the standard audio control, and restart the playback with this.",
+					loop: "This has the same effect as clicking the loop button on the audio control. If you wish to supply your own mechanism for playing audio, then you can hide the standard audio control, and change the loop with this. (This requires that \"Show Loop Toggle\" is checked.)",
+					random: "Move the progress to whatever percent complete you want.",
 					soundFontUrl: "This is the public URL for the sound font files. By default, the sound fonts are here: https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/ and you probably won't need to modify this, but if you want to host them on your own server, or you want different sounding instruments, you can override it here.\n\nImportant!\n<b>This is only used before the first call to the audio is made, so set this before you start playing a tune!</b>",
 				}
 			};
@@ -246,6 +257,19 @@ ${this.formatDrumTable()}`,
 			},
 			doStop() {
 				abcjs.midi.stopPlaying();
+			},
+			doRestart() {
+				abcjs.midi.restartPlaying();
+			},
+			doLoop() {
+				this.loopOn = !this.loopOn;
+				abcjs.midi.setLoop(document.querySelector(".audio-page .abcjs-inline-midi"), this.loopOn);
+			},
+			doOneThird() {
+				abcjs.midi.setRandomProgress(0.33);
+			},
+			doTwoThirds() {
+				abcjs.midi.setRandomProgress(0.66);
 			},
 			constructMidiParams() {
 				this.abcjsParams.midiListener = this.abcjsParams.doListener ? this.listenerCallback : undefined;
@@ -434,6 +458,12 @@ ${this.formatElements(range.elements)},
 abcjs.midi.startPlaying(document.querySelector(".abcjs-inline-midi"));
 
 abcjs.midi.stopPlaying();
+
+abcjs.midi.restartPlaying();
+
+abcjs.midi.setLoop(document.querySelector(".abcjs-inline-midi"), true);
+
+abcjs.midi.setRandomProgress(0.33);
 
 ${this.formatSoundFontCall()}`;
 
