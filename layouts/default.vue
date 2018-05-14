@@ -325,7 +325,7 @@ V:1 nm="abcjs"
   }
 
   #abcjs-logo {
-    background-image: url(/_nuxt/img/abcjs_comp_extended_08.b1e7db9.svg);
+    background-image: url(/static/abcjs_comp_extended_08.svg);
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
