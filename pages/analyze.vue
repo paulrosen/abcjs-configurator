@@ -4,11 +4,17 @@
 			<h1>Analysis Functions</h1>
 			<p>These functions are provided as a convenience, in case the app should do something different depending on what tunes have been input.
 			</p>
-			<p>Result of
+			<div>Result of
 				<code class="subtle-code">abcjs.numberOfTunes(abcString)</code>
 				is
 				<pre class="amber lighten-4 string chip">{{numberOfTunes()}}</pre>
-			</p>
+			</div>
+			<v-card raised>
+				<v-card-title>Result of <code class="subtle-code">abcjs.parseOnly(abcString)</code></v-card-title>
+				<v-card-text>
+				<pre class="amber lighten-4 string">{{parseOnly()}}</pre>
+				</v-card-text>
+			</v-card>
 			<template v-for="title,i in titles()">
 				<v-card :key="i" raised>
 					<v-card-title><code>abcjs.TuneBook(abcString).getTuneByTitle("{{title}}")</code></v-card-title>
@@ -43,7 +49,7 @@
 		},
 
 		methods: {
-			...mapGetters(['numberOfTunes', 'titles', 'ids', 'tuneByTitle', 'tuneById', 'appTitle']),
+			...mapGetters(['numberOfTunes', 'titles', 'ids', 'tuneByTitle', 'tuneById', 'appTitle', 'parseOnly']),
 		}
 	}
 </script>

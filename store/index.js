@@ -7,6 +7,7 @@ const createStore = () => {
 			currentRoute: "",
 			inputAbc: "",
 			numberOfTunes: null,
+			parseOnlyData: null,
 			titles: [],
 			ids: [],
 			tuneBook: null,
@@ -32,6 +33,9 @@ const createStore = () => {
 			},
 			numberOfTunes(state) {
 				return state.numberOfTunes;
+			},
+			parseOnly(state) {
+				return state.parseOnlyData;
 			},
 			titles(state) {
 				return state.titles;
@@ -88,6 +92,12 @@ const createStore = () => {
 				state.inputAbc = payload;
 				if (abcjs) {
 					state.numberOfTunes = abcjs.numberOfTunes(state.inputAbc);
+					state.parseOnlyData = new abcjs.parseOnly(state.inputAbc);
+					state.parseOnlyData = state.parseOnlyData.map((item) => {
+						return "{ " + Object.keys(item).map((k) => {
+							return k + ": ... , ";
+						}).join("") + " }";
+					});
 					state.tuneBook = new abcjs.TuneBook(state.inputAbc);
 					let ids = [];
 					let titles = [];
