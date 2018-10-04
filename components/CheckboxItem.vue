@@ -26,7 +26,7 @@
 			this.checkValue = this.value;
 			if (this.help) {
 				const label = this.$children[0].$el.querySelector("label");
-				const box = this.$children[0].$el.querySelector(".input-group--selection-controls__ripple");
+				const box = this.$children[0].$el.querySelector(".v-input--selection-controls__ripple");
 				const width = box.offsetWidth + label.offsetWidth - 14; // not sure where the 14 comes from.
 				const helpButton = this.$children[1].$el.querySelector(".help-button");
 				helpButton.style.left = width + "px";
@@ -49,6 +49,8 @@
 	}
 	.checkbox-item .help-button {
 		position: absolute;
-		top: 5px;
+		top: 0;
+		height: 18px;
+		width: 18px;
 	}
 </style>

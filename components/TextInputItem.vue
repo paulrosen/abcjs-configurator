@@ -51,6 +51,8 @@
 	}
 	.text-input-item .help-button {
 		position: absolute;
-		top: 36px;
+		top: 15px;
+		height: 18px;
+		width: 18px;
 	}
 </style>

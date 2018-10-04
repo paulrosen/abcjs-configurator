@@ -43,7 +43,7 @@
 </script>
 
 <style>
-	.info-dialog .help-button .btn__content {
+	.info-dialog .help-button .v-btn__content {
 		padding: 0;
 	}
 	.info-dialog .help-button i {

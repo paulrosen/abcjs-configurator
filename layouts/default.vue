@@ -265,7 +265,7 @@ V:1 nm="abcjs"
   footer {
 	  padding-left: 15px;
   }
-  .card {
+  .v-card {
     margin-bottom: 10px;
   }
   .card__title {
@@ -403,7 +403,7 @@ V:1 nm="abcjs"
 	  .layout.wrap {
 		  display: block;
 	  }
-	  .combine-cards .card.narrow {
+	  .combine-cards .v-card.narrow {
 		  min-width: 270px;
 		  max-width: 270px;
 	  }
@@ -412,25 +412,25 @@ V:1 nm="abcjs"
 	  .layout.wrap {
 		  display: flex;
 	  }
-	  .combine-cards .card.narrow {
+	  .combine-cards .v-card.narrow {
 		  min-width: 560px;
 		  max-width: 560px;
 	  }
   }
   @media only screen and (min-width: 1890px) {
-	  .combine-cards .card.narrow {
+	  .combine-cards .v-card.narrow {
 		  min-width: 830px;
 		  max-width: 830px;
 	  }
   }
   @media only screen and (min-width: 2150px) {
-	  .combine-cards .card.narrow {
+	  .combine-cards .v-card.narrow {
 		  min-width: 1072px;
 		  max-width: 1072px;
 	  }
   }
   @media only screen and (min-width: 2410px) {
-	  .combine-cards .card.narrow {
+	  .combine-cards .v-card.narrow {
 		  min-width: 1332px;
 		  max-width: 1332px;
 	  }

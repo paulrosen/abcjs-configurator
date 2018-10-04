@@ -19,7 +19,9 @@ npx: installed 318 in 9.43s
 ? Choose rendering mode Universal
 ? Use axios module yes
 ? Use eslint yes
+? Use prettier no
 ? Author name Paul Rosen
+? Choose a package manager npm
 ```
 
 ## To develop

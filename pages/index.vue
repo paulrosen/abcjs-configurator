@@ -12,13 +12,13 @@
 				There are also some <nuxt-link to="/analyze">convenience functions</nuxt-link> that break apart a multi-tune ABC string.
 			</p>
 			<p>The examples depend on some input text in ABC format. You may enter the text you wish to test below, or just use the sample tunebook that is already entered.</p>
-			<v-text-field
+			<v-textarea
 					:value="inputAbc()"
 					@input="updateInput"
 					multi-line
-					textarea
+					outline
 					label="abcString"
-			></v-text-field>
+			></v-textarea>
 			<v-card>
 				<v-card-title>Loading the Library</v-card-title>
 				<v-card-text>
